@@ -5,4 +5,9 @@
     <color name="orange_primary">#E65100</color>
     <color name="orange_light">#FFE0B2</color>
     <color name="gray_background">#F5F5F5</color>
+    <color name="blue_primary">#0D47A1</color>
+    <color name="blue_secondary">#1976D2</color>
+    <color name="blue_light">#E3F2FD</color>
+    <color name="text_gray">#757575</color>
+    <color name="text_dark">#212121</color>
 </resources>

@@ -10,55 +10,66 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="LAPAKUMKM"
+        android:text="DAFTAR LAPAK"
         android:textSize="32sp"
         android:textStyle="bold"
         android:textColor="@color/orange_primary"
         android:layout_marginBottom="32dp"/>
 
     <EditText
-        android:id="@+id/etEmail"
+        android:id="@+id/etRegNama"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Email Toko / UMKM"
+        android:hint="Nama Toko / UMKM"
+        android:inputType="textPersonName"
+        android:layout_marginBottom="16dp"
+        android:padding="12dp"
+        android:background="@android:drawable/editbox_background_normal"/>
+
+    <EditText
+        android:id="@+id/etRegEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email"
         android:inputType="textEmailAddress"
         android:layout_marginBottom="16dp"
         android:padding="12dp"
         android:background="@android:drawable/editbox_background_normal"/>
 
     <EditText
-        android:id="@+id/etPassword"
+        android:id="@+id/etRegPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Password"
         android:inputType="textPassword"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="16dp"
         android:padding="12dp"
         android:background="@android:drawable/editbox_background_normal"/>
 
-    <CheckBox
-        android:id="@+id/cbRememberMe"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Selalu Login"
-        android:layout_gravity="start"
-        android:layout_marginBottom="16dp"
-        android:textColor="@color/black"/>
-
-    <Button
-        android:id="@+id/btnLogin"
+    <EditText
+        android:id="@+id/etRegConfirmPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Masuk Akun"
+        android:hint="Konfirmasi Password"
+        android:inputType="textPassword"
+        android:layout_marginBottom="24dp"
+        android:padding="12dp"
+        android:background="@android:drawable/editbox_background_normal"/>
+
+    <Button
+        android:id="@+id/btnRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Daftar Sekarang"
         android:backgroundTint="@color/orange_primary"
         android:textColor="@color/white"
         android:padding="12dp"/>
 
     <TextView
-        android:id="@+id/tvRegister"
+        android:id="@+id/tvLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Belum punya akun? Daftar di sini"
+        android:text="Sudah punya akun? Masuk"
         android:textColor="@color/orange_primary"
         android:layout_marginTop="16dp"
         android:clickable="true"

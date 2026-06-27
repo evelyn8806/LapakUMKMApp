@@ -20,6 +20,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".LapakDetailActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".RecommendationListActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".PengajuanSewaActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".DashboardActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
