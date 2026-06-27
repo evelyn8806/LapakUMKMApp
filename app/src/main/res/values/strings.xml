@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">LapakUMKMApp</string>
+    <string name="lapak">LAPAK</string>
+    <string name="umkm">UMKM</string>
+    <string name="tagline">Tempat terbaik untuk\nusahamu berkembang</string>
+    <string name="masuk">Masuk</string>
+    <string name="daftar_akun">Daftar Akun</string>
+    <string name="pilih_peran">Pilih peran akun</string>
+    <string name="umkm_pemilik">UMKM / Pemilik Usaha</string>
+    <string name="admin_pemerintah">Admin / Pemerintah</string>
 </resources>

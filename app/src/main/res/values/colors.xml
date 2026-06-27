@@ -2,12 +2,20 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Dashboard Colors (Original) -->
     <color name="orange_primary">#E65100</color>
-    <color name="orange_light">#FFE0B2</color>
-    <color name="gray_background">#F5F5F5</color>
     <color name="blue_primary">#0D47A1</color>
     <color name="blue_secondary">#1976D2</color>
     <color name="blue_light">#E3F2FD</color>
     <color name="text_gray">#757575</color>
     <color name="text_dark">#212121</color>
+    <color name="gray_background">#F5F5F5</color>
+
+    <!-- New Landing/Login/Register Colors -->
+    <color name="landing_blue">#1A4DA2</color>
+    <color name="landing_orange">#F9A825</color>
+    <color name="role_green">#4CAF50</color>
+    <color name="role_purple">#673AB7</color>
+    <color name="border_gray">#E0E0E0</color>
 </resources>
