@@ -40,6 +40,14 @@
         <activity
             android:name=".DashboardActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".PaymentActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".PaymentDetailActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

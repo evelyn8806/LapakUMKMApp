@@ -1,5 +1,6 @@
 package edu.uph.m24si2.lapakumkmapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -78,7 +79,9 @@ public class PengajuanSewaActivity extends AppCompatActivity {
         });
 
         btnSubmit.setOnClickListener(v -> {
-            Toast.makeText(this, "Pengajuan Berhasil Dikirim!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Pengajuan Berhasil Dikirim!", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(PengajuanSewaActivity.this, PaymentActivity.class);
+            startActivity(intent);
             finish();
         });
     }
