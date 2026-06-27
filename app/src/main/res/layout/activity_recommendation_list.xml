@@ -48,4 +48,13 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
+    <Button
+
+        android:id="@+id/btnFilter"
+
+        android:text="Filter"
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"/>
 </LinearLayout>

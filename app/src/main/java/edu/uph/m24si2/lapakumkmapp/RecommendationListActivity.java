@@ -19,5 +19,14 @@ public class RecommendationListActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        // Mendapatkan data filter dari Intent
+        String jenis = getIntent().getStringExtra("jenis");
+        float minPrice = getIntent().getFloatExtra("minPrice", 0);
+        float maxPrice = getIntent().getFloatExtra("maxPrice", 2000000);
+        String ukuran = getIntent().getStringExtra("ukuran");
+        String sort = getIntent().getStringExtra("sort");
+
+        // Di sini Anda bisa menambahkan logika untuk memfilter data UMKM berdasarkan nilai-nilai di atas
     }
 }
