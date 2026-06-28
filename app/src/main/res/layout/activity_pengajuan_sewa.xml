@@ -173,7 +173,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="NIB"
+                    android:hint="NIB (Opsional)"
                     android:layout_marginBottom="12dp">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etNIB"
@@ -186,7 +186,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Alamat Usaha"
+                    android:hint="Alamat Usaha (Opsional)"
                     android:layout_marginBottom="12dp">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etAlamatUsaha"
@@ -217,7 +217,7 @@
                     android:textAllCaps="false" />
             </LinearLayout>
 
-            <!-- Step 2: Berkas (Simplified) -->
+            <!-- Step 2: Berkas -->
             <LinearLayout
                 android:id="@+id/layoutStep2"
                 android:layout_width="match_parent"
@@ -237,24 +237,92 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Silakan unggah foto KTP dan SIUP/NIB."
+                    android:text="Silakan unggah foto KTP (Wajib) dan SIUP/NIB (Opsional)."
                     android:layout_marginBottom="16dp" />
 
-                <Button
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Pilih File KTP"
-                    android:backgroundTint="@color/gray_background"
-                    android:textColor="@color/text_dark"
-                    android:layout_marginBottom="8dp" />
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="8dp">
+                    <Button
+                        android:id="@+id/btnPilihKTP"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Pilih File KTP"
+                        android:backgroundTint="@color/gray_background"
+                        android:textColor="@color/text_dark"
+                        android:textAllCaps="false" />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginStart="8dp">
+                        <TextView
+                            android:id="@+id/tvFileNameKTP"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Tidak ada file"
+                            android:textSize="12sp"
+                            android:ellipsize="end"
+                            android:maxLines="1" />
+                        <ImageView
+                            android:id="@+id/ivDeleteKTP"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@android:drawable/ic_menu_close_clear_cancel"
+                            app:tint="#D32F2F"
+                            android:visibility="gone"
+                            android:contentDescription="Hapus File" />
+                    </LinearLayout>
+                </LinearLayout>
 
-                <Button
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Pilih File NIB/SIUP"
-                    android:backgroundTint="@color/gray_background"
-                    android:textColor="@color/text_dark"
-                    android:layout_marginBottom="24dp" />
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="24dp">
+                    <Button
+                        android:id="@+id/btnPilihNIB"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Pilih File NIB/SIUP (Opsional)"
+                        android:backgroundTint="@color/gray_background"
+                        android:textColor="@color/text_dark"
+                        android:textAllCaps="false" />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginStart="8dp">
+                        <TextView
+                            android:id="@+id/tvFileNameNIB"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Tidak ada file"
+                            android:textSize="12sp"
+                            android:ellipsize="end"
+                            android:maxLines="1" />
+                        <ImageView
+                            android:id="@+id/ivDeleteNIB"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@android:drawable/ic_menu_close_clear_cancel"
+                            app:tint="#D32F2F"
+                            android:visibility="gone"
+                            android:contentDescription="Hapus File" />
+                    </LinearLayout>
+                </LinearLayout>
 
                 <Button
                     android:id="@+id/btnNextToStep3"
@@ -276,7 +344,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Review Pengajuan"
+                    android:text="Ringkasan Pengajuan"
                     android:textStyle="bold"
                     android:textSize="18sp"
                     android:textColor="@color/text_dark"
@@ -285,80 +353,146 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="8dp"
+                    app:cardCornerRadius="12dp"
                     app:cardElevation="2dp"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="#E0E0E0"
                     android:layout_marginBottom="24dp">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="16dp">
+                        android:padding="20dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <!-- Item Review -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Nama Usaha"
-                            android:textSize="12sp"
-                            android:textColor="@color/text_gray" />
-                        <TextView
-                            android:id="@+id/tvReviewNama"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="-"
-                            android:textStyle="bold"
-                            android:textColor="@color/text_dark"
-                            android:layout_marginBottom="12dp" />
+                            android:orientation="horizontal"
+                            android:layout_marginBottom="16dp">
+                            <TextView
+                                android:layout_width="120dp"
+                                android:layout_height="wrap_content"
+                                android:text="Nama Event"
+                                android:textColor="@color/text_gray"
+                                android:textSize="14sp" />
+                            <TextView
+                                android:id="@+id/tvReviewNamaEvent"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Festival Kuliner Nusantara"
+                                android:textColor="@color/text_dark"
+                                android:gravity="end"
+                                android:textSize="14sp" />
+                        </LinearLayout>
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Jenis Usaha"
-                            android:textSize="12sp"
-                            android:textColor="@color/text_gray" />
-                        <TextView
-                            android:id="@+id/tvReviewJenis"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="-"
-                            android:textColor="@color/text_dark"
-                            android:layout_marginBottom="12dp" />
+                            android:orientation="horizontal"
+                            android:layout_marginBottom="16dp">
+                            <TextView
+                                android:layout_width="120dp"
+                                android:layout_height="wrap_content"
+                                android:text="Lokasi"
+                                android:textColor="@color/text_gray"
+                                android:textSize="14sp" />
+                            <TextView
+                                android:id="@+id/tvReviewLokasi"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Alun-Alun Kota Bandung"
+                                android:textColor="@color/text_dark"
+                                android:gravity="end"
+                                android:textSize="14sp" />
+                        </LinearLayout>
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="NIB"
-                            android:textSize="12sp"
-                            android:textColor="@color/text_gray" />
-                        <TextView
-                            android:id="@+id/tvReviewNIB"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="-"
-                            android:textColor="@color/text_dark"
-                            android:layout_marginBottom="12dp" />
+                            android:orientation="horizontal"
+                            android:layout_marginBottom="16dp">
+                            <TextView
+                                android:layout_width="120dp"
+                                android:layout_height="wrap_content"
+                                android:text="Ukuran Booth"
+                                android:textColor="@color/text_gray"
+                                android:textSize="14sp" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="3x3 m"
+                                android:textColor="@color/text_dark"
+                                android:gravity="end"
+                                android:textSize="14sp" />
+                        </LinearLayout>
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Alamat"
-                            android:textSize="12sp"
-                            android:textColor="@color/text_gray" />
-                        <TextView
-                            android:id="@+id/tvReviewAlamat"
-                            android:layout_width="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginBottom="16dp">
+                            <TextView
+                                android:layout_width="120dp"
+                                android:layout_height="wrap_content"
+                                android:text="Durasi"
+                                android:textColor="@color/text_gray"
+                                android:textSize="14sp" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="10 - 12 Jan 2025 (3 hari)"
+                                android:textColor="@color/text_dark"
+                                android:gravity="end"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="#EEEEEE"
+                            android:layout_marginBottom="16dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="-"
-                            android:textColor="@color/text_dark" />
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Total Biaya"
+                                android:textColor="@color/text_dark"
+                                android:textSize="16sp" />
+                            <TextView
+                                android:id="@+id/tvReviewTotalBiaya"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Rp 250.000"
+                                android:textColor="@color/text_dark"
+                                android:textStyle="bold"
+                                android:gravity="end"
+                                android:textSize="18sp" />
+                        </LinearLayout>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
+
+                <CheckBox
+                    android:id="@+id/cbAgreement"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Saya menyatakan data yang saya isi adalah benar dan bersedia mengikuti syarat &amp; ketentuan yang berlaku."
+                    android:textSize="12sp"
+                    android:layout_marginBottom="24dp" />
 
                 <Button
                     android:id="@+id/btnSubmitPengajuan"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Kirim Pengajuan"
+                    android:text="Ajukan Sekarang"
                     android:backgroundTint="@color/blue_primary"
-                    android:textAllCaps="false" />
+                    android:padding="12dp"
+                    android:textAllCaps="false"
+                    android:enabled="false" />
             </LinearLayout>
 
         </FrameLayout>

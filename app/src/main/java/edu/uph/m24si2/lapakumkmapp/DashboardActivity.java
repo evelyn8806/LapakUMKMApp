@@ -3,12 +3,8 @@ package edu.uph.m24si2.lapakumkmapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.content.SharedPreferences;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import com.google.android.material.card.MaterialCardView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,132 +13,111 @@ import android.widget.EditText;
 import android.widget.TextView;
 import androidx.core.widget.NestedScrollView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class DashboardActivity extends AppCompatActivity {
 
-    private RecyclerView rvEvents;
-    private EventAdapter adapter;
-    private List<EventModel> allEvents;
-    
+    private MaterialCardView cardEvent1, cardEvent2;
     private Button btnExploreNow;
-    private TextView tvRekomendasiHeader, tvNoResults;
+    private TextView tvLihatSemua, tvRekomendasiHeader, tvNoResults;
     private NestedScrollView nestedScrollView;
     private EditText etSearch;
-    private LinearLayout menuPeta, menuFilter, menuPengajuan, menuHistory;
-    private LinearLayout navBeranda, navEksplorasi, navLapak, navNotifikasi, navAkun;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        rvEvents = findViewById(R.id.rvDashboardEvents);
+        cardEvent1 = findViewById(R.id.cardEvent1);
+        cardEvent2 = findViewById(R.id.cardEvent2);
         btnExploreNow = findViewById(R.id.btnExploreNow);
+        tvLihatSemua = findViewById(R.id.tvLihatSemua);
         tvRekomendasiHeader = findViewById(R.id.tvRekomendasiHeader);
         nestedScrollView = findViewById(R.id.nestedScrollView);
         etSearch = findViewById(R.id.etSearch);
         tvNoResults = findViewById(R.id.tvNoResults);
-
-        // Menu Grid
-        menuPeta = findViewById(R.id.menuPeta);
-        menuFilter = findViewById(R.id.menuFilter);
-        menuPengajuan = findViewById(R.id.menuPengajuan);
-        menuHistory = findViewById(R.id.menuHistory);
-
-        // Bottom Nav
-        navBeranda = findViewById(R.id.navBeranda);
-        navEksplorasi = findViewById(R.id.navEksplorasi);
-        navLapak = findViewById(R.id.navLapak);
-        navNotifikasi = findViewById(R.id.navNotifikasi);
-        navAkun = findViewById(R.id.navAkun);
-
-        // centralize data source
-        allEvents = EventManager.getAllEvents();
-
-        // Use a copy for the adapter so we can filter
-        adapter = new EventAdapter(new ArrayList<>(allEvents), this);
-        rvEvents.setAdapter(adapter);
-        rvEvents.setLayoutManager(new LinearLayoutManager(this));
-
-        // Search Logic (Detects Name & Location)
+        
+        // 1. Fitur Search
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                filter(s.toString());
+                String query = s.toString().toLowerCase();
+                boolean anyFound = false;
+
+                if (query.isEmpty()) {
+                    cardEvent1.setVisibility(View.VISIBLE);
+                    cardEvent2.setVisibility(View.VISIBLE);
+                    anyFound = true;
+                } else {
+                    if ("Festival Kuliner Nusantara".toLowerCase().contains(query)) {
+                        cardEvent1.setVisibility(View.VISIBLE);
+                        anyFound = true;
+                    } else {
+                        cardEvent1.setVisibility(View.GONE);
+                    }
+
+                    if ("Pasar Malam Tahun Baru".toLowerCase().contains(query)) {
+                        cardEvent2.setVisibility(View.VISIBLE);
+                        anyFound = true;
+                    } else {
+                        cardEvent2.setVisibility(View.GONE);
+                    }
+                }
+
+                tvNoResults.setVisibility(anyFound ? View.GONE : View.VISIBLE);
             }
 
             @Override
             public void afterTextChanged(Editable s) {}
         });
 
+        // 2. Klik "Jelajahi Sekarang" scroll ke Rekomendasi
         btnExploreNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Scroll ke posisi header
                 int y = ((View) tvRekomendasiHeader.getParent()).getTop();
                 nestedScrollView.smoothScrollTo(0, y);
             }
         });
 
-        // Set Click Listeners for Menu Grid
-        menuPeta.setOnClickListener(v -> Toast.makeText(this, "Fitur Peta segera hadir!", Toast.LENGTH_SHORT).show());
-        menuFilter.setOnClickListener(v -> {
-            Intent intent = new Intent(DashboardActivity.this, FilterActivity.class);
-            startActivity(intent);
+        // 3. Klik "Lihat Semua" (Bisa ke Activity baru atau simulasi filter)
+        tvLihatSemua.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Untuk demo, kita buat toast saja atau arahkan ke list full
+                Intent intent = new Intent(DashboardActivity.this, RecommendationListActivity.class);
+                startActivity(intent);
+            }
         });
-        menuPengajuan.setOnClickListener(v -> {
-            Intent intent = new Intent(DashboardActivity.this, PengajuanSewaActivity.class);
-            startActivity(intent);
-        });
-        menuHistory.setOnClickListener(v -> Toast.makeText(this, "Fitur History segera hadir!", Toast.LENGTH_SHORT).show());
 
-        // Set Click Listeners for Bottom Nav
-        navBeranda.setOnClickListener(v -> nestedScrollView.smoothScrollTo(0, 0));
-        navEksplorasi.setOnClickListener(v -> {
-            int y = ((View) tvRekomendasiHeader.getParent()).getTop();
-            nestedScrollView.smoothScrollTo(0, y);
+        cardEvent1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bukaDetail("Festival Kuliner Nusantara", "Event Kuliner", 
+                    "Nikmati berbagai hidangan khas dari seluruh nusantara.", 
+                    "Alun-Alun Kota Bandung", R.drawable.festival_kuliner);
+            }
         });
-        navLapak.setOnClickListener(v -> Toast.makeText(this, "Fitur Lapak Saya segera hadir!", Toast.LENGTH_SHORT).show());
-        navNotifikasi.setOnClickListener(v -> Toast.makeText(this, "Fitur Notifikasi segera hadir!", Toast.LENGTH_SHORT).show());
-        navAkun.setOnClickListener(v -> {
-            SharedPreferences sharedPref = getSharedPreferences("UserPrefs", MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putBoolean("isLoggedIn", false);
-            editor.apply();
-            
-            Intent intent = new Intent(DashboardActivity.this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            finish();
+
+        cardEvent2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bukaDetail("Pasar Malam Tahun Baru", "Event Tahunan", 
+                    "Kemeriahan pasar malam menyambut tahun baru.", 
+                    "Lapangan Gasibu Bandung", R.drawable.pasar_malam);
+            }
         });
     }
 
-    private void filter(String text) {
-        List<EventModel> filteredList = new ArrayList<>();
-        String query = text.toLowerCase().trim();
-        
-        if (query.isEmpty()) {
-            filteredList.addAll(allEvents);
-        } else {
-            for (EventModel item : allEvents) {
-                if (item.getNama().toLowerCase().contains(query) || 
-                    item.getLokasi().toLowerCase().contains(query) ||
-                    item.getKategori().toLowerCase().contains(query)) {
-                    filteredList.add(item);
-                }
-            }
-        }
-        
-        if (filteredList.isEmpty()) {
-            tvNoResults.setVisibility(View.VISIBLE);
-        } else {
-            tvNoResults.setVisibility(View.GONE);
-        }
-        
-        adapter.updateList(filteredList);
+    private void bukaDetail(String nama, String kategori, String deskripsi, String lokasi, int imageResId) {
+        Intent intent = new Intent(DashboardActivity.this, LapakDetailActivity.class);
+        intent.putExtra("nama_lapak", nama);
+        intent.putExtra("kategori_lapak", kategori);
+        intent.putExtra("deskripsi_lapak", deskripsi);
+        intent.putExtra("lokasi_lapak", lokasi);
+        intent.putExtra("gambar_lapak", imageResId);
+        startActivity(intent);
     }
 }
