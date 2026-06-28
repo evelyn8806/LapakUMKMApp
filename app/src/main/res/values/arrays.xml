@@ -11,4 +11,13 @@
         <item>Terdekat</item>
         <item>Terpopuler</item>
     </string-array>
+
+    <string-array name="city_options">
+        <item>Pilih kota</item>
+        <item>Jakarta</item>
+        <item>Bandung</item>
+        <item>Surabaya</item>
+        <item>Tangerang</item>
+        <item>Medan</item>
+    </string-array>
 </resources>
