@@ -35,11 +35,13 @@ public class LapakDetailActivity extends AppCompatActivity {
             String kategori = extras.getString("kategori_lapak", "Kuliner");
             String deskripsi = extras.getString("deskripsi_lapak", "Deskripsi tidak tersedia.");
             String lokasi = extras.getString("lokasi_lapak", "Lokasi tidak tersedia.");
+            int gambar = extras.getInt("gambar_lapak", R.drawable.festival_kuliner);
 
             tvNamaLapakDetail.setText(nama);
             tvKategoriLapakDetail.setText("Kategori: " + kategori);
             tvDeskripsiLapakDetail.setText(deskripsi);
             tvLokasiLapakDetail.setText(lokasi);
+            ivLapakDetail.setImageResource(gambar);
         }
 
         btnAjukanSewa.setOnClickListener(new View.OnClickListener() {

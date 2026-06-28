@@ -56,19 +56,21 @@
         app:layout_constraintTop_toBottomOf="@id/llLogo" />
 
     <!-- Illustration Placeholder -->
+
+    <!-- Buttons -->
     <ImageView
         android:id="@+id/ivIllustration"
         android:layout_width="0dp"
         android:layout_height="250dp"
         android:layout_marginHorizontal="32dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/ic_launcher_background"
+        android:src="@drawable/tampilan_utama"
         app:layout_constraintBottom_toTopOf="@+id/btnMasuk"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTagline" />
+        app:layout_constraintTop_toBottomOf="@id/tvTagline"
+        app:layout_constraintVertical_bias="1.0" />
 
-    <!-- Buttons -->
     <Button
         android:id="@+id/btnMasuk"
         android:layout_width="match_parent"

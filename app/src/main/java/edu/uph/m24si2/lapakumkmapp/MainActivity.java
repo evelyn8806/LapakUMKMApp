@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
+    private String selectedRole = "UMKM"; // Default role
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,13 +30,18 @@ public class MainActivity extends AppCompatActivity {
 
         Button btnMasuk = findViewById(R.id.btnMasuk);
         Button btnDaftar = findViewById(R.id.btnDaftar);
-        LinearLayout roleUMKM = findViewById(R.id.roleUMKM);
-        LinearLayout roleAdmin = findViewById(R.id.roleAdmin);
+        final LinearLayout roleUMKM = findViewById(R.id.roleUMKM);
+        final LinearLayout roleAdmin = findViewById(R.id.roleAdmin);
+
+        // Initial visual state
+        roleUMKM.setBackgroundResource(R.drawable.bg_role_card_selected);
+        roleAdmin.setBackgroundResource(R.drawable.bg_role_card);
 
         btnMasuk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                intent.putExtra("ROLE", selectedRole);
                 startActivity(intent);
             }
         });
@@ -43,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+                intent.putExtra("ROLE", selectedRole);
                 startActivity(intent);
             }
         });
@@ -50,14 +58,18 @@ public class MainActivity extends AppCompatActivity {
         roleUMKM.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Future role-based logic
+                selectedRole = "UMKM";
+                roleUMKM.setBackgroundResource(R.drawable.bg_role_card_selected);
+                roleAdmin.setBackgroundResource(R.drawable.bg_role_card);
             }
         });
 
         roleAdmin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Future role-based logic
+                selectedRole = "ADMIN";
+                roleAdmin.setBackgroundResource(R.drawable.bg_role_card_selected);
+                roleUMKM.setBackgroundResource(R.drawable.bg_role_card);
             }
         });
     }

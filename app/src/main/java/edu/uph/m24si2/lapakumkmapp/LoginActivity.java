@@ -13,20 +13,25 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText etEmail, etPassword;
-    private Button btnLogin;
-    private TextView tvRegister;
-    private CheckBox cbRememberMe;
+    private String role;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        role = getIntent().getStringExtra("ROLE");
+        TextView tvSubtitle = findViewById(R.id.tvLoginSubtitle);
+        if (role != null) {
+            String roleName = role.equals("UMKM") ? "UMKM" : "Admin";
+            tvSubtitle.setText(getString(R.string.masuk_sebagai, roleName));
+        }
+
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
-        btnLogin = findViewById(R.id.btnLogin);
-        tvRegister = findViewById(R.id.tvRegister);
-        cbRememberMe = findViewById(R.id.cbRememberMe);
+        Button btnLogin = findViewById(R.id.btnLogin);
+        TextView tvRegister = findViewById(R.id.tvRegister);
+        final CheckBox cbRememberMe = findViewById(R.id.cbRememberMe);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,6 +40,8 @@ public class LoginActivity extends AppCompatActivity {
                 String passwordInput = etPassword.getText().toString();
 
                 SharedPreferences sharedPref = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+                
+                // For admin role, use different default or logic if needed
                 String savedEmail = sharedPref.getString("email", "admin@umkm.com");
                 String savedPassword = sharedPref.getString("password", "password123");
 
@@ -60,6 +67,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                intent.putExtra("ROLE", role);
                 startActivity(intent);
             }
         });

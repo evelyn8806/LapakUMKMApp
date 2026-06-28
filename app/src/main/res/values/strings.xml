@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">LapakUMKMApp</string>
+    <string name="lapak">LAPAK</string>
+    <string name="umkm">UMKM</string>
+    <string name="tagline">Tempat terbaik untuk\nusahamu berkembang</string>
+    <string name="masuk">Masuk</string>
+    <string name="daftar_akun">Daftar Akun</string>
+    <string name="pilih_peran">Pilih peran akun</string>
+    <string name="umkm_pemilik">UMKM / Pemilik Usaha</string>
+    <string name="admin_pemerintah">Admin / Pemerintah</string>
+    <string name="selamat_datang">Selamat Datang</string>
+    <string name="login_subtitle">Silakan masuk untuk melanjutkan</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="ingat_saya">Ingat saya</string>
+    <string name="belum_punya_akun">Belum punya akun? Daftar</string>
+    <string name="daftar_title">Daftar Akun</string>
+    <string name="daftar_subtitle">Buat akun baru untuk mulai berjualan</string>
+    <string name="nama_hint">Nama Lengkap / Toko</string>
+    <string name="konfirmasi_password_hint">Konfirmasi Password</string>
+    <string name="daftar_button">Daftar</string>
+    <string name="sudah_punya_akun">Sudah punya akun? Masuk</string>
+    <string name="masuk_sebagai">Masuk sebagai %1$s</string>
+    <string name="daftar_sebagai">Daftar sebagai %1$s</string>
+    <string name="ajukan_sewa">Ajukan Sewa</string>
+    <string name="illustration_desc">Illustration</string>
+    <string name="lapak_detail_image_desc">Lapak Detail Image</string>
 </resources>

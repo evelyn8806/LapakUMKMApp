@@ -14,7 +14,8 @@
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:scaleType="centerCrop"
-            android:src="@android:drawable/ic_menu_gallery" />
+            android:src="@drawable/festival_kuliner"
+            android:contentDescription="Lapak Detail Image" />
 
         <LinearLayout
             android:layout_width="match_parent"
