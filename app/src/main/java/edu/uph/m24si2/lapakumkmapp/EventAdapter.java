@@ -56,6 +56,11 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
         return eventList.size();
     }
 
+    public void updateList(List<EventModel> newList) {
+        this.eventList = newList;
+        notifyDataSetChanged();
+    }
+
     public static class EventViewHolder extends RecyclerView.ViewHolder {
         ImageView ivImage;
         TextView tvTag, tvName, tvLocation, tvPrice;
