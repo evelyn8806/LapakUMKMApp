@@ -48,6 +48,8 @@ public class LapakDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LapakDetailActivity.this, PengajuanSewaActivity.class);
+                intent.putExtra("nama_event", tvNamaLapakDetail.getText().toString());
+                intent.putExtra("lokasi_event", tvLokasiLapakDetail.getText().toString());
                 startActivity(intent);
             }
         });

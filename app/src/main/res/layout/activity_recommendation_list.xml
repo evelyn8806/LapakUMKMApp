@@ -23,6 +23,7 @@
             app:tint="@color/text_dark"
             android:contentDescription="@string/app_name"/>
         <TextView
+            android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -33,14 +34,29 @@
     </RelativeLayout>
 
     <!-- Content -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvEvents"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:padding="16dp"
-        android:clipToPadding="false"
-        tools:listitem="@layout/item_event_card"/>
+        android:layout_weight="1">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvEvents"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            android:clipToPadding="false"
+            tools:listitem="@layout/item_event_card"/>
+
+        <TextView
+            android:id="@+id/tvEmptyResults"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Hasil tidak ditemukan"
+            android:textSize="16sp"
+            android:textColor="@color/text_gray"
+            android:visibility="gone"/>
+    </FrameLayout>
 
     <!-- Bottom Action (Optional) -->
     <com.google.android.material.button.MaterialButton
