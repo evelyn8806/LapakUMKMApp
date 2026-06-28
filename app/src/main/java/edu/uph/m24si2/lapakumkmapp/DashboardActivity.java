@@ -20,20 +20,28 @@ public class DashboardActivity extends AppCompatActivity {
     private TextView tvLihatSemua, tvRekomendasiHeader, tvNoResults;
     private NestedScrollView nestedScrollView;
     private EditText etSearch;
+    private MaterialCardView cardPendingPayment;
+    private android.content.SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
+        prefs = getSharedPreferences("LapakUMKMPrefs", MODE_PRIVATE);
+
         cardEvent1 = findViewById(R.id.cardEvent1);
         cardEvent2 = findViewById(R.id.cardEvent2);
         btnExploreNow = findViewById(R.id.btnExploreNow);
+        cardPendingPayment = findViewById(R.id.cardPendingPayment);
+        Button btnBayarSekarang = findViewById(R.id.btnBayarSekarang);
         tvLihatSemua = findViewById(R.id.tvLihatSemua);
         tvRekomendasiHeader = findViewById(R.id.tvRekomendasiHeader);
         nestedScrollView = findViewById(R.id.nestedScrollView);
         etSearch = findViewById(R.id.etSearch);
         tvNoResults = findViewById(R.id.tvNoResults);
+
+        updatePaymentStatus();
         
         // 1. Fitur Search
         etSearch.addTextChangedListener(new TextWatcher() {
@@ -82,7 +90,20 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
 
-        // 3. Klik "Lihat Semua" (Bisa ke Activity baru atau simulasi filter)
+        // 3. Klik "Bayar Sekarang" (Lapak Saya)
+        btnBayarSekarang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Langsung ke detail instruksi VA
+                Intent intent = new Intent(DashboardActivity.this, PaymentDetailActivity.class);
+                // Kita asumsikan user sebelumnya pilih Transfer BCA (bisa disesuaikan)
+                intent.putExtra("PAYMENT_METHOD", "TRANSFER");
+                intent.putExtra("BANK_NAME", "BCA");
+                startActivity(intent);
+            }
+        });
+
+        // 4. Klik "Lihat Semua" (Bisa ke Activity baru atau simulasi filter)
         tvLihatSemua.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,6 +130,23 @@ public class DashboardActivity extends AppCompatActivity {
                     "Lapangan Gasibu Bandung", R.drawable.pasar_malam);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updatePaymentStatus();
+    }
+
+    private void updatePaymentStatus() {
+        boolean isPaid = prefs.getBoolean("is_paid", false);
+        if (isPaid) {
+            // Jika sudah bayar, sembunyikan kartu "Perlu Dibayar"
+            cardPendingPayment.setVisibility(View.GONE);
+            // Atau bisa diubah teksnya jadi "Aktif"
+        } else {
+            cardPendingPayment.setVisibility(View.VISIBLE);
+        }
     }
 
     private void bukaDetail(String nama, String kategori, String deskripsi, String lokasi, int imageResId) {

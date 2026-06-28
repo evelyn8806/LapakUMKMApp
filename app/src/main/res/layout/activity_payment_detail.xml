@@ -43,6 +43,29 @@
             android:gravity="center">
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Batas Waktu Pembayaran"
+                android:textSize="14sp"
+                android:textColor="#666666"/>
+
+            <TextView
+                android:id="@+id/tvCountdown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="23:59:59"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#D32F2F"
+                android:layout_marginBottom="16dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#EEEEEE"
+                android:layout_marginBottom="16dp"/>
+
+            <TextView
                 android:id="@+id/tvMethodLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -112,6 +135,19 @@
         android:text="1. Masukkan kartu ATM dan PIN\n2. Pilih menu Transfer -> Virtual Account\n3. Masukkan nomor Virtual Account di atas\n4. Konfirmasi data dan klik Bayar"
         android:lineSpacingExtra="4dp"
         android:textColor="#555555"/>
+
+    <TextView
+        android:id="@+id/tvUbahMetode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ubah Metode Pembayaran"
+        android:textColor="#1565C0"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:focusable="true"/>
 
     <View
         android:layout_width="match_parent"

@@ -49,6 +49,17 @@
         <activity
             android:name=".PaymentDetailActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".PaymentSuccessActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".StatusPengajuanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ETicketActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
