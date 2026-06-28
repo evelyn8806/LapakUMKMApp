@@ -13,20 +13,26 @@ import androidx.appcompat.app.AppCompatActivity;
 public class RegisterActivity extends AppCompatActivity {
 
     private EditText etRegNama, etRegEmail, etRegPassword, etRegConfirmPassword;
-    private Button btnRegister;
-    private TextView tvLogin;
+    private String role;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        role = getIntent().getStringExtra("ROLE");
+        TextView tvSubtitle = findViewById(R.id.tvRegisterSubtitle);
+        if (role != null) {
+            String roleName = role.equals("UMKM") ? "UMKM" : "Admin";
+            tvSubtitle.setText(getString(R.string.daftar_sebagai, roleName));
+        }
+
         etRegNama = findViewById(R.id.etRegNama);
         etRegEmail = findViewById(R.id.etRegEmail);
         etRegPassword = findViewById(R.id.etRegPassword);
         etRegConfirmPassword = findViewById(R.id.etRegConfirmPassword);
-        btnRegister = findViewById(R.id.btnRegister);
-        tvLogin = findViewById(R.id.tvLogin);
+        Button btnRegister = findViewById(R.id.btnRegister);
+        TextView tvLogin = findViewById(R.id.tvLogin);
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,6 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
                     editor.putString("email", email);
                     editor.putString("password", password);
                     editor.putString("nama", nama);
+                    editor.putString("role", role); // Store role
                     editor.apply();
 
                     Toast.makeText(RegisterActivity.this, "Pendaftaran Berhasil!", Toast.LENGTH_SHORT).show();
@@ -58,7 +65,7 @@ public class RegisterActivity extends AppCompatActivity {
         tvLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish(); // Kembali ke MainActivity
+                finish(); // Kembali
             }
         });
     }

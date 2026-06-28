@@ -5,23 +5,18 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.LinearLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
-    private EditText etEmail, etPassword;
-    private Button btnLogin;
-    private TextView tvRegister;
-    private CheckBox cbRememberMe;
+
+    private String selectedRole = "UMKM"; // Default role
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Cek jika user memilih "Selalu Login" sebelumnya
+        // Check login status
         SharedPreferences sharedPref = getSharedPreferences("UserPrefs", MODE_PRIVATE);
         boolean isRemembered = sharedPref.getBoolean("isLoggedIn", false);
         if (isRemembered) {
@@ -33,49 +28,48 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        etEmail = findViewById(R.id.etEmail);
-        etPassword = findViewById(R.id.etPassword);
-        btnLogin = findViewById(R.id.btnLogin);
-        tvRegister = findViewById(R.id.tvRegister);
-        cbRememberMe = findViewById(R.id.cbRememberMe);
+        Button btnMasuk = findViewById(R.id.btnMasuk);
+        Button btnDaftar = findViewById(R.id.btnDaftar);
+        final LinearLayout roleUMKM = findViewById(R.id.roleUMKM);
+        final LinearLayout roleAdmin = findViewById(R.id.roleAdmin);
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+        // Initial visual state
+        roleUMKM.setBackgroundResource(R.drawable.bg_role_card_selected);
+        roleAdmin.setBackgroundResource(R.drawable.bg_role_card);
+
+        btnMasuk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String emailInput = etEmail.getText().toString();
-                String passwordInput = etPassword.getText().toString();
-
-                // Ambil data yang tersimpan di SharedPreferences
-                SharedPreferences sharedPref = getSharedPreferences("UserPrefs", MODE_PRIVATE);
-                String savedEmail = sharedPref.getString("email", "admin@umkm.com");
-                String savedPassword = sharedPref.getString("password", "password123");
-
-                // Validasi Login (Menggunakan data register atau default)
-                if (emailInput.equals(savedEmail) && passwordInput.equals(savedPassword)) {
-                    Toast.makeText(MainActivity.this, "Login Berhasil!", Toast.LENGTH_SHORT).show();
-                    
-                    // Simpan status "Selalu Login" jika dicentang
-                    if (cbRememberMe.isChecked()) {
-                        SharedPreferences.Editor editor = sharedPref.edit();
-                        editor.putBoolean("isLoggedIn", true);
-                        editor.apply();
-                    }
-
-                    // Pindah ke Dashboard
-                    Intent intent = new Intent(MainActivity.this, DashboardActivity.class);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    Toast.makeText(MainActivity.this, "Email atau Password Salah!", Toast.LENGTH_SHORT).show();
-                }
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                intent.putExtra("ROLE", selectedRole);
+                startActivity(intent);
             }
         });
 
-        tvRegister.setOnClickListener(new View.OnClickListener() {
+        btnDaftar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+                intent.putExtra("ROLE", selectedRole);
                 startActivity(intent);
+            }
+        });
+
+        roleUMKM.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectedRole = "UMKM";
+                roleUMKM.setBackgroundResource(R.drawable.bg_role_card_selected);
+                roleAdmin.setBackgroundResource(R.drawable.bg_role_card);
+            }
+        });
+
+        roleAdmin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectedRole = "ADMIN";
+                roleAdmin.setBackgroundResource(R.drawable.bg_role_card_selected);
+                roleUMKM.setBackgroundResource(R.drawable.bg_role_card);
             }
         });
     }

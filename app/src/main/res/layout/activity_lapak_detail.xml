@@ -14,7 +14,8 @@
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:scaleType="centerCrop"
-            android:src="@android:drawable/ic_menu_gallery" />
+            android:src="@drawable/festival_kuliner"
+            android:contentDescription="Lapak Detail Image" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -90,8 +91,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:text="Ajukan Sewa Lapak"
-            android:backgroundTint="@color/blue_primary"
+            android:text="@string/ajukan_sewa"
+            android:backgroundTint="@color/orange_primary"
             android:textColor="@color/white"
             android:padding="12dp" />
 

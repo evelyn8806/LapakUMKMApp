@@ -5,10 +5,11 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
+    <!-- Bottom Navigation -->
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:paddingBottom="80dp">
 
         <LinearLayout
@@ -26,61 +27,70 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
+                        android:contentDescription="Icon App"
                         android:src="@android:drawable/ic_menu_today"
-                        app:tint="@color/orange_primary"
-                        android:contentDescription="Icon App"/>
+                        app:tint="@color/orange_primary" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
                         android:text="LAPAKUMKM"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
                         android:textColor="@color/text_dark"
-                        android:layout_marginStart="8dp"/>
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_alignParentEnd="true"
+                    android:contentDescription="Notification"
                     android:src="@android:drawable/ic_popup_reminder"
-                    app:tint="@color/text_dark"
-                    android:contentDescription="Notification"/>
+                    app:tint="@color/text_dark" />
             </RelativeLayout>
 
             <!-- Search Bar -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="2dp"
-                app:strokeWidth="1dp"
                 app:strokeColor="#E0E0E0"
-                android:layout_marginBottom="16dp">
+                app:strokeWidth="1dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:padding="12dp"
-                    android:gravity="center_vertical">
+                    android:padding="12dp">
+
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
+                        android:contentDescription="Search Icon"
                         android:src="@android:drawable/ic_menu_search"
-                        app:tint="@color/text_gray"
-                        android:contentDescription="Search Icon"/>
-                    <TextView
-                        android:layout_width="wrap_content"
+                        app:tint="@color/text_gray" />
+
+                    <EditText
+                        android:id="@+id/etSearch"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Cari lokasi, event, atau kata kunci..."
-                        android:textColor="@color/text_gray"
                         android:layout_marginStart="8dp"
-                        android:textSize="14sp"/>
+                        android:background="@android:color/transparent"
+                        android:hint="Cari lokasi, event, atau kata kunci..."
+                        android:imeOptions="actionSearch"
+                        android:inputType="text"
+                        android:textColor="@color/text_gray"
+                        android:textSize="14sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -88,48 +98,55 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
-                app:cardCornerRadius="16dp"
+                android:layout_marginBottom="16dp"
                 app:cardBackgroundColor="@color/blue_light"
-                android:layout_marginBottom="16dp">
+                app:cardCornerRadius="16dp">
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:padding="20dp">
+
                     <LinearLayout
                         android:layout_width="200dp"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Tempat terbaik untuk usahamu berkembang"
+                            android:textColor="@color/blue_primary"
                             android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/blue_primary"/>
+                            android:textStyle="bold" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Temukan lapak strategis, kelola usaha dengan mudah."
-                            android:textSize="12sp"
                             android:layout_marginTop="8dp"
-                            android:textColor="@color/blue_secondary"/>
+                            android:text="Temukan lapak strategis, kelola usaha dengan mudah."
+                            android:textColor="@color/blue_secondary"
+                            android:textSize="12sp" />
+
                         <Button
                             android:id="@+id/btnExploreNow"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Jelajahi Sekarang"
-                            android:textSize="10sp"
                             android:layout_marginTop="12dp"
                             android:backgroundTint="@color/blue_secondary"
+                            android:paddingHorizontal="16dp"
+                            android:text="Jelajahi Sekarang"
                             android:textAllCaps="false"
-                            android:paddingHorizontal="16dp"/>
+                            android:textSize="10sp" />
                     </LinearLayout>
+
                     <ImageView
-                        android:layout_width="120dp"
+                        android:layout_width="170dp"
                         android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"
-                        android:src="@android:drawable/ic_menu_gallery"
-                        android:scaleType="centerInside"/>
+                        android:layout_marginEnd="10dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/tampilan_utama" />
                 </RelativeLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -137,190 +154,143 @@
             <GridLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:columnCount="3"
-                android:rowCount="2"
-                android:layout_marginBottom="24dp">
+                android:layout_marginBottom="24dp"
+                android:columnCount="4">
 
-                <!-- Menu Items -->
+                <!-- Peta Eksplorasi -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
-                    android:orientation="vertical"
                     android:gravity="center"
+                    android:orientation="vertical"
                     android:padding="8dp">
+
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        app:cardCornerRadius="12dp"
                         app:cardBackgroundColor="@color/blue_light"
+                        app:cardCornerRadius="12dp"
                         app:cardElevation="0dp">
+
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:layout_gravity="center"
                             android:src="@android:drawable/ic_dialog_map"
-                            app:tint="@color/blue_primary"/>
+                            app:tint="@color/blue_primary" />
                     </com.google.android.material.card.MaterialCardView>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Peta Eksplorasi"
-                        android:textSize="10sp"
-                        android:gravity="center"
                         android:layout_marginTop="8dp"
-                        android:textColor="@color/text_dark"/>
+                        android:gravity="center"
+                        android:text="Peta Eksplorasi"
+                        android:textColor="@color/text_dark"
+                        android:textSize="10sp" />
                 </LinearLayout>
 
+                <!-- Filter & Cari -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
-                    android:orientation="vertical"
                     android:gravity="center"
+                    android:orientation="vertical"
                     android:padding="8dp">
+
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        app:cardCornerRadius="12dp"
                         app:cardBackgroundColor="#E8F5E9"
+                        app:cardCornerRadius="12dp"
                         app:cardElevation="0dp">
+
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:layout_gravity="center"
                             android:src="@android:drawable/ic_menu_manage"
-                            app:tint="#2E7D32"/>
+                            app:tint="#2E7D32" />
                     </com.google.android.material.card.MaterialCardView>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Filter &amp; Cari"
-                        android:textSize="10sp"
-                        android:gravity="center"
                         android:layout_marginTop="8dp"
-                        android:textColor="@color/text_dark"/>
+                        android:gravity="center"
+                        android:text="Filter &amp; Cari"
+                        android:textColor="@color/text_dark"
+                        android:textSize="10sp" />
                 </LinearLayout>
 
+                <!-- Pengajuan -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
-                    android:orientation="vertical"
                     android:gravity="center"
+                    android:orientation="vertical"
                     android:padding="8dp">
+
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        app:cardCornerRadius="12dp"
                         app:cardBackgroundColor="#F3E5F5"
+                        app:cardCornerRadius="12dp"
                         app:cardElevation="0dp">
+
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:layout_gravity="center"
                             android:src="@android:drawable/ic_menu_save"
-                            app:tint="#7B1FA2"/>
+                            app:tint="#7B1FA2" />
                     </com.google.android.material.card.MaterialCardView>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Pengajuan"
-                        android:textSize="10sp"
-                        android:gravity="center"
                         android:layout_marginTop="8dp"
-                        android:textColor="@color/text_dark"/>
+                        android:gravity="center"
+                        android:text="Pengajuan"
+                        android:textColor="@color/text_dark"
+                        android:textSize="10sp" />
                 </LinearLayout>
 
-                <!-- Row 2 -->
+                <!-- History -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
-                    android:orientation="vertical"
                     android:gravity="center"
+                    android:orientation="vertical"
                     android:padding="8dp">
+
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        app:cardCornerRadius="12dp"
                         app:cardBackgroundColor="#FFF3E0"
+                        app:cardCornerRadius="12dp"
                         app:cardElevation="0dp">
+
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:layout_gravity="center"
                             android:src="@android:drawable/ic_menu_recent_history"
-                            app:tint="@color/orange_primary"/>
+                            app:tint="@color/orange_primary" />
                     </com.google.android.material.card.MaterialCardView>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Pembayaran"
-                        android:textSize="10sp"
-                        android:gravity="center"
-                        android:layout_marginTop="8dp"
-                        android:textColor="@color/text_dark"/>
-                </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:padding="8dp">
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        app:cardCornerRadius="12dp"
-                        app:cardBackgroundColor="@color/blue_light"
-                        app:cardElevation="0dp">
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_gravity="center"
-                            android:src="@android:drawable/ic_menu_info_details"
-                            app:tint="@color/blue_primary"/>
-                    </com.google.android.material.card.MaterialCardView>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Dashboard"
-                        android:textSize="10sp"
-                        android:gravity="center"
                         android:layout_marginTop="8dp"
-                        android:textColor="@color/text_dark"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:padding="8dp">
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        app:cardCornerRadius="12dp"
-                        app:cardBackgroundColor="#E1F5FE"
-                        app:cardElevation="0dp">
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_gravity="center"
-                            android:src="@android:drawable/ic_popup_reminder"
-                            app:tint="#0288D1"/>
-                    </com.google.android.material.card.MaterialCardView>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Notifikasi"
-                        android:textSize="10sp"
                         android:gravity="center"
-                        android:layout_marginTop="8dp"
-                        android:textColor="@color/text_dark"/>
+                        android:text="History"
+                        android:textColor="@color/text_dark"
+                        android:textSize="10sp" />
                 </LinearLayout>
             </GridLayout>
 
@@ -329,24 +299,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp">
+
                 <TextView
                     android:id="@+id/tvRekomendasiHeader"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Rekomendasi Event &amp; Lokasi"
+                    android:textColor="@color/text_dark"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/text_dark"/>
+                    android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/tvLihatSemua"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:text="Lihat Semua"
-                    android:textSize="12sp"
-                    android:textColor="@color/blue_secondary"
                     android:clickable="true"
-                    android:focusable="true"/>
+                    android:focusable="true"
+                    android:text="Lihat Semua"
+                    android:textColor="@color/blue_secondary"
+                    android:textSize="12sp" />
             </RelativeLayout>
 
             <!-- Vertical Cards (Replaced HorizontalScrollView) -->
@@ -354,6 +326,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvNoResults"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="24dp"
+                    android:text="Event tidak ditemukan"
+                    android:textColor="@color/text_gray"
+                    android:visibility="gone" />
 
                 <!-- Card 1 -->
                 <com.google.android.material.card.MaterialCardView
@@ -363,58 +345,68 @@
                     android:layout_marginBottom="16dp"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="2dp"
-                    app:strokeWidth="1dp"
-                    app:strokeColor="#E0E0E0">
+                    app:strokeColor="#E0E0E0"
+                    app:strokeWidth="1dp">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
+
                         <FrameLayout
                             android:layout_width="match_parent"
                             android:layout_height="160dp">
+
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:src="@android:drawable/ic_menu_gallery"
-                                android:scaleType="centerCrop"/>
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/festival_kuliner" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Event"
+                                android:layout_margin="8dp"
                                 android:background="@drawable/bg_tag_blue"
-                                android:textColor="@color/white"
-                                android:textSize="10sp"
                                 android:paddingHorizontal="8dp"
                                 android:paddingVertical="4dp"
-                                android:layout_margin="8dp"/>
+                                android:text="Event"
+                                android:textColor="@color/white"
+                                android:textSize="10sp" />
+
                         </FrameLayout>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
                             android:padding="12dp">
+
                             <TextView
+                                android:id="@+id/tvTitleEvent1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Festival Kuliner Nusantara"
-                                android:textStyle="bold"
                                 android:textColor="@color/text_dark"
-                                android:textSize="16sp"/>
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
                                 android:text="Alun-Alun Kota Bandung"
-                                android:textSize="12sp"
                                 android:textColor="@color/text_gray"
-                                android:layout_marginTop="4dp"/>
+                                android:textSize="12sp" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
                                 android:text="Rp250.000 / 3 hari"
                                 android:textColor="@color/blue_primary"
-                                android:textStyle="bold"
                                 android:textSize="14sp"
-                                android:layout_marginTop="8dp"/>
+                                android:textStyle="bold" />
                         </LinearLayout>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
@@ -427,48 +419,56 @@
                     android:layout_marginBottom="16dp"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="2dp"
-                    app:strokeWidth="1dp"
-                    app:strokeColor="#E0E0E0">
+                    app:strokeColor="#E0E0E0"
+                    app:strokeWidth="1dp">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
+
                         <FrameLayout
                             android:layout_width="match_parent"
                             android:layout_height="160dp">
+
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:src="@android:drawable/ic_menu_gallery"
-                                android:scaleType="centerCrop"/>
+                                android:scaleType="centerCrop"
+                                app:srcCompat="@drawable/pasar_malam" />
                         </FrameLayout>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
                             android:padding="12dp">
+
                             <TextView
+                                android:id="@+id/tvTitleEvent2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Pasar Malam Tahun Baru"
-                                android:textStyle="bold"
                                 android:textColor="@color/text_dark"
-                                android:textSize="16sp"/>
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
                                 android:text="Lapangan Gasibu Bandung"
-                                android:textSize="12sp"
                                 android:textColor="@color/text_gray"
-                                android:layout_marginTop="4dp"/>
+                                android:textSize="12sp" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
                                 android:text="Rp200.000 / 5 hari"
                                 android:textColor="@color/blue_primary"
-                                android:textStyle="bold"
                                 android:textSize="14sp"
-                                android:layout_marginTop="8dp"/>
+                                android:textStyle="bold" />
                         </LinearLayout>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
@@ -480,7 +480,6 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <!-- Bottom Navigation -->
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="64dp"

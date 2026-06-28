@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
 
+    <!-- Logo Section -->
     <LinearLayout
         android:id="@+id/llLogo"
         android:layout_width="wrap_content"
@@ -20,23 +22,22 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/ic_shop"
-            app:tint="@color/landing_blue"
-            android:contentDescription="@string/app_name" />
+            app:tint="@color/blue_primary" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="@string/lapak"
-            android:textColor="@color/landing_blue"
+            android:text="LAPAK"
+            android:textColor="@color/blue_primary"
             android:textSize="24sp"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/umkm"
-            android:textColor="@color/landing_orange"
+            android:text="UMKM"
+            android:textColor="@color/orange_primary"
             android:textSize="24sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -47,27 +48,28 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:gravity="center"
-        android:text="Tempat terbaik untuk Usaha Berkembang"
+        android:text="@string/tagline"
         android:textColor="@color/text_dark"
-        android:textStyle="bold"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/llLogo" />
 
+    <!-- Illustration Placeholder -->
+
+    <!-- Buttons -->
     <ImageView
         android:id="@+id/ivIllustration"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="3dp"
-        android:contentDescription="@string/illustration_desc"
+        android:layout_height="250dp"
+        android:layout_marginHorizontal="32dp"
         android:scaleType="fitCenter"
         android:src="@drawable/tampilan_utama"
         app:layout_constraintBottom_toTopOf="@+id/btnMasuk"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvTagline"
-        app:layout_constraintVertical_bias="0.515" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/btnMasuk"
@@ -93,7 +95,7 @@
         android:background="@drawable/bg_button_secondary"
         android:text="@string/daftar_akun"
         android:textAllCaps="false"
-        android:textColor="@color/landing_blue"
+        android:textColor="@color/blue_primary"
         android:textSize="16sp"
         android:textStyle="bold"
         app:backgroundTint="@null"
@@ -111,6 +113,7 @@
         app:layout_constraintBottom_toTopOf="@+id/llRoles"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <!-- Role Selection -->
     <LinearLayout
         android:id="@+id/llRoles"
         android:layout_width="match_parent"
@@ -118,7 +121,6 @@
         android:layout_marginHorizontal="32dp"
         android:layout_marginBottom="32dp"
         android:orientation="horizontal"
-        android:baselineAligned="false"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <LinearLayout
@@ -130,15 +132,12 @@
             android:background="@drawable/bg_role_card"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="16dp"
-            android:clickable="true"
-            android:focusable="true">
+            android:padding="16dp">
 
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_shop"
-                android:contentDescription="@string/umkm_pemilik" />
+                android:src="@drawable/ic_shop" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -159,15 +158,12 @@
             android:background="@drawable/bg_role_card"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="16dp"
-            android:clickable="true"
-            android:focusable="true">
+            android:padding="16dp">
 
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_admin"
-                android:contentDescription="@string/admin_pemerintah" />
+                android:src="@drawable/ic_admin" />
 
             <TextView
                 android:layout_width="wrap_content"

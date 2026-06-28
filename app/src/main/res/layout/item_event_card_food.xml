@@ -15,20 +15,15 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="160dp">
-
             <ImageView
-                android:id="@+id/ivEventImage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:contentDescription="@string/illustration_desc"
                 android:scaleType="centerCrop"
-                android:src="@drawable/festival_music" />
-
+                android:src="@drawable/festival_kuliner" />
             <TextView
-                android:id="@+id/tvEventTag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hiburan"
+                android:text="Kuliner"
                 android:background="@drawable/bg_tag_blue"
                 android:textColor="@color/white"
                 android:textSize="10sp"
@@ -41,29 +36,24 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="12dp">
-
             <TextView
-                android:id="@+id/tvEventName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Concert Music Festival"
+                android:text="Festival Jajanan Pasar"
+                android:textStyle="bold"
                 android:textColor="@color/text_dark"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
+                android:textSize="16sp"/>
             <TextView
-                android:id="@+id/tvEventLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Arena JIExpo Kemayoran, Gedung Pusat Niaga lt. 1, Jakarta Pusat"
+                android:text="Alun-Alun Utara Yogyakarta"
                 android:textSize="12sp"
                 android:textColor="@color/text_gray"
                 android:layout_marginTop="4dp"/>
             <TextView
-                android:id="@+id/tvEventPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Rp 350,000"
+                android:text="Rp. 150,000 / Hari"
                 android:textColor="@color/blue_primary"
                 android:textStyle="bold"
                 android:textSize="14sp"
