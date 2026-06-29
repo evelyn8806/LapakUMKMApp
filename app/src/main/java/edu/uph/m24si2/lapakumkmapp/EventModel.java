@@ -8,8 +8,11 @@ public class EventModel {
     private int numericHarga;
     private int gambar;
     private String deskripsi;
+    private String kota;
+    private double latitude;
+    private double longitude;
 
-    public EventModel(String nama, String kategori, String lokasi, String harga, int numericHarga, int gambar, String deskripsi) {
+    public EventModel(String nama, String kategori, String lokasi, String harga, int numericHarga, int gambar, String deskripsi, String kota, double latitude, double longitude) {
         this.nama = nama;
         this.kategori = kategori;
         this.lokasi = lokasi;
@@ -17,6 +20,9 @@ public class EventModel {
         this.numericHarga = numericHarga;
         this.gambar = gambar;
         this.deskripsi = deskripsi;
+        this.kota = kota;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public String getNama() { return nama; }
@@ -26,4 +32,7 @@ public class EventModel {
     public int getNumericHarga() { return numericHarga; }
     public int getGambar() { return gambar; }
     public String getDeskripsi() { return deskripsi; }
+    public String getKota() { return kota; }
+    public double getLatitude() { return latitude; }
+    public double getLongitude() { return longitude; }
 }

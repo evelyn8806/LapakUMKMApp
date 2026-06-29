@@ -38,6 +38,19 @@ public class RecommendationListActivity extends AppCompatActivity {
             
             eventList = new ArrayList<>();
             loadDummyData();
+            
+            // Check for search query from Intent
+            String searchQuery = getIntent().getStringExtra("search_query");
+            if (searchQuery != null && !searchQuery.isEmpty()) {
+                List<EventModel> filteredList = new ArrayList<>();
+                for (EventModel event : eventList) {
+                    if (event.getNama().toLowerCase().contains(searchQuery.toLowerCase()) || 
+                        event.getDeskripsi().toLowerCase().contains(searchQuery.toLowerCase())) {
+                        filteredList.add(event);
+                    }
+                }
+                eventList = filteredList;
+            }
 
             adapter = new EventAdapter(eventList, this);
             rvEvents.setAdapter(adapter);
@@ -45,31 +58,7 @@ public class RecommendationListActivity extends AppCompatActivity {
     }
 
     private void loadDummyData() {
-        eventList.add(new EventModel(
-            "Festival Jajanan Pasar", 
-            "Kuliner", 
-            "Alun-Alun Utara Yogyakarta", 
-            "Rp. 150,000 / Hari", 
-            R.drawable.festival_kuliner,
-            "Nikmati berbagai jajanan pasar tradisional dari seluruh penjuru Jogja."
-        ));
-
-        eventList.add(new EventModel(
-            "Pasar Malam Rakyat", 
-            "Hiburan", 
-            "Lapangan Puputan Renon, Denpasar", 
-            "Rp. 100,000 / Hari", 
-            R.drawable.pasar_malam,
-            "Hiburan keluarga dengan berbagai wahana permainan dan stand UMKM lokal."
-        ));
-
-        eventList.add(new EventModel(
-            "Festival Kuliner Nusantara",
-            "Kuliner",
-            "Alun-Alun Kota Bandung",
-            "Rp. 250.000 / 3 hari",
-            R.drawable.festival_kuliner,
-            "Nikmati hidangan lezat dari berbagai daerah di Indonesia."
-        ));
+        eventList.clear();
+        eventList.addAll(EventManager.getAllEvents());
     }
 }
