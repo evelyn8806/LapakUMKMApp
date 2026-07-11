@@ -1,5 +1,6 @@
 package edu.uph.m24si2.lapakumkmapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -17,7 +18,7 @@ public class ETicketActivity extends AppCompatActivity {
         Button btnUnduh = findViewById(R.id.btnUnduhTiket);
         Button btnBagikan = findViewById(R.id.btnBagikan);
 
-        btnBack.setOnClickListener(v -> finish());
+        btnBack.setOnClickListener(v -> backToDashboard());
 
         btnUnduh.setOnClickListener(v -> {
             Toast.makeText(this, "Mengunduh Tiket PDF...", Toast.LENGTH_SHORT).show();
@@ -26,5 +27,17 @@ public class ETicketActivity extends AppCompatActivity {
         btnBagikan.setOnClickListener(v -> {
             Toast.makeText(this, "Membuka Menu Bagikan...", Toast.LENGTH_SHORT).show();
         });
+    }
+
+    private void backToDashboard() {
+        Intent intent = new Intent(this, DashboardActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        backToDashboard();
     }
 }

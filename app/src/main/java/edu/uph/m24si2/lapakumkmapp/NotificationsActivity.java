@@ -31,7 +31,7 @@ public class NotificationsActivity extends AppCompatActivity {
         });
 
         findViewById(R.id.navEksplorasi).setOnClickListener(v -> {
-            startActivity(new Intent(this, MapsActivity.class));
+            startActivity(new Intent(this, ExplorationMapActivity.class));
         });
 
         findViewById(R.id.navLapak).setOnClickListener(v -> {
