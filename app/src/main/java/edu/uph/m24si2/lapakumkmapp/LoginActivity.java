@@ -54,8 +54,13 @@ public class LoginActivity extends AppCompatActivity {
                         editor.apply();
                     }
 
-                    Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
-                    startActivity(intent);
+                    if (emailInput.contains("admin")) {
+                        Intent intent = new Intent(LoginActivity.this, AdminDashboardActivity.class);
+                        startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
+                        startActivity(intent);
+                    }
                     finish();
                 } else {
                     Toast.makeText(LoginActivity.this, "Email atau Password Salah!", Toast.LENGTH_SHORT).show();
