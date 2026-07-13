@@ -29,10 +29,11 @@ public class PaymentSuccessActivity extends AppCompatActivity {
         // Generate Random Trx ID
         tvTrx.setText("TRX-" + System.currentTimeMillis() / 10000);
 
-        // Update status pembayaran di SharedPreferences
+        // Update status pembayaran di SharedPreferences dan hapus timer
         getSharedPreferences("LapakUMKMPrefs", MODE_PRIVATE)
                 .edit()
                 .putBoolean("is_paid", true)
+                .remove("expiry_time") // Hapus timer agar card di Dashboard hilang
                 .apply();
 
         // Current Time
