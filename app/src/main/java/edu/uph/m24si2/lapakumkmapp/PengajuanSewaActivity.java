@@ -133,9 +133,23 @@ public class PengajuanSewaActivity extends AppCompatActivity {
         });
 
         btnSubmit.setOnClickListener(v -> {
+            // Simpan data pengajuan ke Manager (Database Lokal)
+            String namaUmkm = etNamaUsaha.getText().toString();
+            String namaEvent = tvReviewNamaEvent.getText().toString();
+            String tanggal = "01 Jan 2025"; // Bisa ambil dari DatePicker
+
+            PengajuanManager.getInstance().tambahPengajuan(namaUmkm, namaEvent, tanggal);
+
+            // Reset timer pembayaran untuk pengajuan baru
+            getSharedPreferences("LapakUMKMPrefs", MODE_PRIVATE)
+                    .edit()
+                    .remove("expiry_time")
+                    .commit();
+
             Toast.makeText(this, "Pengajuan Berhasil Dikirim!", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(this, DashboardActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            Intent intent = new Intent(this, PaymentDetailActivity.class);
+            intent.putExtra("PAYMENT_METHOD", "TRANSFER");
+            intent.putExtra("BANK_NAME", "BCA");
             startActivity(intent);
             finish();
         });

@@ -32,12 +32,12 @@ public class PaymentDetailActivity extends AppCompatActivity {
         Button btnKonfirmasi = findViewById(R.id.btnKonfirmasiSelesai);
         TextView tvUbahMetode = findViewById(R.id.tvUbahMetode);
 
+        // Langsung hitung sisa waktu real-time
         setupTimer();
 
         String method = getIntent().getStringExtra("PAYMENT_METHOD");
         String bank = getIntent().getStringExtra("BANK_NAME");
 
-        // Default values if opened from Dashboard
         if (method == null) method = "TRANSFER";
         if (bank == null) bank = "BCA";
 
@@ -68,7 +68,6 @@ public class PaymentDetailActivity extends AppCompatActivity {
         });
         
         btnKonfirmasi.setOnClickListener(v -> {
-            // Simulasi Verifikasi Pembayaran
             btnKonfirmasi.setEnabled(false);
             btnKonfirmasi.setText("Memverifikasi Pembayaran...");
             
@@ -78,32 +77,27 @@ public class PaymentDetailActivity extends AppCompatActivity {
                 intent.putExtra("PAYMENT_METHOD", finalMethod.equals("TRANSFER") ? finalBank : finalMethod);
                 startActivity(intent);
                 finish();
-            }, 3000); // Delay 3 detik seolah-olah cek ke server bank
+            }, 3000);
         });
     }
 
     private void setupTimer() {
+        long currentTime = System.currentTimeMillis();
         long expiryTime = prefs.getLong("expiry_time", 0);
         
-        // Jika belum ada waktu expiry, set 24 jam dari sekarang
-        if (expiryTime == 0) {
-            expiryTime = System.currentTimeMillis() + (24 * 60 * 60 * 1000);
-            prefs.edit().putLong("expiry_time", expiryTime).apply();
+        // Jika expiryTime sudah lewat atau belum ada, set ulang ke 24 jam dari sekarang
+        if (expiryTime <= currentTime) {
+            expiryTime = currentTime + (24L * 60 * 60 * 1000);
+            prefs.edit().putLong("expiry_time", expiryTime).commit();
         }
 
-        long currentTime = System.currentTimeMillis();
         long remainingTime = expiryTime - currentTime;
-
-        if (remainingTime > 0) {
-            startTimer(remainingTime);
-        } else {
-            tvCountdown.setText("00:00:00");
-            Toast.makeText(this, "Waktu Pembayaran Habis", Toast.LENGTH_LONG).show();
-        }
+        startTimer(remainingTime);
     }
 
     private void startTimer(long duration) {
         if (countDownTimer != null) countDownTimer.cancel();
+        
         countDownTimer = new CountDownTimer(duration, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -124,10 +118,17 @@ public class PaymentDetailActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onStop() {
+        super.onStop();
         if (countDownTimer != null) {
             countDownTimer.cancel();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Resume timer saat activity kembali fokus
+        setupTimer();
     }
 }

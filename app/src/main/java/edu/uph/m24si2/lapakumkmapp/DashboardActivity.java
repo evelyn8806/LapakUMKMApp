@@ -20,8 +20,8 @@ import java.util.List;
 
 public class DashboardActivity extends AppCompatActivity {
 
-    private MaterialCardView cardEvent1, cardEvent2;
-    private Button btnExploreNow;
+    private MaterialCardView cardEvent1, cardEvent2, cardPendingPayment;
+    private Button btnExploreNow, btnBayarSekarang;
     private TextView tvLihatSemua, tvRekomendasiHeader, tvNoResults;
     private NestedScrollView nestedScrollView;
     private EditText etSearch;
@@ -33,14 +33,30 @@ public class DashboardActivity extends AppCompatActivity {
 
         cardEvent1 = findViewById(R.id.cardEvent1);
         cardEvent2 = findViewById(R.id.cardEvent2);
+        cardPendingPayment = findViewById(R.id.cardPendingPayment);
         btnExploreNow = findViewById(R.id.btnExploreNow);
+        btnBayarSekarang = findViewById(R.id.btnBayarSekarang);
         tvLihatSemua = findViewById(R.id.tvLihatSemua);
         tvRekomendasiHeader = findViewById(R.id.tvRekomendasiHeader);
         nestedScrollView = findViewById(R.id.nestedScrollView);
         etSearch = findViewById(R.id.etSearch);
         tvNoResults = findViewById(R.id.tvNoResults);
 
-        // Menu Click Listeners
+        // Logic tampilkan card "Perlu Dibayar" jika ada expiry_time di prefs
+        long expiryTime = getSharedPreferences("LapakUMKMPrefs", MODE_PRIVATE).getLong("expiry_time", 0);
+        if (expiryTime > System.currentTimeMillis()) {
+            cardPendingPayment.setVisibility(View.VISIBLE);
+        } else {
+            cardPendingPayment.setVisibility(View.GONE);
+        }
+
+        btnBayarSekarang.setOnClickListener(v -> {
+            Intent intent = new Intent(DashboardActivity.this, PaymentDetailActivity.class);
+            // Default ke BCA Transfer untuk mempermudah alur sesuai permintaan
+            intent.putExtra("PAYMENT_METHOD", "TRANSFER");
+            intent.putExtra("BANK_NAME", "BCA");
+            startActivity(intent);
+        });
         findViewById(R.id.menuMaps).setOnClickListener(v -> {
             startActivity(new Intent(DashboardActivity.this, MapsActivity.class));
         });
@@ -135,6 +151,18 @@ public class DashboardActivity extends AppCompatActivity {
                     "Lapangan Gasibu Bandung", R.drawable.pasar_malam);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Refresh status pembayaran saat kembali ke dashboard
+        long expiryTime = getSharedPreferences("LapakUMKMPrefs", MODE_PRIVATE).getLong("expiry_time", 0);
+        if (expiryTime > System.currentTimeMillis()) {
+            cardPendingPayment.setVisibility(View.VISIBLE);
+        } else {
+            cardPendingPayment.setVisibility(View.GONE);
+        }
     }
 
     private void bukaDetail(String nama, String kategori, String deskripsi, String lokasi, int imageResId) {
