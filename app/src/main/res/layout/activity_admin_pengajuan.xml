@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <!-- Header -->
+    <RelativeLayout
+        android:id="@+id/headerAdmin"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:paddingHorizontal="16dp">
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            android:src="@android:drawable/ic_menu_sort_by_size"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Pengajuan"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@color/black"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@android:drawable/ic_menu_search"
+                android:layout_marginEnd="12dp"/>
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@android:drawable/ic_menu_manage"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <!-- Tabs -->
+    <HorizontalScrollView
+        android:id="@+id/tabsAdmin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/headerAdmin"
+        android:layout_marginTop="8dp"
+        android:paddingHorizontal="16dp"
+        android:scrollbars="none">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button android:layout_width="wrap_content" android:layout_height="36dp" android:text="Semua" android:textSize="12sp" android:backgroundTint="@color/blue_primary" android:textColor="@color/white" android:layout_marginEnd="8dp" style="@style/Widget.MaterialComponents.Button.UnelevatedButton"/>
+            <Button android:layout_width="wrap_content" android:layout_height="36dp" android:text="Baru" android:textSize="12sp" android:backgroundTint="#F5F5F5" android:textColor="@color/text_gray" android:layout_marginEnd="8dp" style="@style/Widget.MaterialComponents.Button.UnelevatedButton"/>
+            <Button android:layout_width="wrap_content" android:layout_height="36dp" android:text="Diproses" android:textSize="12sp" android:backgroundTint="#F5F5F5" android:textColor="@color/text_gray" android:layout_marginEnd="8dp" style="@style/Widget.MaterialComponents.Button.UnelevatedButton"/>
+            <Button android:layout_width="wrap_content" android:layout_height="36dp" android:text="Disetujui" android:textSize="12sp" android:backgroundTint="#F5F5F5" android:textColor="@color/text_gray" android:layout_marginEnd="8dp" style="@style/Widget.MaterialComponents.Button.UnelevatedButton"/>
+            <Button android:layout_width="wrap_content" android:layout_height="36dp" android:text="Ditolak" android:textSize="12sp" android:backgroundTint="#F5F5F5" android:textColor="@color/text_gray" style="@style/Widget.MaterialComponents.Button.UnelevatedButton"/>
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <!-- List -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tabsAdmin"
+        android:layout_above="@+id/adminBottomNav"
+        android:layout_marginTop="16dp">
+        <LinearLayout
+            android:id="@+id/containerPengajuanFull"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp">
+            <!-- Items -->
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Bottom Navigation Bar Admin -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/adminBottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_alignParentBottom="true"
+        app:cardElevation="16dp"
+        app:cardCornerRadius="0dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:id="@+id/navAdminDashboard"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+                <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_today" app:tint="@color/text_gray"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Dashboard" android:textSize="10sp" android:textColor="@color/text_gray"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+                <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_save" app:tint="@color/blue_primary"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Pengajuan" android:textSize="10sp" android:textColor="@color/blue_primary"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/navAdminPengguna"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+                <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_myplaces" app:tint="@color/text_gray"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Pengguna" android:textSize="10sp" android:textColor="@color/text_gray"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/navAdminAkun"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+                <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_send" app:tint="@color/text_gray"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Akun" android:textSize="10sp" android:textColor="@color/text_gray"/>
+            </LinearLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</RelativeLayout>

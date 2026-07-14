@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText etRegNama, etRegEmail, etRegPassword, etRegConfirmPassword;
+    private EditText etRegNama, etRegEmail, etRegPhone, etRegPassword, etRegConfirmPassword;
     private String role;
 
     @Override
@@ -29,6 +29,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         etRegNama = findViewById(R.id.etRegNama);
         etRegEmail = findViewById(R.id.etRegEmail);
+        etRegPhone = findViewById(R.id.etRegPhone);
         etRegPassword = findViewById(R.id.etRegPassword);
         etRegConfirmPassword = findViewById(R.id.etRegConfirmPassword);
         Button btnRegister = findViewById(R.id.btnRegister);
@@ -39,10 +40,11 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String nama = etRegNama.getText().toString();
                 String email = etRegEmail.getText().toString();
+                String phone = etRegPhone.getText().toString();
                 String password = etRegPassword.getText().toString();
                 String confirmPassword = etRegConfirmPassword.getText().toString();
 
-                if (nama.isEmpty() || email.isEmpty() || password.isEmpty()) {
+                if (nama.isEmpty() || email.isEmpty() || phone.isEmpty() || password.isEmpty()) {
                     Toast.makeText(RegisterActivity.this, "Harap isi semua data!", Toast.LENGTH_SHORT).show();
                 } else if (!password.equals(confirmPassword)) {
                     Toast.makeText(RegisterActivity.this, "Password tidak cocok!", Toast.LENGTH_SHORT).show();
@@ -51,6 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
                     SharedPreferences sharedPref = getSharedPreferences("UserPrefs", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPref.edit();
                     editor.putString("email", email);
+                    editor.putString("phone", phone);
                     editor.putString("password", password);
                     editor.putString("nama", nama);
                     editor.putString("role", role); // Store role

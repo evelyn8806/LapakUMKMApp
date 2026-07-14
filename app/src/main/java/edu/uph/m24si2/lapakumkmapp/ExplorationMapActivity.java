@@ -58,6 +58,7 @@ public class ExplorationMapActivity extends AppCompatActivity implements OnMapRe
         fabMyLocation = findViewById(R.id.fabMyLocation);
 
         setupCitySpinner();
+        setupBottomNav();
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -135,7 +136,7 @@ public class ExplorationMapActivity extends AppCompatActivity implements OnMapRe
             String title = marker.getTitle();
             for (EventModel event : allEvents) {
                 if (event.getNama().equals(title)) {
-                    Intent intent = new Intent(MapsActivity.this, LapakDetailActivity.class);
+                    Intent intent = new Intent(ExplorationMapActivity.this, LapakDetailActivity.class);
                     intent.putExtra("nama_lapak", event.getNama());
                     intent.putExtra("kategori_lapak", event.getKategori());
                     intent.putExtra("deskripsi_lapak", event.getDeskripsi());
@@ -149,6 +150,40 @@ public class ExplorationMapActivity extends AppCompatActivity implements OnMapRe
 
         if (spinnerCity.getSelectedItem() != null) {
             updateMapForCity(spinnerCity.getSelectedItem().toString());
+        }
+    }
+
+    private void setupBottomNav() {
+        View navBeranda = findViewById(R.id.navBeranda);
+        if (navBeranda != null) {
+            navBeranda.setOnClickListener(v -> {
+                startActivity(new Intent(this, DashboardActivity.class));
+                finish();
+            });
+        }
+        
+        View navLapak = findViewById(R.id.navLapak);
+        if (navLapak != null) {
+            navLapak.setOnClickListener(v -> {
+                startActivity(new Intent(this, MyStallsActivity.class));
+                finish();
+            });
+        }
+
+        View navNotif = findViewById(R.id.navNotif);
+        if (navNotif != null) {
+            navNotif.setOnClickListener(v -> {
+                startActivity(new Intent(this, NotificationsActivity.class));
+                finish();
+            });
+        }
+
+        View navAkun = findViewById(R.id.navAkun);
+        if (navAkun != null) {
+            navAkun.setOnClickListener(v -> {
+                startActivity(new Intent(this, AccountActivity.class));
+                finish();
+            });
         }
     }
 }

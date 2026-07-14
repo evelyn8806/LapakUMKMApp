@@ -148,17 +148,6 @@
             android:textColor="#FFFFFF"
             app:cornerRadius="12dp"/>
 
-        <Button
-            android:id="@+id/btnBagikan"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:text="Bagikan"
-            android:textAllCaps="false"
-            android:textColor="#3949AB"
-            app:cornerRadius="12dp"
-            android:layout_marginTop="12dp"
-            app:strokeColor="#3949AB"/>
     </LinearLayout>
 
 </LinearLayout>

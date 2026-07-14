@@ -18,4 +18,11 @@
     <color name="role_green">#4CAF50</color>
     <color name="role_purple">#673AB7</color>
     <color name="border_gray">#E0E0E0</color>
+    <!-- Admin Theme Colors -->
+    <color name="admin_primary">#7B61FF</color>
+    <color name="admin_primary_light">#F0EEFF</color>
+    <color name="status_new">#7B61FF</color>
+    <color name="status_processing">#FFB74D</color>
+    <color name="status_approved">#81C784</color>
+    <color name="status_rejected">#E57373</color>
 </resources>

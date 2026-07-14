@@ -1,46 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:paddingVertical="12dp"
-    android:gravity="center_vertical">
+    android:layout_marginBottom="16dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp"
+    app:strokeWidth="1dp"
+    app:strokeColor="#F5F5F5">
 
-    <TextView
-        android:id="@+id/tvNamaUmkmItem"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:text="Kopi Nikmat"
-        android:textSize="12sp"
-        android:textColor="@color/black"/>
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <TextView
-        android:id="@+id/tvEventItem"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="3"
-        android:text="Festival Kuliner"
-        android:textSize="12sp"
-        android:textColor="@color/text_gray"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tvTanggalItem"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:text="01 Des 2024"
-        android:textSize="12sp"
-        android:textColor="@color/text_gray"/>
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ivUmkmFull"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/pasar_malam"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.MaterialComponents.MediumComponent"/>
 
-    <TextView
-        android:id="@+id/tvStatusItem"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:text="Menunggu"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        android:clickable="true"
-        android:focusable="true"/>
-</LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/ivUmkmFull"
+                android:layout_marginStart="16dp"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/tvUmkmNameFull"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bakso Berkah"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"/>
+                    <TextView
+                        android:id="@+id/tvStatusBadgeFull"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="4dp"
+                        android:text="Baru"
+                        android:textSize="10sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/admin_primary"
+                        android:background="@drawable/bg_tag_new"/>
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tvUmkmCategoryFull"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Kuliner"
+                    android:textColor="@color/text_gray"
+                    android:textSize="13sp"
+                    android:layout_marginTop="2dp"/>
+
+                <TextView
+                    android:id="@+id/tvTimeInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Diajukan: 2 jam yang lalu"
+                    android:textColor="@color/text_gray"
+                    android:textSize="11sp"
+                    android:layout_marginTop="8dp"/>
+
+                <TextView
+                    android:id="@+id/tvUserInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Oleh: Ahmad Rizki"
+                    android:textColor="@color/text_gray"
+                    android:textSize="11sp"/>
+
+            </LinearLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutActions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnRejectFull"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Tolak"
+                android:textColor="#E57373"
+                android:textSize="12sp"
+                app:strokeColor="#E57373"
+                app:strokeWidth="1dp"
+                app:cornerRadius="8dp"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_marginEnd="8dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnProcessFull"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Proses"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                app:backgroundTint="@color/admin_primary"
+                app:cornerRadius="8dp"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

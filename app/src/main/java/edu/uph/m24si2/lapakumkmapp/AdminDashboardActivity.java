@@ -16,71 +16,75 @@ public class AdminDashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_dashboard);
 
-        View btnLogout = findViewById(R.id.btnLogoutAdmin);
-        btnLogout.setOnClickListener(v -> {
-            Toast.makeText(this, "Berhasil Logout", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, LoginActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            finish();
-        });
-
+        AdminNavigationHelper.setupNavigation(this, R.id.navAdminDashboard);
         loadApplications();
+        updateStats();
+        
+        findViewById(R.id.tvSeeAllSubmissions).setOnClickListener(v -> {
+            startActivity(new Intent(this, AdminPengajuanActivity.class));
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         loadApplications();
+        updateStats();
+    }
+
+    private void updateStats() {
+        TextView tvTotalNew = findViewById(R.id.tvTotalNew);
+        TextView tvTotalProcessing = findViewById(R.id.tvTotalProcessing);
+        TextView tvTotalApproved = findViewById(R.id.tvTotalApproved);
+        TextView tvTotalRejected = findViewById(R.id.tvTotalRejected);
+
+        PengajuanManager manager = PengajuanManager.getInstance();
+        tvTotalNew.setText(String.valueOf(manager.getMenungguVerifikasi()));
+        tvTotalProcessing.setText(String.valueOf(manager.getDiproses())); 
+        tvTotalApproved.setText(String.valueOf(manager.getDisetujui()));
+        tvTotalRejected.setText(String.valueOf(manager.getDitolak()));
     }
 
     private void loadApplications() {
-        LinearLayout container = findViewById(R.id.layoutAdminList);
+        LinearLayout container = findViewById(R.id.containerPengajuanAdmin);
         if (container == null) return;
         
         container.removeAllViews();
-        List<PengajuanModel> list = DataRepository.getDaftarPengajuan();
+        List<PengajuanModel> list = PengajuanManager.getInstance().getListPengajuan();
 
-        if (list.isEmpty()) {
-            TextView emptyTv = new TextView(this);
-            emptyTv.setText("Belum ada pengajuan masuk.");
-            emptyTv.setGravity(android.view.Gravity.CENTER);
-            emptyTv.setPadding(0, 50, 0, 0);
-            container.addView(emptyTv);
-            return;
-        }
-
+        int count = 0;
         for (PengajuanModel p : list) {
-            View itemView = getLayoutInflater().inflate(R.layout.item_admin_request, container, false);
+            if (count >= 4) break;
             
-            TextView tvUsaha = itemView.findViewById(R.id.tvAdminUsahaName);
-            TextView tvEvent = itemView.findViewById(R.id.tvAdminEventName);
-            TextView tvStatus = itemView.findViewById(R.id.tvAdminStatus);
-            android.widget.Button btnApprove = itemView.findViewById(R.id.btnApprove);
-            android.widget.Button btnReject = itemView.findViewById(R.id.btnReject);
+            View itemView = getLayoutInflater().inflate(R.layout.item_pengajuan_dashboard, container, false);
+            
+            TextView tvUsaha = itemView.findViewById(R.id.tvUmkmName);
+            TextView tvCategory = itemView.findViewById(R.id.tvUmkmCategory);
+            TextView tvStatus = itemView.findViewById(R.id.tvStatusBadge);
 
-            tvUsaha.setText(p.getNamaUsaha());
-            tvEvent.setText("Event: " + p.getNamaEvent());
+            tvUsaha.setText(p.getNamaUmkm());
+            tvCategory.setText("Kuliner"); // Simplified
             tvStatus.setText(p.getStatus());
-
-            if (!p.getStatus().equals("PENDING")) {
-                btnApprove.setVisibility(View.GONE);
-                btnReject.setVisibility(View.GONE);
+            
+            // Set status color and background
+            if (p.getStatus().equals("Menunggu")) {
+                tvStatus.setText("Baru");
+                tvStatus.setTextColor(getResources().getColor(R.color.admin_primary));
+                tvStatus.setBackgroundResource(R.drawable.bg_tag_new);
+            } else if (p.getStatus().equals("Disetujui")) {
+                tvStatus.setTextColor(getResources().getColor(R.color.status_approved));
+                tvStatus.setBackgroundResource(R.drawable.bg_tag_approved);
+            } else if (p.getStatus().equals("Ditolak")) {
+                tvStatus.setTextColor(getResources().getColor(R.color.status_rejected));
+                tvStatus.setBackgroundResource(R.drawable.bg_tag_rejected);
             }
 
-            btnApprove.setOnClickListener(v -> {
-                DataRepository.updateStatus(p.getId(), "APPROVED");
-                Toast.makeText(this, "Disetujui!", Toast.LENGTH_SHORT).show();
-                loadApplications();
-            });
-
-            btnReject.setOnClickListener(v -> {
-                DataRepository.updateStatus(p.getId(), "REJECTED");
-                Toast.makeText(this, "Ditolak", Toast.LENGTH_SHORT).show();
-                loadApplications();
+            itemView.setOnClickListener(v -> {
+                startActivity(new Intent(this, AdminPengajuanActivity.class));
             });
 
             container.addView(itemView);
+            count++;
         }
     }
 }

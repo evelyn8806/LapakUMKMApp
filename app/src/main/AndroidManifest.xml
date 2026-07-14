@@ -24,6 +24,26 @@
             android:exported="false" />
 
         <activity
+            android:name=".AccountActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".SecurityActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".LogoutConfirmActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".MyStallsActivity"
             android:exported="false" />
 

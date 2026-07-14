@@ -9,10 +9,14 @@ public class PengajuanManager {
 
     private PengajuanManager() {
         listPengajuan = new ArrayList<>();
-        // Data Awal untuk Demo
-        listPengajuan.add(new PengajuanModel("1", "Kopi Nikmat", "Festival Kuliner Nusantara", "01 Des 2024", "Menunggu"));
-        listPengajuan.add(new PengajuanModel("2", "Dapur Mbak Sari", "Pasar Malam Tahun Baru", "30 Nov 2024", "Menunggu"));
-        listPengajuan.add(new PengajuanModel("3", "Kerajinan Bambu", "Bazaar Ramadhan 2025", "29 Nov 2024", "Menunggu"));
+        // Data Awal untuk Demo Admin (based on image)
+        listPengajuan.add(new PengajuanModel("1", "Bakso Berkah", "Festival Kuliner", "2 jam lalu", "Menunggu"));
+        listPengajuan.add(new PengajuanModel("2", "Kreasi Anyaman", "Bazaar Kerajinan", "5 jam lalu", "Diproses"));
+        listPengajuan.add(new PengajuanModel("3", "Jajanan Tradisional", "Festival Kuliner", "1 hari lalu", "Disetujui"));
+        listPengajuan.add(new PengajuanModel("4", "Dapur Mama", "Festival Kuliner", "2 hari lalu", "Ditolak"));
+        
+        listPengajuan.add(new PengajuanModel("5", "Kopi Nikmat", "Festival Kuliner Nusantara", "01 Des 2024", "Menunggu"));
+        listPengajuan.add(new PengajuanModel("6", "Dapur Mbak Sari", "Pasar Malam Tahun Baru", "25 Des 2024", "Disetujui"));
     }
 
     public static synchronized PengajuanManager getInstance() {
@@ -42,11 +46,27 @@ public class PengajuanManager {
         }
         return count;
     }
+
+    public int getDiproses() {
+        int count = 0;
+        for (PengajuanModel p : listPengajuan) {
+            if (p.getStatus().equals("Diproses")) count++;
+        }
+        return count;
+    }
     
     public int getDisetujui() {
         int count = 0;
         for (PengajuanModel p : listPengajuan) {
-            if (p.getStatus().equals("Disetujui")) count++;
+            if (p.getStatus().equals("Disetujui") || p.getStatus().equals("Aktif")) count++;
+        }
+        return count;
+    }
+
+    public int getDitolak() {
+        int count = 0;
+        for (PengajuanModel p : listPengajuan) {
+            if (p.getStatus().equals("Ditolak")) count++;
         }
         return count;
     }

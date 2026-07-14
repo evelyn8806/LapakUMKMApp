@@ -57,9 +57,6 @@ public class DashboardActivity extends AppCompatActivity {
             intent.putExtra("BANK_NAME", "BCA");
             startActivity(intent);
         });
-        findViewById(R.id.menuMaps).setOnClickListener(v -> {
-            startActivity(new Intent(DashboardActivity.this, MapsActivity.class));
-        });
 
         findViewById(R.id.menuFilter).setOnClickListener(v -> {
             startActivity(new Intent(DashboardActivity.this, FilterActivity.class));
@@ -67,15 +64,19 @@ public class DashboardActivity extends AppCompatActivity {
 
         // Bottom Nav Listeners
         findViewById(R.id.navEksplorasi).setOnClickListener(v -> {
-            startActivity(new Intent(DashboardActivity.this, MapsActivity.class));
+            startActivity(new Intent(DashboardActivity.this, ExplorationMapActivity.class));
         });
 
         findViewById(R.id.navLapak).setOnClickListener(v -> {
-            startActivity(new Intent(DashboardActivity.this, StatusPengajuanListActivity.class));
+            startActivity(new Intent(DashboardActivity.this, StatusPengajuanActivity.class));
         });
 
         findViewById(R.id.navNotif).setOnClickListener(v -> {
             startActivity(new Intent(DashboardActivity.this, NotificationsActivity.class));
+        });
+
+        findViewById(R.id.navAkun).setOnClickListener(v -> {
+            startActivity(new Intent(DashboardActivity.this, AccountActivity.class));
         });
         
         // 1. Fitur Search
