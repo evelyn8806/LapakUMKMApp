@@ -1,5 +1,6 @@
 package edu.uph.m24si2.lapakumkmapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -102,9 +103,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.clear();
         boolean hasEvent = false;
         
-        // Filter menggunakan data terpusat dari EventManager
+        if (allEvents == null) allEvents = EventManager.getAllEvents();
+
+        int count = 0;
         for (EventModel event : allEvents) {
-            if (event.getKota().equalsIgnoreCase(cityName)) {
+            if (event.getKota().trim().equalsIgnoreCase(cityName.trim())) {
                 LatLng pos = new LatLng(event.getLatitude(), event.getLongitude());
                 mMap.addMarker(new MarkerOptions()
                         .position(pos)
@@ -112,7 +115,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         .snippet(event.getKategori() + " | " + event.getHarga())
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
                 hasEvent = true;
+                count++;
             }
+        }
+
+        if (hasEvent) {
+            Toast.makeText(this, "Ditemukan " + count + " event di " + cityName, Toast.LENGTH_SHORT).show();
         }
 
         cvNoEventOverlay.setVisibility(hasEvent ? View.GONE : View.VISIBLE);
@@ -123,13 +131,24 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap = googleMap;
         mMap.getUiSettings().setZoomControlsEnabled(true);
         
+        mMap.setOnInfoWindowClickListener(marker -> {
+            String title = marker.getTitle();
+            for (EventModel event : allEvents) {
+                if (event.getNama().equals(title)) {
+                    Intent intent = new Intent(MapsActivity.this, LapakDetailActivity.class);
+                    intent.putExtra("nama_lapak", event.getNama());
+                    intent.putExtra("kategori_lapak", event.getKategori());
+                    intent.putExtra("deskripsi_lapak", event.getDeskripsi());
+                    intent.putExtra("lokasi_lapak", event.getLokasi());
+                    intent.putExtra("gambar_lapak", event.getGambar());
+                    startActivity(intent);
+                    break;
+                }
+            }
+        });
+
         if (spinnerCity.getSelectedItem() != null) {
             updateMapForCity(spinnerCity.getSelectedItem().toString());
         }
-
-        mMap.setOnMarkerClickListener(marker -> {
-            marker.showInfoWindow();
-            return false;
-        });
     }
 }

@@ -42,7 +42,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         // Menu Click Listeners
         findViewById(R.id.menuMaps).setOnClickListener(v -> {
-            startActivity(new Intent(DashboardActivity.this, ExplorationMapActivity.class));
+            startActivity(new Intent(DashboardActivity.this, MapsActivity.class));
         });
 
         findViewById(R.id.menuFilter).setOnClickListener(v -> {
@@ -51,11 +51,11 @@ public class DashboardActivity extends AppCompatActivity {
 
         // Bottom Nav Listeners
         findViewById(R.id.navEksplorasi).setOnClickListener(v -> {
-            startActivity(new Intent(DashboardActivity.this, ExplorationMapActivity.class));
+            startActivity(new Intent(DashboardActivity.this, MapsActivity.class));
         });
 
         findViewById(R.id.navLapak).setOnClickListener(v -> {
-            startActivity(new Intent(DashboardActivity.this, MyStallsActivity.class));
+            startActivity(new Intent(DashboardActivity.this, StatusPengajuanListActivity.class));
         });
 
         findViewById(R.id.navNotif).setOnClickListener(v -> {
