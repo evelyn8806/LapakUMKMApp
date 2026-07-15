@@ -151,9 +151,14 @@ public class PengajuanSewaActivity extends AppCompatActivity {
                     .commit();
 
             Toast.makeText(this, "Pengajuan Berhasil Dikirim!", Toast.LENGTH_LONG).show();
+<<<<<<< Updated upstream
             Intent intent = new Intent(this, PaymentDetailActivity.class);
             intent.putExtra("PAYMENT_METHOD", "TRANSFER");
             intent.putExtra("BANK_NAME", "BCA");
+=======
+            Intent intent = new Intent(this, PaymentActivity.class);
+            intent.putExtra("nama_event", tvReviewNamaEvent.getText().toString());
+>>>>>>> Stashed changes
             startActivity(intent);
             finish();
         });

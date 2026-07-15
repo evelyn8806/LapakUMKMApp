@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F5F7FB">
@@ -53,25 +54,28 @@
                 android:padding="18dp">
 
                 <TextView
+                    android:id="@+id/tvPaymentEventName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Festival Kuliner Nusantara"
-                    android:textStyle="bold"
+                    android:textColor="#222222"
                     android:textSize="18sp"
-                    android:textColor="#222222"/>
+                    android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tvPaymentEventDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
                     android:text="10 - 14 Desember 2026"
-                    android:textColor="#666666"
-                    android:layout_marginTop="4dp"/>
+                    android:textColor="#666666" />
 
                 <TextView
+                    android:id="@+id/tvPaymentBoothInfo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Booth A12 (3x3)"
-                    android:textColor="#666666"/>
+                    android:textColor="#666666" />
 
             </LinearLayout>
 
@@ -95,8 +99,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Rincian Pembayaran"
-                    android:textStyle="bold"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -108,12 +112,12 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Biaya Booth"/>
+                        android:text="Biaya Booth" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Rp225.000"/>
+                        android:text="Rp225.000" />
 
                 </LinearLayout>
 
@@ -127,12 +131,12 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Biaya Admin"/>
+                        android:text="Biaya Admin" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Rp25.000"/>
+                        android:text="Rp25.000" />
 
                 </LinearLayout>
 
@@ -140,7 +144,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="18dp"
-                    android:background="#DDDDDD"/>
+                    android:background="#DDDDDD" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -153,17 +157,17 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="TOTAL"
-                        android:textStyle="bold"
-                        android:textSize="18sp"/>
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/txtTotal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Rp250.000"
-                        android:textStyle="bold"
                         android:textColor="#1565C0"
-                        android:textSize="18sp"/>
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -196,12 +200,14 @@
                     android:id="@+id/radioPayment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp">
+                    android:layout_marginTop="80dp">
 
                     <RadioButton
                         android:id="@+id/rbTransfer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/ic_transfer_small"
+                        android:drawablePadding="10dp"
                         android:text="Transfer Bank" />
 
                     <LinearLayout
@@ -222,6 +228,8 @@
                         android:id="@+id/rbDana"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/ic_dana_small"
+                        android:drawablePadding="10dp"
                         android:text="DANA"/>
                     <RadioButton
                         android:id="@+id/rbGopay"

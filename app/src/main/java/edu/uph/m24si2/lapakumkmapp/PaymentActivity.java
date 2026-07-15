@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +27,13 @@ public class PaymentActivity extends AppCompatActivity {
         RadioGroup radioGroup = findViewById(R.id.radioPayment);
         LinearLayout layoutBankOptions = findViewById(R.id.layoutBankOptions);
         Spinner spinnerBank = findViewById(R.id.spinnerBank);
+        TextView tvEventName = findViewById(R.id.tvPaymentEventName);
+
+        // Get Data from Intent
+        String eventName = getIntent().getStringExtra("nama_event");
+        if (eventName != null && !eventName.isEmpty()) {
+            tvEventName.setText(eventName);
+        }
 
         // Setup Spinner Bank
         String[] banks = {"BCA", "BNI", "BRI", "Mandiri"};

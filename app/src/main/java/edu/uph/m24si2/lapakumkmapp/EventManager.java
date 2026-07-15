@@ -72,6 +72,50 @@ public class EventManager {
             "Temukan jutaan buku dengan harga sangat terjangkau.",
             "Jakarta", -6.2297, 106.8456
         ));
+        list.add(new EventModel(
+            "Car Free Day Food Festival",
+            "Kuliner",
+            "Bundaran HI, Jakarta",
+            "Rp. 75.000 / Hari",
+            75000,
+            R.drawable.festival_kuliner,
+            "Stand makanan sehat di area Car Free Day.",
+            "Jakarta", -6.1950, 106.8230
+        ));
+
+        // --- SURABAYA ---
+        list.add(new EventModel(
+            "Surabaya Great Expo",
+            "Bazar",
+            "Grand City Surabaya",
+            "Rp. 300.000 / Hari",
+            300000,
+            R.drawable.ic_shop,
+            "Pameran industri kreatif terbesar di Jawa Timur.",
+            "Surabaya", -7.2635, 112.7480
+        ));
+        list.add(new EventModel(
+            "Pasar Tunjungan",
+            "Kuliner",
+            "Jl. Tunjungan, Surabaya",
+            "Rp. 150.000 / Hari",
+            150000,
+            R.drawable.pasar_malam,
+            "Nikmati suasana malam hari di ikon kota Surabaya.",
+            "Surabaya", -7.2590, 112.7380
+        ));
+
+        // --- MEDAN ---
+        list.add(new EventModel(
+            "Ramadhan Fair Medan",
+            "Religi/Kuliner",
+            "Masjid Raya Al-Mashun, Medan",
+            "Rp. 50.000 / Hari",
+            50000,
+            R.drawable.festival_kuliner,
+            "Bazar tahunan saat bulan Ramadhan.",
+            "Medan", 3.5750, 98.6870
+        ));
 
         return list;
     }
