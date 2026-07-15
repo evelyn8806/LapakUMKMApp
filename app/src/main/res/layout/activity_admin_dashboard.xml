@@ -17,21 +17,39 @@
             android:orientation="vertical"
             android:padding="24dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Halo, Admin! 👋"
-                android:textColor="@color/black"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Halo, Admin! 👋"
+                        android:textColor="@color/black"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Selamat datang di Dashboard Admin"
-                android:textColor="@color/text_gray"
-                android:textSize="14sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Selamat datang di Dashboard Admin"
+                        android:textColor="@color/text_gray"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/ivAdminNotification"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@android:drawable/ic_popup_reminder"
+                    app:tint="@color/black" />
+            </RelativeLayout>
 
             <!-- Stats Grid -->
             <GridLayout
@@ -42,6 +60,7 @@
 
                 <!-- Pengajuan Baru -->
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardStatsNew"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
@@ -81,6 +100,7 @@
 
                 <!-- Pengajuan Diproses -->
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardStatsProcessing"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
@@ -120,6 +140,7 @@
 
                 <!-- Pengajuan Disetujui -->
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardStatsApproved"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
@@ -159,6 +180,7 @@
 
                 <!-- Pengajuan Ditolak -->
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardStatsRejected"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
@@ -218,7 +240,8 @@
                     android:text="Lihat semua"
                     android:textColor="#7B61FF"
                     android:textSize="12sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold"
+                    android:visibility="gone"/>
             </RelativeLayout>
 
             <LinearLayout

@@ -21,9 +21,24 @@ public class AdminDashboardActivity extends AppCompatActivity {
         loadApplications();
         updateStats();
         
-        findViewById(R.id.tvSeeAllSubmissions).setOnClickListener(v -> {
-            startActivity(new Intent(this, AdminPengajuanActivity.class));
+        setupStatClicks();
+
+        findViewById(R.id.ivAdminNotification).setOnClickListener(v -> {
+            startActivity(new Intent(this, NotificationsActivity.class));
         });
+    }
+
+    private void setupStatClicks() {
+        findViewById(R.id.cardStatsNew).setOnClickListener(v -> openPengajuanWithFilter("Baru"));
+        findViewById(R.id.cardStatsProcessing).setOnClickListener(v -> openPengajuanWithFilter("Diproses"));
+        findViewById(R.id.cardStatsApproved).setOnClickListener(v -> openPengajuanWithFilter("Disetujui"));
+        findViewById(R.id.cardStatsRejected).setOnClickListener(v -> openPengajuanWithFilter("Ditolak"));
+    }
+
+    private void openPengajuanWithFilter(String filter) {
+        Intent intent = new Intent(this, AdminPengajuanActivity.class);
+        intent.putExtra("FILTER_STATUS", filter);
+        startActivity(intent);
     }
 
     @Override
@@ -53,10 +68,7 @@ public class AdminDashboardActivity extends AppCompatActivity {
         container.removeAllViews();
         List<PengajuanModel> list = PengajuanManager.getInstance().getListPengajuan();
 
-        int count = 0;
         for (PengajuanModel p : list) {
-            if (count >= 4) break;
-            
             View itemView = getLayoutInflater().inflate(R.layout.item_pengajuan_dashboard, container, false);
             
             TextView tvUsaha = itemView.findViewById(R.id.tvUmkmName);
@@ -84,14 +96,15 @@ public class AdminDashboardActivity extends AppCompatActivity {
             }
 
             itemView.setOnClickListener(v -> {
-                startActivity(new Intent(this, AdminPengajuanActivity.class));
+                Intent intent = new Intent(this, AdminPengajuanDetailActivity.class);
+                intent.putExtra("pengajuan", p);
+                startActivity(intent);
             });
 
             container.addView(itemView);
-            count++;
         }
 
-        if (count == 0) {
+        if (list.isEmpty()) {
             TextView emptyText = new TextView(this);
             emptyText.setText("Belum ada pengajuan terbaru");
             emptyText.setGravity(android.view.Gravity.CENTER);

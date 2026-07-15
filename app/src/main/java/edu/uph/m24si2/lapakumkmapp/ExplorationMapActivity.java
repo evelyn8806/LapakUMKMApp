@@ -124,14 +124,16 @@ public class ExplorationMapActivity extends AppCompatActivity {
     }
 
     private void setupBottomNav() {
-        findViewById(R.id.navBeranda).setOnClickListener(v -> {
-            startActivity(new Intent(this, DashboardActivity.class));
-            finish();
-        });
+        String role = getSharedPreferences("UserPrefs", MODE_PRIVATE).getString("role", "UMKM");
 
-        findViewById(R.id.navAkun).setOnClickListener(v -> {
-            startActivity(new Intent(this, AccountActivity.class));
-            finish();
-        });
+        if ("ADMIN".equals(role)) {
+            findViewById(R.id.umkmBottomNav).setVisibility(View.GONE);
+            findViewById(R.id.adminBottomNav).setVisibility(View.VISIBLE);
+            AdminNavigationHelper.setupNavigation(this, -1);
+        } else {
+            findViewById(R.id.umkmBottomNav).setVisibility(View.VISIBLE);
+            findViewById(R.id.adminBottomNav).setVisibility(View.GONE);
+            UmkmNavigationHelper.setupNavigation(this, R.id.navEksplorasi);
+        }
     }
 }

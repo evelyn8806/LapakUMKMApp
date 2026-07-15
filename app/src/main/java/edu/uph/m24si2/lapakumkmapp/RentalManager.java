@@ -22,6 +22,15 @@ public class RentalManager {
         requests.add(request);
     }
 
+    public void updateRequest(RentalRequest updatedRequest) {
+        for (int i = 0; i < requests.size(); i++) {
+            if (requests.get(i).getId().equals(updatedRequest.getId())) {
+                requests.set(i, updatedRequest);
+                return;
+            }
+        }
+    }
+
     public List<RentalRequest> getRequests() {
         return requests;
     }

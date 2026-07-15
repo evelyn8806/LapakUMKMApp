@@ -162,12 +162,15 @@ public class PengajuanSewaActivity extends AppCompatActivity {
             String namaUmkm = etNamaUsaha.getText().toString();
             String namaEvent = tvReviewNamaEvent.getText().toString();
             String tanggal = "01 Jan 2025"; // Bisa ambil dari DatePicker
+            String jenisUsahaTerpilih = spinnerJenisUsaha.getSelectedItem().toString();
+            String deskripsiUsaha = etDeskripsiUsaha.getText().toString();
+            String nib = etNIB.getText().toString();
+            String ktpPath = ktpUri != null ? ktpUri.toString() : "";
+            String nibPath = nibUri != null ? nibUri.toString() : "";
             
             android.content.SharedPreferences sharedPref = getSharedPreferences("UserPrefs", MODE_PRIVATE);
             String userEmail = sharedPref.getString("email", "email@example.com");
             String userName = sharedPref.getString("nama", "User");
-
-            PengajuanManager.getInstance().tambahPengajuan(namaUmkm, namaEvent, tanggal, userEmail, userName);
 
             // Create and save RentalRequest
             String eventLocation = tvReviewLokasi.getText().toString();
@@ -184,6 +187,17 @@ public class PengajuanSewaActivity extends AppCompatActivity {
             
             RentalManager.getInstance().addRequest(newRequest);
 
+            PengajuanManager.getInstance().tambahPengajuan(namaUmkm, namaEvent, tanggal, userEmail, userName, newRequest.getId(),
+                    jenisUsahaTerpilih, deskripsiUsaha, nib, ktpPath, nibPath);
+
+            // Add Notification for User
+            NotificationManager.getInstance().addNotification("Pengajuan Berhasil", 
+                "Pengajuan sewa untuk event " + namaEvent + " telah berhasil dikirim. Segera lakukan pembayaran.");
+
+            // Add Notification for Admin
+            NotificationManager.getInstance().addNotification("Pengajuan Baru", 
+                "Ada pengajuan baru dari " + userName + " untuk event " + namaEvent);
+
             // Reset timer pembayaran untuk pengajuan baru
             getSharedPreferences("LapakUMKMPrefs", MODE_PRIVATE)
                     .edit()
@@ -193,13 +207,8 @@ public class PengajuanSewaActivity extends AppCompatActivity {
             Toast.makeText(this, "Pengajuan Berhasil Dikirim!", Toast.LENGTH_LONG).show();
             
             Intent intent = new Intent(this, PaymentActivity.class);
-<<<<<<< Updated upstream
-            intent.putExtra("nama_event", tvReviewNamaEvent.getText().toString());
-            
-=======
             intent.putExtra("nama_event", namaEvent);
             intent.putExtra("rental_request", newRequest);
->>>>>>> Stashed changes
             startActivity(intent);
             finish();
         });

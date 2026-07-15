@@ -15,29 +15,41 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DashboardActivity extends AppCompatActivity {
 
-    private MaterialCardView cardEvent1, cardEvent2, cardPendingPayment;
+    private MaterialCardView cardPendingPayment;
     private Button btnExploreNow, btnBayarSekarang;
-    private TextView tvLihatSemua, tvRekomendasiHeader;
+    private TextView tvRekomendasiHeader, tvNoResults;
     private NestedScrollView nestedScrollView;
+    private RecyclerView rvEvents;
+    private EventAdapter adapter;
+    private List<EventModel> allEvents;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        cardEvent1 = findViewById(R.id.cardEvent1);
-        cardEvent2 = findViewById(R.id.cardEvent2);
         cardPendingPayment = findViewById(R.id.cardPendingPayment);
         btnExploreNow = findViewById(R.id.btnExploreNow);
         btnBayarSekarang = findViewById(R.id.btnBayarSekarang);
-        tvLihatSemua = findViewById(R.id.tvLihatSemua);
         tvRekomendasiHeader = findViewById(R.id.tvRekomendasiHeader);
         nestedScrollView = findViewById(R.id.nestedScrollView);
+        rvEvents = findViewById(R.id.rvDashboardEvents);
+        tvNoResults = findViewById(R.id.tvNoDashboardResults);
+
+        UmkmNavigationHelper.setupNavigation(this, R.id.navBeranda);
+
+        allEvents = EventManager.getAllEvents();
+        rvEvents.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new EventAdapter(allEvents, this);
+        rvEvents.setAdapter(adapter);
 
         // Logic tampilkan card "Perlu Dibayar" jika ada expiry_time di prefs
         long expiryTime = getSharedPreferences("LapakUMKMPrefs", MODE_PRIVATE).getLong("expiry_time", 0);
@@ -74,35 +86,34 @@ public class DashboardActivity extends AppCompatActivity {
             startActivity(new Intent(DashboardActivity.this, MyStallsActivity.class));
         });
 
-<<<<<<< Updated upstream
-        // Search Bar Listener
-        android.widget.EditText etSearchDashboard = findViewById(R.id.etSearchDashboard);
-        etSearchDashboard.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH || 
-                actionId == android.view.inputmethod.EditorInfo.IME_ACTION_DONE) {
-                String query = etSearchDashboard.getText().toString();
-                if (!query.isEmpty()) {
-                    Intent intent = new Intent(DashboardActivity.this, RecommendationListActivity.class);
-                    intent.putExtra("search_query", query);
-                    startActivity(intent);
-                    return true;
-                }
-            }
-            return false;
-=======
         findViewById(R.id.menuHistory).setOnClickListener(v -> {
             startActivity(new Intent(DashboardActivity.this, HistoryActivity.class));
->>>>>>> Stashed changes
         });
 
-        // Bottom Nav Listeners
-        findViewById(R.id.navEksplorasi).setOnClickListener(v -> {
-            startActivity(new Intent(DashboardActivity.this, ExplorationMapActivity.class));
-        });
+        // Search Bar Listener (Real-time & Sensitive)
+        EditText etSearchDashboard = findViewById(R.id.etSearchDashboard);
+        if (etSearchDashboard != null) {
+            etSearchDashboard.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
-        findViewById(R.id.navAkun).setOnClickListener(v -> {
-            startActivity(new Intent(DashboardActivity.this, AccountActivity.class));
-        });
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    filterEvents(s.toString());
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {}
+            });
+
+            etSearchDashboard.setOnEditorActionListener((v, actionId, event) -> {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH || 
+                    actionId == EditorInfo.IME_ACTION_DONE) {
+                    return true;
+                }
+                return false;
+            });
+        }
         
         // 2. Klik "Jelajahi Sekarang" scroll ke Rekomendasi
         btnExploreNow.setOnClickListener(new View.OnClickListener() {
@@ -114,32 +125,39 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
 
-        // 3. Klik "Lihat Semua"
-        tvLihatSemua.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(DashboardActivity.this, RecommendationListActivity.class);
-                startActivity(intent);
-            }
+        findViewById(R.id.ivNotification).setOnClickListener(v -> {
+            startActivity(new Intent(DashboardActivity.this, NotificationsActivity.class));
         });
+    }
 
-        cardEvent1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bukaDetail("Festival Kuliner Nusantara", "Event Kuliner", 
-                    "Nikmati berbagai hidangan khas dari seluruh nusantara.", 
-                    "Alun-Alun Kota Bandung", R.drawable.festival_kuliner);
-            }
-        });
+    private void filterEvents(String query) {
+        if (query.isEmpty()) {
+            adapter.updateList(allEvents);
+            tvNoResults.setVisibility(View.GONE);
+            rvEvents.setVisibility(View.VISIBLE);
+            return;
+        }
 
-        cardEvent2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bukaDetail("Pasar Malam Tahun Baru", "Event Tahunan", 
-                    "Kemeriahan pasar malam menyambut tahun baru.", 
-                    "Lapangan Gasibu Bandung", R.drawable.pasar_malam);
+        List<EventModel> filteredList = new ArrayList<>();
+        String lowerQuery = query.toLowerCase();
+        
+        // "Sensitive" search logic: check if any part of the name, category, or location matches
+        for (EventModel event : allEvents) {
+            if (event.getNama().toLowerCase().contains(lowerQuery) || 
+                event.getKategori().toLowerCase().contains(lowerQuery) || 
+                event.getLokasi().toLowerCase().contains(lowerQuery)) {
+                filteredList.add(event);
             }
-        });
+        }
+
+        if (filteredList.isEmpty()) {
+            tvNoResults.setVisibility(View.VISIBLE);
+            rvEvents.setVisibility(View.GONE);
+        } else {
+            tvNoResults.setVisibility(View.GONE);
+            rvEvents.setVisibility(View.VISIBLE);
+            adapter.updateList(filteredList);
+        }
     }
 
     @Override
@@ -152,15 +170,5 @@ public class DashboardActivity extends AppCompatActivity {
         } else {
             cardPendingPayment.setVisibility(View.GONE);
         }
-    }
-
-    private void bukaDetail(String nama, String kategori, String deskripsi, String lokasi, int imageResId) {
-        Intent intent = new Intent(DashboardActivity.this, LapakDetailActivity.class);
-        intent.putExtra("nama_lapak", nama);
-        intent.putExtra("kategori_lapak", kategori);
-        intent.putExtra("deskripsi_lapak", deskripsi);
-        intent.putExtra("lokasi_lapak", lokasi);
-        intent.putExtra("gambar_lapak", imageResId);
-        startActivity(intent);
     }
 }

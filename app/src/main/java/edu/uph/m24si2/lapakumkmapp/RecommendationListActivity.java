@@ -95,8 +95,8 @@ public class RecommendationListActivity extends AppCompatActivity {
 
         if (filteredList.isEmpty()) {
             tvNoResults.setVisibility(View.VISIBLE);
-            tvOtherRecommendationsHeader.setVisibility(View.VISIBLE);
-            adapter = new EventAdapter(allEvents, this);
+            tvOtherRecommendationsHeader.setVisibility(View.GONE);
+            adapter = new EventAdapter(new ArrayList<>(), this);
         } else {
             tvNoResults.setVisibility(View.GONE);
             tvOtherRecommendationsHeader.setVisibility(View.GONE);

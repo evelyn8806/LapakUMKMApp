@@ -42,6 +42,16 @@
                 android:textSize="14sp"
                 android:layout_marginTop="4dp" />
 
+            <TextView
+                android:id="@+id/tvHargaLapakDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rp0"
+                android:textColor="@color/blue_primary"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"

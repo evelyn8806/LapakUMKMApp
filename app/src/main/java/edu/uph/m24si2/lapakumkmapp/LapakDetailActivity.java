@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class LapakDetailActivity extends AppCompatActivity {
 
     private ImageView ivLapakDetail;
-    private TextView tvNamaLapakDetail, tvKategoriLapakDetail, tvDeskripsiLapakDetail, tvLokasiLapakDetail;
+    private TextView tvNamaLapakDetail, tvKategoriLapakDetail, tvDeskripsiLapakDetail, tvLokasiLapakDetail, tvHargaLapakDetail;
     private Button btnAjukanSewa;
     private int eventImage;
     private String eventPrice;
@@ -26,6 +26,7 @@ public class LapakDetailActivity extends AppCompatActivity {
         tvKategoriLapakDetail = findViewById(R.id.tvKategoriLapakDetail);
         tvDeskripsiLapakDetail = findViewById(R.id.tvDeskripsiLapakDetail);
         tvLokasiLapakDetail = findViewById(R.id.tvLokasiLapakDetail);
+        tvHargaLapakDetail = findViewById(R.id.tvHargaLapakDetail);
         btnAjukanSewa = findViewById(R.id.btnAjukanSewa);
 
         Bundle extras = getIntent().getExtras();
@@ -41,6 +42,7 @@ public class LapakDetailActivity extends AppCompatActivity {
             tvKategoriLapakDetail.setText("Kategori: " + kategori);
             tvDeskripsiLapakDetail.setText(deskripsi);
             tvLokasiLapakDetail.setText(lokasi);
+            tvHargaLapakDetail.setText(eventPrice);
             ivLapakDetail.setImageResource(eventImage);
         }
 

@@ -32,9 +32,20 @@ public class PengajuanManager {
         return userList;
     }
 
-    public void tambahPengajuan(String namaUmkm, String namaEvent, String tanggal, String userEmail, String userName) {
+    public void tambahPengajuan(String namaUmkm, String namaEvent, String tanggal, String userEmail, String userName, String rentalRequestId,
+                                String jenisUsaha, String deskripsiUsaha, String nib, String ktpUri, String nibUri) {
         String id = String.valueOf(listPengajuan.size() + 1);
-        listPengajuan.add(0, new PengajuanModel(id, namaUmkm, namaEvent, tanggal, "Menunggu", userEmail, userName));
+        PengajuanModel p = new PengajuanModel(id, namaUmkm, namaEvent, tanggal, "Menunggu", userEmail, userName, rentalRequestId);
+        p.setJenisUsaha(jenisUsaha);
+        p.setDeskripsiUsaha(deskripsiUsaha);
+        p.setNib(nib);
+        p.setKtpUri(ktpUri);
+        p.setNibUri(nibUri);
+        listPengajuan.add(0, p);
+
+        // Add Notification for Admin
+        NotificationManager.getInstance().addNotification("Pengajuan Baru", 
+            "UMKM " + namaUmkm + " telah mengajukan sewa untuk event " + namaEvent + ".");
     }
 
     public int getTotalEvent() { return 24; } 

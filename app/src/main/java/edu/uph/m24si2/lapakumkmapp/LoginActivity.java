@@ -44,29 +44,42 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
-                if ("ADMIN".equals(role) && !emailInput.endsWith("@umkm.com")) {
-                    Toast.makeText(LoginActivity.this, "Email Admin harus menggunakan @umkm.com", Toast.LENGTH_SHORT).show();
-                    return;
+                // Cek kredensial di UserManager
+                UserModel foundUser = UserManager.getInstance().login(emailInput, passwordInput);
+
+                // Fallback ke SharedPreferences jika tidak ditemukan di UserManager (untuk mendukung persistence user terakhir yang mendaftar)
+                if (foundUser == null) {
+                    SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+                    String savedEmail = prefs.getString("email", "");
+                    String savedPassword = prefs.getString("password", "");
+                    
+                    if (!savedEmail.isEmpty() && savedEmail.equalsIgnoreCase(emailInput) && savedPassword.equals(passwordInput)) {
+                        foundUser = new UserModel(
+                            prefs.getString("nama", ""),
+                            savedEmail,
+                            prefs.getString("phone", ""),
+                            savedPassword,
+                            prefs.getString("role", "UMKM")
+                        );
+                        // Tambahkan kembali ke UserManager agar tersedia selama aplikasi berjalan
+                        UserManager.getInstance().addUser(foundUser);
+                    }
                 }
 
-                // Cek kredensial di UserManager
-                UserModel user = UserManager.getInstance().login(emailInput, passwordInput);
-
-                if (user != null) {
+                if (foundUser != null) {
                     Toast.makeText(LoginActivity.this, "Login Berhasil!", Toast.LENGTH_SHORT).show();
                     
                     SharedPreferences sharedPref = getSharedPreferences("UserPrefs", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPref.edit();
-                    editor.putString("email", user.getEmail());
-                    editor.putString("nama", user.getNama());
-                    editor.putString("role", user.getRole());
+                    editor.putString("email", foundUser.getEmail());
+                    editor.putString("nama", foundUser.getNama());
+                    editor.putString("role", foundUser.getRole());
                     
-                    if (cbRememberMe.isChecked()) {
-                        editor.putBoolean("isLoggedIn", true);
-                    }
+                    // Update status "Ingat Saya"
+                    editor.putBoolean("isLoggedIn", cbRememberMe.isChecked());
                     editor.apply();
 
-                    if (user.getRole().equals("ADMIN")) {
+                    if (foundUser.getRole().equals("ADMIN")) {
                         Intent intent = new Intent(LoginActivity.this, AdminDashboardActivity.class);
                         startActivity(intent);
                     } else {

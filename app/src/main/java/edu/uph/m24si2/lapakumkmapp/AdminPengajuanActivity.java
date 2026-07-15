@@ -1,5 +1,6 @@
 package edu.uph.m24si2.lapakumkmapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -20,12 +21,19 @@ public class AdminPengajuanActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin_pengajuan);
 
         AdminNavigationHelper.setupNavigation(this, R.id.navAdminPengajuan);
+        
+        String filterExtra = getIntent().getStringExtra("FILTER_STATUS");
+        if (filterExtra != null) {
+            currentFilter = filterExtra;
+        }
+
         setupTabs();
         loadApplications();
     }
 
     private void setupTabs() {
         LinearLayout tabsLayout = (LinearLayout) ((android.widget.HorizontalScrollView) findViewById(R.id.tabsAdmin)).getChildAt(0);
+        updateTabStyles(tabsLayout);
         for (int i = 0; i < tabsLayout.getChildCount(); i++) {
             View view = tabsLayout.getChildAt(i);
             if (view instanceof MaterialButton) {
@@ -106,6 +114,11 @@ public class AdminPengajuanActivity extends AppCompatActivity {
                 tvStatus.setBackgroundResource(R.drawable.bg_tag_rejected);
                 btnReject.setVisibility(View.GONE);
                 btnProcess.setText("Lihat");
+            } else if (p.getStatus().equals("Diproses")) {
+                tvStatus.setTextColor(ContextCompat.getColor(this, R.color.status_processing));
+                tvStatus.setBackgroundResource(R.drawable.bg_tag_processing);
+                btnReject.setVisibility(View.VISIBLE);
+                btnProcess.setText("Proses");
             } else {
                 tvStatus.setTextColor(ContextCompat.getColor(this, R.color.status_processing));
                 tvStatus.setBackgroundResource(R.drawable.bg_tag_processing);
@@ -114,13 +127,9 @@ public class AdminPengajuanActivity extends AppCompatActivity {
             }
 
             btnProcess.setOnClickListener(v -> {
-                if (p.getStatus().equals("Menunggu")) {
-                    PengajuanManager.getInstance().updateStatus(p.getId(), "Disetujui");
-                    Toast.makeText(this, "Berhasil disetujui", Toast.LENGTH_SHORT).show();
-                    loadApplications();
-                } else {
-                    Toast.makeText(this, "Detail pengajuan", Toast.LENGTH_SHORT).show();
-                }
+                Intent intent = new Intent(this, AdminPengajuanDetailActivity.class);
+                intent.putExtra("pengajuan", p);
+                startActivity(intent);
             });
 
             btnReject.setOnClickListener(v -> {
@@ -129,7 +138,19 @@ public class AdminPengajuanActivity extends AppCompatActivity {
                 loadApplications();
             });
 
+            itemView.setOnClickListener(v -> {
+                Intent intent = new Intent(this, AdminPengajuanDetailActivity.class);
+                intent.putExtra("pengajuan", p);
+                startActivity(intent);
+            });
+
             container.addView(itemView);
         }
+    }
+    
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadApplications();
     }
 }
