@@ -3,119 +3,208 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F9FA">
+    android:background="#FFFFFF">
 
     <!-- Header -->
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:text="Lapak Saya"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+    <RelativeLayout
+        android:id="@+id/headerLapak"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:paddingHorizontal="16dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="Pengajuan"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@android:drawable/ic_menu_search"
+            app:tint="@color/black"/>
+    </RelativeLayout>
 
     <!-- Tabs -->
     <HorizontalScrollView
         android:id="@+id/tabScroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvTitle"
-        android:layout_marginTop="16dp"
+        android:layout_below="@id/headerLapak"
+        android:layout_marginTop="8dp"
         android:scrollbars="none"
         android:paddingHorizontal="16dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingBottom="8dp">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnFilterSemua"
-                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                 android:layout_width="wrap_content"
-                android:layout_height="36dp"
+                android:layout_height="40dp"
                 android:layout_marginEnd="8dp"
-                android:backgroundTint="@color/blue_primary"
                 android:text="Semua"
                 android:textAllCaps="false"
-                android:textSize="12sp"
-                android:textColor="@color/white" />
+                android:textSize="13sp"
+                app:cornerRadius="12dp"
+                app:backgroundTint="@color/admin_primary"
+                android:textColor="@color/white"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnFilterProses"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
-                android:layout_height="36dp"
+                android:layout_height="40dp"
                 android:layout_marginEnd="8dp"
-                android:text="Proses"
+                android:text="Diproses"
                 android:textAllCaps="false"
-                android:textSize="12sp"
+                android:textSize="13sp"
+                app:cornerRadius="12dp"
+                app:backgroundTint="#F5F5F5"
                 android:textColor="@color/text_gray"
-                app:strokeColor="#E0E0E0" />
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnFilterAktif"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
-                android:layout_height="36dp"
+                android:layout_height="40dp"
                 android:layout_marginEnd="8dp"
-                android:text="Aktif"
+                android:text="Disetujui"
                 android:textAllCaps="false"
-                android:textSize="12sp"
+                android:textSize="13sp"
+                app:cornerRadius="12dp"
+                app:backgroundTint="#F5F5F5"
                 android:textColor="@color/text_gray"
-                app:strokeColor="#E0E0E0" />
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton" />
 
-            <Button
-                android:id="@+id/btnFilterSelesai"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:layout_marginEnd="8dp"
-                android:text="Selesai"
-                android:textAllCaps="false"
-                android:textSize="12sp"
-                android:textColor="@color/text_gray"
-                app:strokeColor="#E0E0E0" />
-
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnFilterDibatalkan"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:text="Dibatalkan"
+                android:layout_height="40dp"
+                android:text="Ditolak"
                 android:textAllCaps="false"
-                android:textSize="12sp"
+                android:textSize="13sp"
+                app:cornerRadius="12dp"
+                app:backgroundTint="#F5F5F5"
                 android:textColor="@color/text_gray"
-                app:strokeColor="#E0E0E0" />
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton" />
         </LinearLayout>
     </HorizontalScrollView>
 
-    <!-- List -->
-    <ScrollView
+    <!-- List Area -->
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/bottomNav"
         android:layout_below="@id/tabScroll"
-        android:layout_marginTop="16dp">
+        android:layout_marginTop="8dp">
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/containerStalls"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp">
+                    <!-- Items injected here -->
+                </LinearLayout>
+
+                <!-- Footer List -->
+                <LinearLayout
+                    android:id="@+id/layoutFooterList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:paddingVertical="24dp"
+                    android:visibility="gone">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tidak menemukan pengajuan?"
+                        android:textColor="@color/admin_primary"
+                        android:textStyle="bold"
+                        android:textSize="13sp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="↓ Tarik ke bawah untuk memuat ulang"
+                        android:textColor="@color/text_gray"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+        <!-- Empty State -->
         <LinearLayout
-            android:id="@+id/containerStalls"
+            android:id="@+id/layoutEmptyState"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:orientation="vertical"
-            android:paddingHorizontal="16dp">
-            <!-- Items injected here -->
-        </LinearLayout>
-    </ScrollView>
+            android:gravity="center"
+            android:paddingHorizontal="40dp"
+            android:visibility="gone">
 
-    <!-- Bottom Navigation Bar -->
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:src="@drawable/ic_pengajuan"
+                android:alpha="0.3"
+                app:tint="@color/admin_primary" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Belum ada pengajuan"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Kamu belum mengajukan partisipasi ke event atau lokasi manapun."
+                android:textColor="@color/text_gray"
+                android:textSize="14sp"
+                android:gravity="center" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnBuatPengajuanBaru"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="32dp"
+                android:text="Buat Pengajuan Baru"
+                android:textAllCaps="false"
+                android:textStyle="bold"
+                app:cornerRadius="12dp"
+                app:backgroundTint="@color/admin_primary"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <!-- Bottom Navigation Bar UMKM -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
+        android:layout_height="72dp"
         android:layout_alignParentBottom="true"
         app:cardElevation="16dp"
         app:cardCornerRadius="0dp">
@@ -167,25 +256,7 @@
                     android:textSize="10sp"
                     android:textColor="@color/text_gray"/>
             </LinearLayout>
-            <LinearLayout
-                android:id="@+id/navLapak"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center">
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@android:drawable/ic_menu_view"
-                    app:tint="@color/blue_primary"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Lapak Saya"
-                    android:textSize="10sp"
-                    android:textColor="@color/blue_primary"/>
-            </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/navNotif"
                 android:layout_width="0dp"

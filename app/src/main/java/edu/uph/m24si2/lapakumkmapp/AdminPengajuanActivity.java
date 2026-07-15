@@ -86,8 +86,8 @@ public class AdminPengajuanActivity extends AppCompatActivity {
             tvUsaha.setText(p.getNamaUmkm());
             tvCategory.setText("Kuliner");
             tvStatus.setText(p.getStatus());
-            tvTime.setText("Diajukan: 2 jam yang lalu");
-            tvUser.setText("Oleh: Ahmad Rizki");
+            tvTime.setText("Diajukan: " + p.getTanggal());
+            tvUser.setText("Oleh: " + p.getUserName());
 
             // Set status appearance
             if (p.getStatus().equals("Menunggu")) {

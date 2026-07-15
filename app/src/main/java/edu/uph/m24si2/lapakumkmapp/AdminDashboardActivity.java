@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import java.util.List;
 
 public class AdminDashboardActivity extends AppCompatActivity {
@@ -63,20 +64,23 @@ public class AdminDashboardActivity extends AppCompatActivity {
             TextView tvStatus = itemView.findViewById(R.id.tvStatusBadge);
 
             tvUsaha.setText(p.getNamaUmkm());
-            tvCategory.setText("Kuliner"); // Simplified
+            tvCategory.setText(p.getNamaEvent());
             tvStatus.setText(p.getStatus());
             
-            // Set status color and background
-            if (p.getStatus().equals("Menunggu")) {
+            // Status Styling
+            if (p.getStatus().equals("Menunggu") || p.getStatus().equals("Baru")) {
                 tvStatus.setText("Baru");
-                tvStatus.setTextColor(getResources().getColor(R.color.admin_primary));
+                tvStatus.setTextColor(ContextCompat.getColor(this, R.color.admin_primary));
                 tvStatus.setBackgroundResource(R.drawable.bg_tag_new);
             } else if (p.getStatus().equals("Disetujui")) {
-                tvStatus.setTextColor(getResources().getColor(R.color.status_approved));
+                tvStatus.setTextColor(ContextCompat.getColor(this, R.color.status_approved));
                 tvStatus.setBackgroundResource(R.drawable.bg_tag_approved);
             } else if (p.getStatus().equals("Ditolak")) {
-                tvStatus.setTextColor(getResources().getColor(R.color.status_rejected));
+                tvStatus.setTextColor(ContextCompat.getColor(this, R.color.status_rejected));
                 tvStatus.setBackgroundResource(R.drawable.bg_tag_rejected);
+            } else if (p.getStatus().equals("Diproses")) {
+                tvStatus.setTextColor(ContextCompat.getColor(this, R.color.status_processing));
+                tvStatus.setBackgroundResource(R.drawable.bg_tag_processing);
             }
 
             itemView.setOnClickListener(v -> {
@@ -85,6 +89,15 @@ public class AdminDashboardActivity extends AppCompatActivity {
 
             container.addView(itemView);
             count++;
+        }
+
+        if (count == 0) {
+            TextView emptyText = new TextView(this);
+            emptyText.setText("Belum ada pengajuan terbaru");
+            emptyText.setGravity(android.view.Gravity.CENTER);
+            emptyText.setPadding(0, 50, 0, 50);
+            emptyText.setTextColor(ContextCompat.getColor(this, R.color.text_gray));
+            container.addView(emptyText);
         }
     }
 }

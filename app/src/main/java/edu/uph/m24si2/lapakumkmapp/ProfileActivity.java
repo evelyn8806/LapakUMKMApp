@@ -39,14 +39,12 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void updateStatistics() {
-        java.util.List<PengajuanModel> list = PengajuanManager.getInstance().getListPengajuan();
-        int total = list.size();
-        int disetujui = 0;
-        for (PengajuanModel p : list) {
-            if (p.getStatus().equalsIgnoreCase("Aktif") || p.getStatus().equalsIgnoreCase("Disetujui")) {
-                disetujui++;
-            }
-        }
+        android.content.SharedPreferences sharedPref = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        String email = sharedPref.getString("email", "");
+        
+        int total = PengajuanManager.getInstance().getTotalPengajuanByUser(email);
+        int disetujui = PengajuanManager.getInstance()
+                .getDisetujuiByUser(email);
 
         ((TextView) findViewById(R.id.tvTotalPengajuan)).setText(String.valueOf(total));
         ((TextView) findViewById(R.id.tvPengajuanDisetujui)).setText(String.valueOf(disetujui));
@@ -68,10 +66,7 @@ public class ProfileActivity extends AppCompatActivity {
             startActivity(new Intent(this, ExplorationMapActivity.class));
             finish();
         });
-        findViewById(R.id.navLapak).setOnClickListener(v -> {
-            startActivity(new Intent(this, MyStallsActivity.class));
-            finish();
-        });
+
         findViewById(R.id.navNotif).setOnClickListener(v -> {
             startActivity(new Intent(this, NotificationsActivity.class));
             finish();

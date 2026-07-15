@@ -2,10 +2,10 @@ package edu.uph.m24si2.lapakumkmapp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import androidx.core.content.ContextCompat;
 
 public class AdminNavigationHelper {
@@ -17,15 +17,6 @@ public class AdminNavigationHelper {
         setupNavItem(activity, bottomNav.findViewById(R.id.navAdminDashboard), AdminDashboardActivity.class, activeId == R.id.navAdminDashboard);
         setupNavItem(activity, bottomNav.findViewById(R.id.navAdminPengajuan), AdminPengajuanActivity.class, activeId == R.id.navAdminPengajuan);
         setupNavItem(activity, bottomNav.findViewById(R.id.navAdminPengguna), AdminPenggunaActivity.class, activeId == R.id.navAdminPengguna);
-        
-        // Laporan - Placeholder
-        bottomNav.findViewById(R.id.navAdminLaporan).setOnClickListener(v -> 
-            Toast.makeText(activity, "Fitur Laporan akan segera hadir", Toast.LENGTH_SHORT).show()
-        );
-        if (activeId == R.id.navAdminLaporan) {
-            updateItemStyle(activity, bottomNav.findViewById(R.id.navAdminLaporan), true);
-        }
-
         setupNavItem(activity, bottomNav.findViewById(R.id.navAdminAkun), AccountActivity.class, activeId == R.id.navAdminAkun);
     }
 
@@ -38,7 +29,7 @@ public class AdminNavigationHelper {
             if (activity.getClass() != targetActivity) {
                 Intent intent = new Intent(activity, targetActivity);
                 activity.startActivity(intent);
-                if (!(activity instanceof AccountActivity)) {
+                if (!targetActivity.getSimpleName().equals("AccountActivity")) {
                     activity.finish();
                 }
             }
@@ -58,18 +49,17 @@ public class AdminNavigationHelper {
         } else if (itemView.getId() == R.id.navAdminPengguna) {
             icon = itemView.findViewById(R.id.ivNavPengguna);
             text = itemView.findViewById(R.id.tvNavPengguna);
-        } else if (itemView.getId() == R.id.navAdminLaporan) {
-            icon = itemView.findViewById(R.id.ivNavLaporan);
-            text = itemView.findViewById(R.id.tvNavLaporan);
         } else if (itemView.getId() == R.id.navAdminAkun) {
             icon = itemView.findViewById(R.id.ivNavAkun);
             text = itemView.findViewById(R.id.tvNavAkun);
         }
 
         if (icon != null && text != null) {
-            int color = isActive ? ContextCompat.getColor(activity, R.color.admin_primary) : ContextCompat.getColor(activity, R.color.text_gray);
-            icon.setColorFilter(color);
-            text.setTextColor(color);
+            int activeColor = Color.parseColor("#7B61FF");
+            int inactiveColor = ContextCompat.getColor(activity, R.color.text_gray);
+            
+            icon.setColorFilter(isActive ? activeColor : inactiveColor);
+            text.setTextColor(isActive ? activeColor : inactiveColor);
         }
     }
 }

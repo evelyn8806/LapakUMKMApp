@@ -9,14 +9,6 @@ public class PengajuanManager {
 
     private PengajuanManager() {
         listPengajuan = new ArrayList<>();
-        // Data Awal untuk Demo Admin (based on image)
-        listPengajuan.add(new PengajuanModel("1", "Bakso Berkah", "Festival Kuliner", "2 jam lalu", "Menunggu"));
-        listPengajuan.add(new PengajuanModel("2", "Kreasi Anyaman", "Bazaar Kerajinan", "5 jam lalu", "Diproses"));
-        listPengajuan.add(new PengajuanModel("3", "Jajanan Tradisional", "Festival Kuliner", "1 hari lalu", "Disetujui"));
-        listPengajuan.add(new PengajuanModel("4", "Dapur Mama", "Festival Kuliner", "2 hari lalu", "Ditolak"));
-        
-        listPengajuan.add(new PengajuanModel("5", "Kopi Nikmat", "Festival Kuliner Nusantara", "01 Des 2024", "Menunggu"));
-        listPengajuan.add(new PengajuanModel("6", "Dapur Mbak Sari", "Pasar Malam Tahun Baru", "25 Des 2024", "Disetujui"));
     }
 
     public static synchronized PengajuanManager getInstance() {
@@ -30,14 +22,28 @@ public class PengajuanManager {
         return listPengajuan;
     }
 
-    public void tambahPengajuan(String namaUmkm, String namaEvent, String tanggal) {
-        String id = String.valueOf(listPengajuan.size() + 1);
-        listPengajuan.add(0, new PengajuanModel(id, namaUmkm, namaEvent, tanggal, "Menunggu"));
+    public List<PengajuanModel> getListPengajuanByUser(String email) {
+        List<PengajuanModel> userList = new ArrayList<>();
+        for (PengajuanModel p : listPengajuan) {
+            if (p.getUserEmail() != null && p.getUserEmail().equalsIgnoreCase(email)) {
+                userList.add(p);
+            }
+        }
+        return userList;
     }
 
-    public int getTotalEvent() { return 24; } // Dummy data
+    public void tambahPengajuan(String namaUmkm, String namaEvent, String tanggal, String userEmail, String userName) {
+        String id = String.valueOf(listPengajuan.size() + 1);
+        listPengajuan.add(0, new PengajuanModel(id, namaUmkm, namaEvent, tanggal, "Menunggu", userEmail, userName));
+    }
+
+    public int getTotalEvent() { return 24; } 
     
     public int getTotalPengajuan() { return listPengajuan.size(); }
+
+    public int getTotalPengajuanByUser(String email) {
+        return getListPengajuanByUser(email).size();
+    }
     
     public int getMenungguVerifikasi() {
         int count = 0;
@@ -59,6 +65,16 @@ public class PengajuanManager {
         int count = 0;
         for (PengajuanModel p : listPengajuan) {
             if (p.getStatus().equals("Disetujui") || p.getStatus().equals("Aktif")) count++;
+        }
+        return count;
+    }
+
+    public int getDisetujuiByUser(String email) {
+        int count = 0;
+        for (PengajuanModel p : getListPengajuanByUser(email)) {
+            if (p.getStatus().equals("Disetujui") || p.getStatus().equals("Aktif")) {
+                count++;
+            }
         }
         return count;
     }

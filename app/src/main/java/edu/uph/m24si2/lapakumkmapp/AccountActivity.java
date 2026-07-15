@@ -92,10 +92,7 @@ public class AccountActivity extends AppCompatActivity {
                 finish();
             });
 
-            findViewById(R.id.navLapak).setOnClickListener(v -> {
-                startActivity(new Intent(this, MyStallsActivity.class));
-                finish();
-            });
+
 
             findViewById(R.id.navNotif).setOnClickListener(v -> {
                 startActivity(new Intent(this, NotificationsActivity.class));

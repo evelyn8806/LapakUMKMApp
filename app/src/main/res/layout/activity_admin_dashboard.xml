@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:text="Halo, Admin! 👋"
                 android:textColor="@color/black"
-                android:textSize="22sp"
+                android:textSize="24sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -38,19 +38,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:columnCount="2"
-                android:rowCount="2">
+                android:columnCount="2">
 
                 <!-- Pengajuan Baru -->
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
-                    android:layout_margin="6dp"
+                    android:layout_margin="8dp"
                     app:cardCornerRadius="16dp"
-                    app:cardElevation="0dp"
-                    app:strokeWidth="1dp"
-                    app:strokeColor="#F5F5F5">
+                    app:cardElevation="2dp"
+                    app:strokeWidth="0dp">
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -59,18 +57,25 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Pengajuan Baru" android:textSize="11sp" android:textColor="@color/admin_primary" android:textStyle="bold"/>
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Pengajuan Baru" android:textSize="11sp" android:textColor="#7B61FF" android:textStyle="bold"/>
                             <TextView android:id="@+id/tvTotalNew" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="12" android:textSize="28sp" android:textStyle="bold" android:textColor="@color/black" android:layout_marginTop="8dp"/>
                             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="+3 hari ini" android:textSize="10sp" android:textColor="@color/text_gray"/>
                         </LinearLayout>
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            android:src="@drawable/ic_pengajuan"
-                            app:tint="@color/admin_primary"
-                            android:alpha="0.2"/>
+                            app:cardCornerRadius="8dp"
+                            app:cardBackgroundColor="#F0EEFF"
+                            app:cardElevation="0dp">
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center"
+                                android:src="@android:drawable/ic_menu_save"
+                                app:tint="#7B61FF" />
+                        </com.google.android.material.card.MaterialCardView>
                     </RelativeLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -79,11 +84,10 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
-                    android:layout_margin="6dp"
+                    android:layout_margin="8dp"
                     app:cardCornerRadius="16dp"
-                    app:cardElevation="0dp"
-                    app:strokeWidth="1dp"
-                    app:strokeColor="#F5F5F5">
+                    app:cardElevation="2dp"
+                    app:strokeWidth="0dp">
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -92,18 +96,25 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Pengajuan Diproses" android:textSize="11sp" android:textColor="@color/black" android:textStyle="bold"/>
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Pengajuan Diproses" android:textSize="11sp" android:textColor="#FFB74D" android:textStyle="bold"/>
                             <TextView android:id="@+id/tvTotalProcessing" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="25" android:textSize="28sp" android:textStyle="bold" android:textColor="@color/black" android:layout_marginTop="8dp"/>
                             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Dalam proses" android:textSize="10sp" android:textColor="@color/text_gray"/>
                         </LinearLayout>
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            android:src="@drawable/ic_clock"
-                            app:tint="@color/status_processing"
-                            android:alpha="0.2"/>
+                            app:cardCornerRadius="8dp"
+                            app:cardBackgroundColor="#FFF3E0"
+                            app:cardElevation="0dp">
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center"
+                                android:src="@android:drawable/ic_menu_recent_history"
+                                app:tint="#FFB74D" />
+                        </com.google.android.material.card.MaterialCardView>
                     </RelativeLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -112,11 +123,10 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
-                    android:layout_margin="6dp"
+                    android:layout_margin="8dp"
                     app:cardCornerRadius="16dp"
-                    app:cardElevation="0dp"
-                    app:strokeWidth="1dp"
-                    app:strokeColor="#F5F5F5">
+                    app:cardElevation="2dp"
+                    app:strokeWidth="0dp">
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -125,18 +135,25 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Pengajuan Disetujui" android:textSize="11sp" android:textColor="@color/black" android:textStyle="bold"/>
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Pengajuan Disetujui" android:textSize="11sp" android:textColor="#81C784" android:textStyle="bold"/>
                             <TextView android:id="@+id/tvTotalApproved" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="48" android:textSize="28sp" android:textStyle="bold" android:textColor="@color/black" android:layout_marginTop="8dp"/>
                             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="+8 minggu ini" android:textSize="10sp" android:textColor="@color/text_gray"/>
                         </LinearLayout>
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            android:src="@drawable/ic_check_circle"
-                            app:tint="@color/status_approved"
-                            android:alpha="0.2"/>
+                            app:cardCornerRadius="8dp"
+                            app:cardBackgroundColor="#E8F5E9"
+                            app:cardElevation="0dp">
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center"
+                                android:src="@android:drawable/checkbox_on_background"
+                                app:tint="#81C784" />
+                        </com.google.android.material.card.MaterialCardView>
                     </RelativeLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -145,11 +162,10 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
-                    android:layout_margin="6dp"
+                    android:layout_margin="8dp"
                     app:cardCornerRadius="16dp"
-                    app:cardElevation="0dp"
-                    app:strokeWidth="1dp"
-                    app:strokeColor="#F5F5F5">
+                    app:cardElevation="2dp"
+                    app:strokeWidth="0dp">
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -158,18 +174,25 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Pengajuan Ditolak" android:textSize="11sp" android:textColor="@color/black" android:textStyle="bold"/>
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Pengajuan Ditolak" android:textSize="11sp" android:textColor="#E57373" android:textStyle="bold"/>
                             <TextView android:id="@+id/tvTotalRejected" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="5" android:textSize="28sp" android:textStyle="bold" android:textColor="@color/black" android:layout_marginTop="8dp"/>
                             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Perlu ditinjau" android:textSize="10sp" android:textColor="@color/text_gray"/>
                         </LinearLayout>
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            android:src="@drawable/ic_cancel_circle"
-                            app:tint="@color/status_rejected"
-                            android:alpha="0.2"/>
+                            app:cardCornerRadius="8dp"
+                            app:cardBackgroundColor="#FFEBEE"
+                            app:cardElevation="0dp">
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center"
+                                android:src="@android:drawable/ic_delete"
+                                app:tint="#E57373" />
+                        </com.google.android.material.card.MaterialCardView>
                     </RelativeLayout>
                 </com.google.android.material.card.MaterialCardView>
             </GridLayout>
@@ -193,7 +216,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:text="Lihat semua"
-                    android:textColor="@color/admin_primary"
+                    android:textColor="#7B61FF"
                     android:textSize="12sp"
                     android:textStyle="bold"/>
             </RelativeLayout>
@@ -203,7 +226,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <!-- Items injected dynamically using item_pengajuan_admin_dashboard.xml -->
+                <!-- Items -->
             </LinearLayout>
 
         </LinearLayout>

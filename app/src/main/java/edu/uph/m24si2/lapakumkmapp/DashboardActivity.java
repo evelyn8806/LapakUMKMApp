@@ -62,14 +62,16 @@ public class DashboardActivity extends AppCompatActivity {
             startActivity(new Intent(DashboardActivity.this, FilterActivity.class));
         });
 
+        findViewById(R.id.menuPengajuan).setOnClickListener(v -> {
+            startActivity(new Intent(DashboardActivity.this, MyStallsActivity.class));
+        });
+
         // Bottom Nav Listeners
         findViewById(R.id.navEksplorasi).setOnClickListener(v -> {
             startActivity(new Intent(DashboardActivity.this, ExplorationMapActivity.class));
         });
 
-        findViewById(R.id.navLapak).setOnClickListener(v -> {
-            startActivity(new Intent(DashboardActivity.this, StatusPengajuanActivity.class));
-        });
+
 
         findViewById(R.id.navNotif).setOnClickListener(v -> {
             startActivity(new Intent(DashboardActivity.this, NotificationsActivity.class));

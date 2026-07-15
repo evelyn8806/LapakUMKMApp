@@ -20,7 +20,14 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPref = getSharedPreferences("UserPrefs", MODE_PRIVATE);
         boolean isRemembered = sharedPref.getBoolean("isLoggedIn", false);
         if (isRemembered) {
-            Intent intent = new Intent(MainActivity.this, DashboardActivity.class);
+            String email = sharedPref.getString("email", "");
+            String role = sharedPref.getString("role", "");
+            Intent intent;
+            if (email.contains("admin") || "ADMIN".equals(role)) {
+                intent = new Intent(MainActivity.this, AdminDashboardActivity.class);
+            } else {
+                intent = new Intent(MainActivity.this, DashboardActivity.class);
+            }
             startActivity(intent);
             finish();
             return;

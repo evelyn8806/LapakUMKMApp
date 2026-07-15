@@ -25,7 +25,7 @@
                 android:layout_height="64dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/pasar_malam"
-                app:shapeAppearanceOverlay="@style/ShapeAppearance.MaterialComponents.MediumComponent"/>
+                app:shapeAppearanceOverlay="@style/CircleImageView"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

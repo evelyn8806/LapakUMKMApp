@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import com.google.android.material.button.MaterialButton;
+import java.util.List;
 
 public class AdminPenggunaActivity extends AppCompatActivity {
 
@@ -61,39 +62,49 @@ public class AdminPenggunaActivity extends AppCompatActivity {
         
         container.removeAllViews();
         
-        // Dummy Users based on the image
-        addUser(container, "Siti Nur Aisyah", "sitinuraisyah@email.com", "Pelaku UMKM");
-        addUser(container, "Ahmad Rizki", "ahmadrizki@email.com", "Pelaku UMKM");
-        addUser(container, "Budi Santoso", "budisantoso@email.com", "Pelaku UMKM");
-        addUser(container, "Dewi Lestari", "dewilestari@email.com", "Pelaku UMKM");
-        addUser(container, "Rina Handayani", "rina.handayani@email.com", "Pelaku UMKM");
-        addUser(container, "Admin Utama", "admin@umkmapp.com", "Admin");
-    }
+        List<UserModel> users = UserManager.getInstance().getListUsers();
+        boolean hasItems = false;
 
-    private void addUser(LinearLayout container, String name, String email, String role) {
-        // Filter logic
-        if (!currentFilter.equals("Semua") && !currentFilter.equals(role)) {
-            return;
+        for (UserModel user : users) {
+            // Filter logic
+            String roleTag = user.getRole().equals("ADMIN") ? "Admin" : "Pelaku UMKM";
+            if (!currentFilter.equals("Semua") && !currentFilter.equals(roleTag)) {
+                continue;
+            }
+
+            hasItems = true;
+            addUserView(container, user);
         }
 
+        if (!hasItems) {
+            TextView emptyText = new TextView(this);
+            emptyText.setText("Belum ada pengguna terdaftar");
+            emptyText.setGravity(android.view.Gravity.CENTER);
+            emptyText.setPadding(0, 100, 0, 0);
+            emptyText.setTextColor(ContextCompat.getColor(this, R.color.text_gray));
+            container.addView(emptyText);
+        }
+    }
+
+    private void addUserView(LinearLayout container, UserModel user) {
         View itemView = getLayoutInflater().inflate(R.layout.item_admin_user, container, false);
-        ((TextView) itemView.findViewById(R.id.tvUserName)).setText(name);
-        ((TextView) itemView.findViewById(R.id.tvUserEmail)).setText(email);
+        ((TextView) itemView.findViewById(R.id.tvUserName)).setText(user.getNama());
+        ((TextView) itemView.findViewById(R.id.tvUserEmail)).setText(user.getEmail());
         
         TextView tvRole = itemView.findViewById(R.id.tvUserRoleTag);
-        tvRole.setText(role);
+        String roleTag = user.getRole().equals("ADMIN") ? "Admin" : "Pelaku UMKM";
+        tvRole.setText(roleTag);
         
-        if (role.equals("Admin")) {
+        if (user.getRole().equals("ADMIN")) {
             tvRole.setTextColor(Color.parseColor("#2196F3"));
-            tvRole.setBackgroundResource(R.drawable.bg_tag_new); // Reuse or create new
-            // Re-tint background if needed
+            tvRole.setBackgroundResource(R.drawable.bg_tag_new);
             tvRole.getBackground().setTint(Color.parseColor("#E3F2FD"));
         } else {
             tvRole.setTextColor(ContextCompat.getColor(this, R.color.admin_primary));
             tvRole.setBackgroundResource(R.drawable.bg_tag_new);
         }
         
-        itemView.setOnClickListener(v -> Toast.makeText(this, "Detail " + name, Toast.LENGTH_SHORT).show());
+        itemView.setOnClickListener(v -> Toast.makeText(this, "Detail " + user.getNama(), Toast.LENGTH_SHORT).show());
         container.addView(itemView);
     }
 }

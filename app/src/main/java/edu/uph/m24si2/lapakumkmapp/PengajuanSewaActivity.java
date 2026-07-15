@@ -137,8 +137,12 @@ public class PengajuanSewaActivity extends AppCompatActivity {
             String namaUmkm = etNamaUsaha.getText().toString();
             String namaEvent = tvReviewNamaEvent.getText().toString();
             String tanggal = "01 Jan 2025"; // Bisa ambil dari DatePicker
+            
+            android.content.SharedPreferences sharedPref = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+            String userEmail = sharedPref.getString("email", "email@example.com");
+            String userName = sharedPref.getString("nama", "User");
 
-            PengajuanManager.getInstance().tambahPengajuan(namaUmkm, namaEvent, tanggal);
+            PengajuanManager.getInstance().tambahPengajuan(namaUmkm, namaEvent, tanggal, userEmail, userName);
 
             // Reset timer pembayaran untuk pengajuan baru
             getSharedPreferences("LapakUMKMPrefs", MODE_PRIVATE)

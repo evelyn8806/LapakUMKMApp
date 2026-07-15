@@ -150,15 +150,16 @@
                 </RelativeLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Section: Lapak Saya (Baru Ditambahkan) -->
+            <!-- Section: Pengajuan (Baru Ditambahkan) -->
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
                 android:text="Lapak Saya"
                 android:textColor="@color/text_dark"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="12dp" />
+                android:textStyle="bold" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardPendingPayment"
@@ -274,12 +275,16 @@
 
                 <!-- Pengajuan -->
                 <LinearLayout
+                    android:id="@+id/menuPengajuan"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="8dp">
+                    android:padding="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground">
 
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="48dp"
@@ -643,28 +648,7 @@
                     android:textSize="10sp"
                     android:textColor="@color/text_gray"/>
             </LinearLayout>
-            <LinearLayout
-                android:id="@+id/navLapak"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:clickable="true"
-                android:focusable="true"
-                android:background="?attr/selectableItemBackground">
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@android:drawable/ic_menu_view"
-                    app:tint="@color/text_gray"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Lapak Saya"
-                    android:textSize="10sp"
-                    android:textColor="@color/text_gray"/>
-            </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/navNotif"
                 android:layout_width="0dp"

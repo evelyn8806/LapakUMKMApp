@@ -4,21 +4,21 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import com.google.android.material.button.MaterialButton;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MyStallsActivity extends AppCompatActivity {
 
     private LinearLayout containerStalls;
-    private Button btnSemua, btnProses, btnAktif, btnSelesai, btnDibatalkan;
-    private List<Button> filterButtons = new ArrayList<>();
+    private MaterialButton btnSemua, btnProses, btnAktif, btnDibatalkan;
+    private List<MaterialButton> filterButtons = new ArrayList<>();
+    private String currentFilter = "Semua";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,58 +30,65 @@ public class MyStallsActivity extends AppCompatActivity {
         btnSemua = findViewById(R.id.btnFilterSemua);
         btnProses = findViewById(R.id.btnFilterProses);
         btnAktif = findViewById(R.id.btnFilterAktif);
-        btnSelesai = findViewById(R.id.btnFilterSelesai);
         btnDibatalkan = findViewById(R.id.btnFilterDibatalkan);
 
         filterButtons.add(btnSemua);
         filterButtons.add(btnProses);
         filterButtons.add(btnAktif);
-        filterButtons.add(btnSelesai);
         filterButtons.add(btnDibatalkan);
 
         setupFilters();
         setupBottomNav();
+        
+        findViewById(R.id.btnBuatPengajuanBaru).setOnClickListener(v -> {
+            startActivity(new Intent(this, DashboardActivity.class));
+            finish();
+        });
         
         // Load initial data
         loadStalls("Semua");
     }
 
     private void setupFilters() {
-        btnSemua.setOnClickListener(v -> loadStalls("Semua"));
-        btnProses.setOnClickListener(v -> loadStalls("Proses"));
-        btnAktif.setOnClickListener(v -> loadStalls("Aktif"));
-        btnSelesai.setOnClickListener(v -> loadStalls("Selesai"));
-        btnDibatalkan.setOnClickListener(v -> loadStalls("Dibatalkan"));
+        for (MaterialButton btn : filterButtons) {
+            btn.setOnClickListener(v -> {
+                currentFilter = btn.getText().toString();
+                loadStalls(currentFilter);
+            });
+        }
     }
 
     private void loadStalls(String filter) {
         updateFilterUI(filter);
         containerStalls.removeAllViews();
+        View layoutEmptyState = findViewById(R.id.layoutEmptyState);
+        View layoutFooter = findViewById(R.id.layoutFooterList);
         
-        List<PengajuanModel> allList = PengajuanManager.getInstance().getListPengajuan();
+        android.content.SharedPreferences sharedPref = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        String email = sharedPref.getString("email", "");
+        List<PengajuanModel> allList = PengajuanManager.getInstance().getListPengajuanByUser(email);
         List<PengajuanModel> filteredList = new ArrayList<>();
 
         for (PengajuanModel p : allList) {
+            String status = p.getStatus();
             if (filter.equals("Semua")) {
                 filteredList.add(p);
-            } else if (filter.equals("Proses")) {
-                if (p.getStatus().contains("Menunggu")) filteredList.add(p);
-            } else if (filter.equals("Aktif")) {
-                if (p.getStatus().equals("Aktif") || p.getStatus().equals("Disetujui")) filteredList.add(p);
-            } else if (filter.equals("Selesai")) {
-                if (p.getStatus().equals("Selesai")) filteredList.add(p);
-            } else if (filter.equals("Dibatalkan")) {
-                if (p.getStatus().equals("Dibatalkan") || p.getStatus().equals("Ditolak")) filteredList.add(p);
+            } else if (filter.equals("Diproses")) {
+                if (status.equals("Menunggu") || status.equals("Diproses")) filteredList.add(p);
+            } else if (filter.equals("Disetujui")) {
+                if (status.equals("Disetujui") || status.equals("Aktif")) filteredList.add(p);
+            } else if (filter.equals("Ditolak")) {
+                if (status.equals("Ditolak") || status.equals("Dibatalkan")) filteredList.add(p);
             }
         }
 
         if (filteredList.isEmpty()) {
-            TextView emptyTv = new TextView(this);
-            emptyTv.setText("Tidak ada data untuk kategori ini.");
-            emptyTv.setGravity(android.view.Gravity.CENTER);
-            emptyTv.setPadding(0, 100, 0, 0);
-            containerStalls.addView(emptyTv);
+            if (layoutEmptyState != null) layoutEmptyState.setVisibility(View.VISIBLE);
+            if (layoutFooter != null) layoutFooter.setVisibility(View.GONE);
             return;
+        } else {
+            if (layoutEmptyState != null) layoutEmptyState.setVisibility(View.GONE);
+            if (layoutFooter != null) layoutFooter.setVisibility(View.VISIBLE);
         }
 
         for (PengajuanModel p : filteredList) {
@@ -91,70 +98,48 @@ public class MyStallsActivity extends AppCompatActivity {
             TextView tvLocation = itemView.findViewById(R.id.tvStallLocation);
             TextView tvStatus = itemView.findViewById(R.id.tvStallStatus);
             TextView tvDate = itemView.findViewById(R.id.tvStallDate);
-            Button btnAction = itemView.findViewById(R.id.btnStallAction);
             ImageView ivImage = itemView.findViewById(R.id.ivStallImage);
 
             tvName.setText(p.getNamaEvent());
-            tvLocation.setText("Lokasi Event"); // Dummy location if not in model
+            tvLocation.setText("Lokasi Event"); 
             tvStatus.setText(p.getStatus());
-            tvDate.setText(p.getStatus().contains("Menunggu") ? "Diajukan: " + p.getTanggal() : p.getTanggal());
+            tvDate.setText("Diajukan: " + p.getTanggal());
 
-            // Set Status Style
-            if (p.getStatus().equals("Menunggu")) {
-                tvStatus.setBackgroundColor(Color.parseColor("#FFF8E1"));
-                tvStatus.setTextColor(Color.parseColor("#FF8F00"));
-                tvStatus.setText("Menunggu Verifikasi");
-                btnAction.setText("Lihat Detail");
-                btnAction.setOnClickListener(v -> onLihatDetailClick(v));
-            } else if (p.getStatus().equals("Menunggu Pembayaran")) {
-                tvStatus.setBackgroundColor(Color.parseColor("#FFF3E0"));
-                tvStatus.setTextColor(Color.parseColor("#E65100"));
-                btnAction.setText("Lanjutkan Pembayaran");
-                btnAction.setOnClickListener(v -> onBayarClick(v));
-                ivImage.setImageResource(R.drawable.pasar_malam);
-            } else if (p.getStatus().equals("Aktif") || p.getStatus().equals("Disetujui")) {
-                tvStatus.setBackgroundColor(Color.parseColor("#E8F5E9"));
-                tvStatus.setTextColor(Color.parseColor("#2E7D32"));
-                tvStatus.setText("Aktif");
-                btnAction.setText("Lihat E-Tiket");
-                btnAction.setOnClickListener(v -> onLihatETicketClick(v));
-            } else if (p.getStatus().equals("Selesai")) {
-                tvStatus.setBackgroundColor(Color.parseColor("#F5F5F5"));
-                tvStatus.setTextColor(Color.parseColor("#757575"));
-                btnAction.setVisibility(View.GONE);
+            // Status Styling
+            if (p.getStatus().equals("Menunggu") || p.getStatus().equals("Diproses")) {
+                tvStatus.setText("Diproses");
+                tvStatus.setTextColor(ContextCompat.getColor(this, R.color.status_processing));
+                tvStatus.setBackgroundResource(R.drawable.bg_tag_processing);
+            } else if (p.getStatus().equals("Disetujui") || p.getStatus().equals("Aktif")) {
+                tvStatus.setText("Disetujui");
+                tvStatus.setTextColor(ContextCompat.getColor(this, R.color.status_approved));
+                tvStatus.setBackgroundResource(R.drawable.bg_tag_approved);
+            } else if (p.getStatus().equals("Ditolak") || p.getStatus().equals("Dibatalkan")) {
+                tvStatus.setText("Ditolak");
+                tvStatus.setTextColor(ContextCompat.getColor(this, R.color.status_rejected));
+                tvStatus.setBackgroundResource(R.drawable.bg_tag_rejected);
             }
+
+            itemView.setOnClickListener(v -> {
+                Intent intent = new Intent(this, LapakDetailActivity.class);
+                intent.putExtra("nama_lapak", p.getNamaEvent());
+                startActivity(intent);
+            });
 
             containerStalls.addView(itemView);
         }
     }
 
     private void updateFilterUI(String selectedFilter) {
-        for (Button btn : filterButtons) {
+        for (MaterialButton btn : filterButtons) {
             if (btn.getText().toString().equals(selectedFilter)) {
-                btn.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.blue_primary));
+                btn.setBackgroundTintList(android.content.res.ColorStateList.valueOf(ContextCompat.getColor(this, R.color.admin_primary)));
                 btn.setTextColor(Color.WHITE);
-                // Switch to Unelevated style logic
             } else {
-                btn.setBackgroundTintList(null);
+                btn.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("#F5F5F5")));
                 btn.setTextColor(ContextCompat.getColor(this, R.color.text_gray));
-                // Switch to Outlined style logic
             }
         }
-    }
-
-    public void onLihatDetailClick(View v) {
-        Intent intent = new Intent(this, LapakDetailActivity.class);
-        startActivity(intent);
-    }
-
-    public void onBayarClick(View v) {
-        Intent intent = new Intent(this, PaymentActivity.class);
-        startActivity(intent);
-    }
-
-    public void onLihatETicketClick(View v) {
-        Intent intent = new Intent(this, ETicketActivity.class);
-        startActivity(intent);
     }
 
     private void setupBottomNav() {
