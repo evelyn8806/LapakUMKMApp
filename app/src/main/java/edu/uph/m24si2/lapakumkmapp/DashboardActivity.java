@@ -22,9 +22,8 @@ public class DashboardActivity extends AppCompatActivity {
 
     private MaterialCardView cardEvent1, cardEvent2, cardPendingPayment;
     private Button btnExploreNow, btnBayarSekarang;
-    private TextView tvLihatSemua, tvRekomendasiHeader, tvNoResults;
+    private TextView tvLihatSemua, tvRekomendasiHeader;
     private NestedScrollView nestedScrollView;
-    private EditText etSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +38,6 @@ public class DashboardActivity extends AppCompatActivity {
         tvLihatSemua = findViewById(R.id.tvLihatSemua);
         tvRekomendasiHeader = findViewById(R.id.tvRekomendasiHeader);
         nestedScrollView = findViewById(R.id.nestedScrollView);
-        etSearch = findViewById(R.id.etSearch);
-        tvNoResults = findViewById(R.id.tvNoResults);
 
         // Logic tampilkan card "Perlu Dibayar" jika ada expiry_time di prefs
         long expiryTime = getSharedPreferences("LapakUMKMPrefs", MODE_PRIVATE).getLong("expiry_time", 0);
@@ -81,43 +78,6 @@ public class DashboardActivity extends AppCompatActivity {
             startActivity(new Intent(DashboardActivity.this, AccountActivity.class));
         });
         
-        // 1. Fitur Search
-        etSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String query = s.toString().toLowerCase();
-                boolean anyFound = false;
-
-                if (query.isEmpty()) {
-                    cardEvent1.setVisibility(View.VISIBLE);
-                    cardEvent2.setVisibility(View.VISIBLE);
-                    anyFound = true;
-                } else {
-                    if ("Festival Kuliner Nusantara".toLowerCase().contains(query)) {
-                        cardEvent1.setVisibility(View.VISIBLE);
-                        anyFound = true;
-                    } else {
-                        cardEvent1.setVisibility(View.GONE);
-                    }
-
-                    if ("Pasar Malam Tahun Baru".toLowerCase().contains(query)) {
-                        cardEvent2.setVisibility(View.VISIBLE);
-                        anyFound = true;
-                    } else {
-                        cardEvent2.setVisibility(View.GONE);
-                    }
-                }
-
-                tvNoResults.setVisibility(anyFound ? View.GONE : View.VISIBLE);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {}
-        });
-
         // 2. Klik "Jelajahi Sekarang" scroll ke Rekomendasi
         btnExploreNow.setOnClickListener(new View.OnClickListener() {
             @Override

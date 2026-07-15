@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
             String email = sharedPref.getString("email", "");
             String role = sharedPref.getString("role", "");
             Intent intent;
-            if (email.contains("admin") || "ADMIN".equals(role)) {
+            if ("ADMIN".equals(role) || email.endsWith("@umkm.com")) {
                 intent = new Intent(MainActivity.this, AdminDashboardActivity.class);
             } else {
                 intent = new Intent(MainActivity.this, DashboardActivity.class);

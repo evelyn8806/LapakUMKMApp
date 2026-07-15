@@ -9,6 +9,10 @@ public class UserManager {
 
     private UserManager() {
         listUsers = new ArrayList<>();
+        // Default users
+        listUsers.add(new UserModel("Admin Lapak", "admin@umkm.com", "081122334455", "admin123", "ADMIN"));
+        listUsers.add(new UserModel("Budi Santoso", "budi@gmail.com", "081234567890", "user123", "UMKM"));
+        listUsers.add(new UserModel("Siti Aminah", "siti@gmail.com", "081298765432", "user123", "UMKM"));
     }
 
     public static synchronized UserManager getInstance() {

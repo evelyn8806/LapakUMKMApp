@@ -48,6 +48,10 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, "Harap isi semua data!", Toast.LENGTH_SHORT).show();
                 } else if (!password.equals(confirmPassword)) {
                     Toast.makeText(RegisterActivity.this, "Password tidak cocok!", Toast.LENGTH_SHORT).show();
+                } else if ("ADMIN".equals(role) && !email.endsWith("@umkm.com")) {
+                    Toast.makeText(RegisterActivity.this, "Email Admin harus menggunakan domain @umkm.com", Toast.LENGTH_SHORT).show();
+                } else if ("ADMIN".equals(role) && email.toLowerCase().endsWith("@gmail.com")) {
+                    Toast.makeText(RegisterActivity.this, "Email Admin tidak boleh menggunakan @gmail.com", Toast.LENGTH_SHORT).show();
                 } else {
                     // Simpan data ke SharedPreferences agar bisa login
                     SharedPreferences sharedPref = getSharedPreferences("UserPrefs", MODE_PRIVATE);

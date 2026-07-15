@@ -44,6 +44,11 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
+                if ("ADMIN".equals(role) && !emailInput.endsWith("@umkm.com")) {
+                    Toast.makeText(LoginActivity.this, "Email Admin harus menggunakan @umkm.com", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 // Cek kredensial di UserManager
                 UserModel user = UserManager.getInstance().login(emailInput, passwordInput);
 

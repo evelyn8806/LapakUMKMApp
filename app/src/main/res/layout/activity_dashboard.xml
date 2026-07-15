@@ -56,44 +56,6 @@
                     app:tint="@color/text_dark" />
             </RelativeLayout>
 
-            <!-- Search Bar -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="2dp"
-                app:strokeColor="#E0E0E0"
-                app:strokeWidth="1dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="12dp">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:contentDescription="Search Icon"
-                        android:src="@android:drawable/ic_menu_search"
-                        app:tint="@color/text_gray" />
-
-                    <EditText
-                        android:id="@+id/etSearch"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:background="@android:color/transparent"
-                        android:hint="Cari lokasi, event, atau kata kunci..."
-                        android:imeOptions="actionSearch"
-                        android:inputType="text"
-                        android:textColor="@color/text_gray"
-                        android:textSize="14sp" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
             <!-- Banner Carousel Placeholder -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
@@ -378,16 +340,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tvNoResults"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="24dp"
-                    android:text="Event tidak ditemukan"
-                    android:textColor="@color/text_gray"
-                    android:visibility="gone" />
 
                 <!-- Card 1 -->
                 <com.google.android.material.card.MaterialCardView
