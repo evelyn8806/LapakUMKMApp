@@ -25,7 +25,7 @@ public class AdminPengajuanDetailActivity extends AppCompatActivity {
 
         // Mark as Diproses if status is still Menunggu
         if (pengajuan.getStatus().equals("Menunggu")) {
-            PengajuanManager.getInstance().updateStatus(pengajuan.getId(), "Diproses");
+            PengajuanManager.getInstance().updateStatus(this, pengajuan.getId(), "Diproses");
             NotificationManager.getInstance().addNotification("Aktivitas Admin", 
                 "Anda sedang memproses pengajuan dari " + pengajuan.getNamaUmkm());
         }
@@ -73,7 +73,7 @@ public class AdminPengajuanDetailActivity extends AppCompatActivity {
         }
 
         findViewById(R.id.btnRejectDetail).setOnClickListener(v -> {
-            PengajuanManager.getInstance().updateStatus(pengajuan.getId(), "Ditolak");
+            PengajuanManager.getInstance().updateStatus(this, pengajuan.getId(), "Ditolak");
             NotificationManager.getInstance().addNotification("Pengajuan Ditolak", 
                 "Pengajuan dari " + pengajuan.getNamaUmkm() + " telah ditolak.");
             Toast.makeText(this, "Pengajuan Ditolak", Toast.LENGTH_SHORT).show();
@@ -81,7 +81,7 @@ public class AdminPengajuanDetailActivity extends AppCompatActivity {
         });
 
         findViewById(R.id.btnApproveDetail).setOnClickListener(v -> {
-            PengajuanManager.getInstance().updateStatus(pengajuan.getId(), "Disetujui");
+            PengajuanManager.getInstance().updateStatus(this, pengajuan.getId(), "Disetujui");
             
             // Update RentalManager status
             String rentalId = pengajuan.getRentalRequestId();

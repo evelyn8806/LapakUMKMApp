@@ -55,14 +55,13 @@
                     android:orientation="vertical"
                     android:padding="20dp"
                     android:gravity="center">
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:src="@android:drawable/ic_menu_gallery"
-                        android:padding="4dp"
-                        android:background="#F3E5F5"
-                        app:shapeAppearanceOverlay="@style/CircleImageView"
-                        android:scaleType="centerCrop"/>
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="90dp"
+                        android:layout_height="60dp"
+                        app:srcCompat="@drawable/ic_pengguna" />
+
                     <TextView
                         android:id="@+id/tvProfileName"
                         android:layout_width="wrap_content"

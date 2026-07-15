@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
                             prefs.getString("role", "UMKM")
                         );
                         // Tambahkan kembali ke UserManager agar tersedia selama aplikasi berjalan
-                        UserManager.getInstance().addUser(foundUser);
+                        UserManager.getInstance().addUser(LoginActivity.this, foundUser);
                     }
                 }
 

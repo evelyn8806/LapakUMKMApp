@@ -34,7 +34,7 @@ public class PengajuanManager {
                 JSONArray jsonArray = new JSONArray(json);
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject obj = jsonArray.getJSONObject(i);
-                    listPengajuan.add(new PengajuanModel(
+                    PengajuanModel p = new PengajuanModel(
                         obj.getString("id"),
                         obj.getString("namaUmkm"),
                         obj.getString("namaEvent"),
@@ -42,10 +42,17 @@ public class PengajuanManager {
                         obj.getString("status"),
                         obj.getString("userEmail"),
                         obj.getString("userName"),
-                        obj.getString("deskripsi"),
-                        obj.getString("harga"),
-                        obj.getString("lokasi")
-                    ));
+                        obj.optString("deskripsi", ""),
+                        obj.optString("harga", ""),
+                        obj.optString("lokasi", "")
+                    );
+                    p.setRentalRequestId(obj.optString("rentalRequestId", ""));
+                    p.setJenisUsaha(obj.optString("jenisUsaha", ""));
+                    p.setDeskripsiUsaha(obj.optString("deskripsiUsaha", ""));
+                    p.setNib(obj.optString("nib", ""));
+                    p.setKtpUri(obj.optString("ktpUri", ""));
+                    p.setNibUri(obj.optString("nibUri", ""));
+                    listPengajuan.add(p);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -69,6 +76,12 @@ public class PengajuanManager {
                 obj.put("deskripsi", p.getDeskripsi());
                 obj.put("harga", p.getHarga());
                 obj.put("lokasi", p.getLokasi());
+                obj.put("rentalRequestId", p.getRentalRequestId());
+                obj.put("jenisUsaha", p.getJenisUsaha());
+                obj.put("deskripsiUsaha", p.getDeskripsiUsaha());
+                obj.put("nib", p.getNib());
+                obj.put("ktpUri", p.getKtpUri());
+                obj.put("nibUri", p.getNibUri());
                 jsonArray.put(obj);
             }
             prefs.edit().putString(KEY_PENGAJUAN, jsonArray.toString()).apply();
@@ -91,27 +104,22 @@ public class PengajuanManager {
         return userList;
     }
 
-<<<<<<< Updated upstream
-    public void tambahPengajuan(String namaUmkm, String namaEvent, String tanggal, String userEmail, String userName, String rentalRequestId,
-                                String jenisUsaha, String deskripsiUsaha, String nib, String ktpUri, String nibUri) {
-        String id = String.valueOf(listPengajuan.size() + 1);
-        PengajuanModel p = new PengajuanModel(id, namaUmkm, namaEvent, tanggal, "Menunggu", userEmail, userName, rentalRequestId);
+    public void tambahPengajuan(Context context, String namaUmkm, String namaEvent, String tanggal, String userEmail, String userName, String rentalRequestId,
+                                String jenisUsaha, String deskripsiUsaha, String nib, String ktpUri, String nibUri, String deskripsi, String harga, String lokasi) {
+        String id = String.valueOf(System.currentTimeMillis());
+        PengajuanModel p = new PengajuanModel(id, namaUmkm, namaEvent, tanggal, "Menunggu", userEmail, userName, deskripsi, harga, lokasi);
+        p.setRentalRequestId(rentalRequestId);
         p.setJenisUsaha(jenisUsaha);
         p.setDeskripsiUsaha(deskripsiUsaha);
         p.setNib(nib);
         p.setKtpUri(ktpUri);
         p.setNibUri(nibUri);
         listPengajuan.add(0, p);
+        savePengajuan(context);
 
         // Add Notification for Admin
         NotificationManager.getInstance().addNotification("Pengajuan Baru", 
             "UMKM " + namaUmkm + " telah mengajukan sewa untuk event " + namaEvent + ".");
-=======
-    public void tambahPengajuan(Context context, String namaUmkm, String namaEvent, String tanggal, String userEmail, String userName, String deskripsi, String harga, String lokasi) {
-        String id = String.valueOf(System.currentTimeMillis()); // Use timestamp for unique ID
-        listPengajuan.add(0, new PengajuanModel(id, namaUmkm, namaEvent, tanggal, "Menunggu", userEmail, userName, deskripsi, harga, lokasi));
-        savePengajuan(context);
->>>>>>> Stashed changes
     }
 
     public int getTotalEvent() { return 24; } 

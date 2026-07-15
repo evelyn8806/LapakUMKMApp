@@ -228,7 +228,6 @@
                         android:id="@+id/rbDana"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableEnd="@drawable/ic_dana_small"
                         android:drawablePadding="10dp"
                         android:text="DANA"/>
                     <RadioButton

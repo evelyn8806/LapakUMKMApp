@@ -367,6 +367,17 @@
                     android:textColor="@color/text_dark"
                     android:textSize="16sp"
                     android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvLihatSemua"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:text="Lihat Semua"
+                    android:textColor="@color/blue_secondary"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
             </RelativeLayout>
 
             <!-- Vertical Cards (Replaced static cards with RecyclerView) -->

@@ -144,7 +144,7 @@ public class AdminPengajuanActivity extends AppCompatActivity {
             });
 
             btnReject.setOnClickListener(v -> {
-                PengajuanManager.getInstance().updateStatus(p.getId(), "Ditolak");
+                PengajuanManager.getInstance().updateStatus(this, p.getId(), "Ditolak");
                 Toast.makeText(this, "Ditolak", Toast.LENGTH_SHORT).show();
                 loadApplications();
             });
