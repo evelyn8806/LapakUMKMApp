@@ -19,8 +19,32 @@
         android:theme="@style/Theme.LapakUMKMApp"
         android:usesCleartextTraffic="true">
 
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="YOUR_API_KEY_HERE" />
+
         <activity
             android:name=".ExplorationMapActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".AccountActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".SecurityActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".LogoutConfirmActivity"
             android:exported="false" />
 
         <activity
@@ -90,6 +114,22 @@
 
         <activity
             android:name=".RentalListActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".StatusPengajuanListActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".AdminDashboardActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".AdminPengajuanActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".AdminPenggunaActivity"
             android:exported="false" />
 
     </application>

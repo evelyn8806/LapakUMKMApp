@@ -1,6 +1,7 @@
 package edu.uph.m24si2.lapakumkmapp;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -53,6 +54,11 @@ public class MyStallsActivity extends AppCompatActivity {
 
         findViewById(R.id.navNotif).setOnClickListener(v -> {
             startActivity(new Intent(this, NotificationsActivity.class));
+            finish();
+        });
+
+        findViewById(R.id.navAkun).setOnClickListener(v -> {
+            startActivity(new Intent(this, AccountActivity.class));
             finish();
         });
     }

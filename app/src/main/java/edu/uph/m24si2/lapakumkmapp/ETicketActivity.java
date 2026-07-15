@@ -16,7 +16,6 @@ public class ETicketActivity extends AppCompatActivity {
 
         ImageView btnBack = findViewById(R.id.btnBackTicket);
         Button btnUnduh = findViewById(R.id.btnUnduhTiket);
-        Button btnBagikan = findViewById(R.id.btnBagikan);
 
         btnBack.setOnClickListener(v -> backToDashboard());
 
@@ -24,9 +23,6 @@ public class ETicketActivity extends AppCompatActivity {
             Toast.makeText(this, "Mengunduh Tiket PDF...", Toast.LENGTH_SHORT).show();
         });
 
-        btnBagikan.setOnClickListener(v -> {
-            Toast.makeText(this, "Membuka Menu Bagikan...", Toast.LENGTH_SHORT).show();
-        });
     }
 
     private void backToDashboard() {

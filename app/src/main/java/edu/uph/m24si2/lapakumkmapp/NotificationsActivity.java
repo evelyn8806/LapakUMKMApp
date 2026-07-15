@@ -16,12 +16,6 @@ public class NotificationsActivity extends AppCompatActivity {
 
         setupBottomNav();
 
-        // Tombol Tandai Semua Dibaca
-        findViewById(R.id.btnMarkRead).setOnClickListener(v -> {
-            Toast.makeText(this, "Semua notifikasi ditandai telah dibaca", Toast.LENGTH_SHORT).show();
-            // Logika menyembunyikan tag "Baru"
-            // (Hanya contoh visual)
-        });
     }
 
     private void setupBottomNav() {
@@ -34,8 +28,10 @@ public class NotificationsActivity extends AppCompatActivity {
             startActivity(new Intent(this, ExplorationMapActivity.class));
         });
 
-        findViewById(R.id.navLapak).setOnClickListener(v -> {
-            startActivity(new Intent(this, MyStallsActivity.class));
+
+
+        findViewById(R.id.navAkun).setOnClickListener(v -> {
+            startActivity(new Intent(this, AccountActivity.class));
             finish();
         });
     }

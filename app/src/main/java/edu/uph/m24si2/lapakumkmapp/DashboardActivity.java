@@ -89,12 +89,14 @@ public class DashboardActivity extends AppCompatActivity {
             startActivity(new Intent(DashboardActivity.this, ExplorationMapActivity.class));
         });
 
-        findViewById(R.id.navLapak).setOnClickListener(v -> {
-            startActivity(new Intent(DashboardActivity.this, MyStallsActivity.class));
-        });
+
 
         findViewById(R.id.navNotif).setOnClickListener(v -> {
             startActivity(new Intent(DashboardActivity.this, NotificationsActivity.class));
+        });
+
+        findViewById(R.id.navAkun).setOnClickListener(v -> {
+            startActivity(new Intent(DashboardActivity.this, AccountActivity.class));
         });
         
         etSearch.addTextChangedListener(new TextWatcher() {

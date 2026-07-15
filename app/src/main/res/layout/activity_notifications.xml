@@ -20,16 +20,6 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/btnMarkRead"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:text="Tandai semua dibaca"
-            android:textColor="@color/blue_primary"
-            android:textSize="12sp"
-            android:textStyle="bold" />
     </RelativeLayout>
 
     <!-- List -->
@@ -302,29 +292,9 @@
                     android:textSize="10sp"
                     android:textColor="@color/text_gray"/>
             </LinearLayout>
+
             <LinearLayout
-                android:id="@+id/navLapak"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:clickable="true"
-                android:focusable="true"
-                android:background="?attr/selectableItemBackground">
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@android:drawable/ic_menu_view"
-                    app:tint="@color/text_gray"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Lapak Saya"
-                    android:textSize="10sp"
-                    android:textColor="@color/text_gray"/>
-            </LinearLayout>
-            <LinearLayout
+                android:id="@+id/navNotif"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -343,11 +313,15 @@
                     android:textColor="@color/blue_primary"/>
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/navAkun"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:gravity="center">
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground">
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"

@@ -1,47 +1,30 @@
 package edu.uph.m24si2.lapakumkmapp;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.Spinner;
-import android.widget.Toast;
-import androidx.annotation.NonNull;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.material.button.MaterialButton;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class ExplorationMapActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class ExplorationMapActivity extends AppCompatActivity {
 
-    private GoogleMap mMap;
-    private ImageView btnBack;
-    private Spinner spinnerCity;
-    private View cvNoEventOverlay;
-    private Button btnRequestEvent;
-    private FloatingActionButton fabMyLocation;
-
-    private final Map<String, LatLng> cityCoordinates = new HashMap<String, LatLng>() {{
-        put("Bandung", new LatLng(-6.9175, 107.6191));
-        put("Jakarta", new LatLng(-6.2088, 106.8456));
-        put("Yogyakarta", new LatLng(-7.7956, 110.3695));
-        put("Surabaya", new LatLng(-7.2575, 112.7521));
-        put("Medan", new LatLng(3.5952, 98.6722));
-    }};
-
+    private RecyclerView rvExploration;
+    private EventAdapter adapter;
     private List<EventModel> allEvents;
+    private EditText etSearch;
+    private TextView tvNoResults;
+    private String currentCategory = "SEMUA";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,87 +32,105 @@ public class ExplorationMapActivity extends AppCompatActivity implements OnMapRe
         setContentView(R.layout.activity_maps);
 
         allEvents = EventManager.getAllEvents();
-
-        btnBack = findViewById(R.id.btnBack);
-        spinnerCity = findViewById(R.id.spinnerCity);
-        cvNoEventOverlay = findViewById(R.id.cvNoEventOverlay);
-        btnRequestEvent = findViewById(R.id.btnRequestEvent);
-        fabMyLocation = findViewById(R.id.fabMyLocation);
-
-        setupCitySpinner();
-
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        if (mapFragment != null) {
-            mapFragment.getMapAsync(this);
-        }
-
-        btnBack.setOnClickListener(v -> finish());
-
-        btnRequestEvent.setOnClickListener(v -> {
-            String selectedCity = spinnerCity.getSelectedItem().toString();
-            Toast.makeText(this, "Request event untuk kota " + selectedCity + " terkirim!", Toast.LENGTH_LONG).show();
-            cvNoEventOverlay.setVisibility(View.GONE);
-        });
+        
+        rvExploration = findViewById(R.id.rvExploration);
+        etSearch = findViewById(R.id.etSearchExploration);
+        tvNoResults = findViewById(R.id.tvNoExplorationResults);
+        
+        setupRecyclerView();
+        setupSearch();
+        setupFilters();
+        setupBottomNav();
     }
 
-    private void setupCitySpinner() {
-        List<String> cities = new ArrayList<>(cityCoordinates.keySet());
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, cities);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerCity.setAdapter(adapter);
+    private void setupRecyclerView() {
+        rvExploration.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new EventAdapter(allEvents, this);
+        rvExploration.setAdapter(adapter);
+    }
 
-        spinnerCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+    private void setupFilters() {
+        LinearLayout layoutFilters = findViewById(R.id.layoutFilters);
+        for (int i = 0; i < layoutFilters.getChildCount(); i++) {
+            View v = layoutFilters.getChildAt(i);
+            if (v instanceof MaterialButton) {
+                MaterialButton btn = (MaterialButton) v;
+                btn.setOnClickListener(view -> {
+                    currentCategory = btn.getText().toString();
+                    updateFilterStyles(layoutFilters);
+                    applyFilters();
+                });
+            }
+        }
+    }
+
+    private void updateFilterStyles(LinearLayout layoutFilters) {
+        for (int i = 0; i < layoutFilters.getChildCount(); i++) {
+            View v = layoutFilters.getChildAt(i);
+            if (v instanceof MaterialButton) {
+                MaterialButton btn = (MaterialButton) v;
+                if (btn.getText().toString().equals(currentCategory)) {
+                    btn.setBackgroundTintList(android.content.res.ColorStateList.valueOf(ContextCompat.getColor(this, R.color.admin_primary)));
+                    btn.setTextColor(Color.WHITE);
+                } else {
+                    btn.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("#F5F5F5")));
+                    btn.setTextColor(ContextCompat.getColor(this, R.color.text_gray));
+                }
+            }
+        }
+    }
+
+    private void setupSearch() {
+        etSearch.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedCity = cities.get(position);
-                updateMapForCity(selectedCity);
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                applyFilters();
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void afterTextChanged(Editable s) {}
         });
     }
 
-    private void updateMapForCity(String cityName) {
-        if (mMap == null) return;
-
-        LatLng coordinates = cityCoordinates.get(cityName);
-        if (coordinates != null) {
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(coordinates, 12f));
-        }
-
-        mMap.clear();
-        boolean hasEvent = false;
+    private void applyFilters() {
+        String searchText = etSearch.getText().toString().toLowerCase();
+        List<EventModel> filteredList = new ArrayList<>();
         
-        // Filter menggunakan data terpusat dari EventManager
-        for (EventModel event : allEvents) {
-            if (event.getKota().equalsIgnoreCase(cityName)) {
-                LatLng pos = new LatLng(event.getLatitude(), event.getLongitude());
-                mMap.addMarker(new MarkerOptions()
-                        .position(pos)
-                        .title(event.getNama())
-                        .snippet(event.getKategori() + " | " + event.getHarga())
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
-                hasEvent = true;
+        for (EventModel item : allEvents) {
+            boolean matchesSearch = item.getNama().toLowerCase().contains(searchText) || 
+                                   item.getLokasi().toLowerCase().contains(searchText);
+            
+            boolean matchesCategory = currentCategory.equals("SEMUA") || 
+                                     item.getKategori().equalsIgnoreCase(currentCategory);
+            
+            if (matchesSearch && matchesCategory) {
+                filteredList.add(item);
             }
         }
 
-        cvNoEventOverlay.setVisibility(hasEvent ? View.GONE : View.VISIBLE);
+        adapter.updateList(filteredList);
+        tvNoResults.setVisibility(filteredList.isEmpty() ? View.VISIBLE : View.GONE);
     }
 
-    @Override
-    public void onMapReady(@NonNull GoogleMap googleMap) {
-        mMap = googleMap;
-        mMap.getUiSettings().setZoomControlsEnabled(true);
+    private void setupBottomNav() {
+        findViewById(R.id.navBeranda).setOnClickListener(v -> {
+            startActivity(new Intent(this, DashboardActivity.class));
+            finish();
+        });
         
-        if (spinnerCity.getSelectedItem() != null) {
-            updateMapForCity(spinnerCity.getSelectedItem().toString());
-        }
 
-        mMap.setOnMarkerClickListener(marker -> {
-            marker.showInfoWindow();
-            return false;
+
+        findViewById(R.id.navNotif).setOnClickListener(v -> {
+            startActivity(new Intent(this, NotificationsActivity.class));
+            finish();
+        });
+
+        findViewById(R.id.navAkun).setOnClickListener(v -> {
+            startActivity(new Intent(this, AccountActivity.class));
+            finish();
         });
     }
 }

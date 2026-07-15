@@ -39,22 +39,29 @@ public class LoginActivity extends AppCompatActivity {
                 String emailInput = etEmail.getText().toString();
                 String passwordInput = etPassword.getText().toString();
 
-                SharedPreferences sharedPref = getSharedPreferences("UserPrefs", MODE_PRIVATE);
-                
-                // For admin role, use different default or logic if needed
-                String savedEmail = sharedPref.getString("email", "admin@umkm.com");
-                String savedPassword = sharedPref.getString("password", "password123");
+                if (emailInput.isEmpty() || passwordInput.isEmpty()) {
+                    Toast.makeText(LoginActivity.this, "Harap isi email dan password!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-                if (emailInput.equals(savedEmail) && passwordInput.equals(savedPassword)) {
+                // Cek kredensial di UserManager
+                UserModel user = UserManager.getInstance().login(emailInput, passwordInput);
+
+                if (user != null) {
                     Toast.makeText(LoginActivity.this, "Login Berhasil!", Toast.LENGTH_SHORT).show();
                     
+                    SharedPreferences sharedPref = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putString("email", user.getEmail());
+                    editor.putString("nama", user.getNama());
+                    editor.putString("role", user.getRole());
+                    
                     if (cbRememberMe.isChecked()) {
-                        SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putBoolean("isLoggedIn", true);
-                        editor.apply();
                     }
+                    editor.apply();
 
-                    if (emailInput.contains("admin")) {
+                    if (user.getRole().equals("ADMIN")) {
                         Intent intent = new Intent(LoginActivity.this, AdminDashboardActivity.class);
                         startActivity(intent);
                     } else {
