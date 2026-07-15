@@ -19,6 +19,7 @@
             android:layout_centerVertical="true"
             android:src="@android:drawable/ic_media_previous"/>
         <TextView
+            android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -195,6 +196,21 @@
     </ScrollView>
 
     <Button
+        android:id="@+id/btnEventSelesai"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="Event Selesai"
+        android:backgroundTint="#D32F2F"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        app:cornerRadius="12dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="10dp"
+        android:visibility="gone"/>
+
+    <Button
         android:id="@+id/btnLihatTiket"
         android:layout_width="match_parent"
         android:layout_height="56dp"
@@ -204,6 +220,7 @@
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         app:cornerRadius="12dp"
-        android:layout_margin="20dp"/>
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="20dp"/>
 
 </LinearLayout>

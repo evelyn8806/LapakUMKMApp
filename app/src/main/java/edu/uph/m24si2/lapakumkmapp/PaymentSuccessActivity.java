@@ -26,17 +26,14 @@ public class PaymentSuccessActivity extends AppCompatActivity {
         String method = getIntent().getStringExtra("PAYMENT_METHOD");
         tvMethod.setText(method);
 
-        // Generate Random Trx ID
         tvTrx.setText("TRX-" + System.currentTimeMillis() / 10000);
 
-        // Update status pembayaran di SharedPreferences dan hapus timer
         getSharedPreferences("LapakUMKMPrefs", MODE_PRIVATE)
                 .edit()
                 .putBoolean("is_paid", true)
-                .remove("expiry_time") // Hapus timer agar card di Dashboard hilang
+                .remove("expiry_time")
                 .apply();
 
-        // Current Time
         SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy HH:mm", Locale.getDefault());
         tvTime.setText(sdf.format(new Date()) + " WIB");
 

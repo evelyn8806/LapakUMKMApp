@@ -28,177 +28,30 @@
             app:tint="@color/black"/>
     </RelativeLayout>
 
-    <!-- Tabs -->
-    <HorizontalScrollView
-        android:id="@+id/tabScroll"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/headerLapak"
-        android:layout_marginTop="8dp"
-        android:scrollbars="none"
-        android:paddingHorizontal="16dp">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingBottom="8dp">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnFilterSemua"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginEnd="8dp"
-                android:text="Semua"
-                android:textAllCaps="false"
-                android:textSize="13sp"
-                app:cornerRadius="12dp"
-                app:backgroundTint="@color/admin_primary"
-                android:textColor="@color/white"
-                style="@style/Widget.MaterialComponents.Button.UnelevatedButton" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnFilterProses"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginEnd="8dp"
-                android:text="Diproses"
-                android:textAllCaps="false"
-                android:textSize="13sp"
-                app:cornerRadius="12dp"
-                app:backgroundTint="#F5F5F5"
-                android:textColor="@color/text_gray"
-                style="@style/Widget.MaterialComponents.Button.UnelevatedButton" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnFilterAktif"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginEnd="8dp"
-                android:text="Disetujui"
-                android:textAllCaps="false"
-                android:textSize="13sp"
-                app:cornerRadius="12dp"
-                app:backgroundTint="#F5F5F5"
-                android:textColor="@color/text_gray"
-                style="@style/Widget.MaterialComponents.Button.UnelevatedButton" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnFilterDibatalkan"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:text="Ditolak"
-                android:textAllCaps="false"
-                android:textSize="13sp"
-                app:cornerRadius="12dp"
-                app:backgroundTint="#F5F5F5"
-                android:textColor="@color/text_gray"
-                style="@style/Widget.MaterialComponents.Button.UnelevatedButton" />
-        </LinearLayout>
-    </HorizontalScrollView>
-
-    <!-- List Area -->
-    <RelativeLayout
+    <!-- List Container -->
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/bottomNav"
-        android:layout_below="@id/tabScroll"
-        android:layout_marginTop="8dp">
+        android:layout_below="@id/tvTitle"
+        android:layout_marginTop="16dp"
+        android:paddingHorizontal="16dp">
 
-        <ScrollView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvMyStalls"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="none">
+            android:visibility="gone" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:id="@+id/containerStalls"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingHorizontal="16dp">
-                    <!-- Items injected here -->
-                </LinearLayout>
-
-                <!-- Footer List -->
-                <LinearLayout
-                    android:id="@+id/layoutFooterList"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:paddingVertical="24dp"
-                    android:visibility="gone">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Tidak menemukan pengajuan?"
-                        android:textColor="@color/admin_primary"
-                        android:textStyle="bold"
-                        android:textSize="13sp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="↓ Tarik ke bawah untuk memuat ulang"
-                        android:textColor="@color/text_gray"
-                        android:textSize="12sp"/>
-                </LinearLayout>
-            </LinearLayout>
-        </ScrollView>
-
-        <!-- Empty State -->
-        <LinearLayout
-            android:id="@+id/layoutEmptyState"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tvEmptyStalls"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:paddingHorizontal="40dp"
-            android:visibility="gone">
-
-            <ImageView
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:src="@drawable/ic_pengajuan"
-                android:alpha="0.3"
-                app:tint="@color/admin_primary" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="Belum ada pengajuan"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="Kamu belum mengajukan partisipasi ke event atau lokasi manapun."
-                android:textColor="@color/text_gray"
-                android:textSize="14sp"
-                android:gravity="center" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnBuatPengajuanBaru"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginTop="32dp"
-                android:text="Buat Pengajuan Baru"
-                android:textAllCaps="false"
-                android:textStyle="bold"
-                app:cornerRadius="12dp"
-                app:backgroundTint="@color/admin_primary"/>
-        </LinearLayout>
-    </RelativeLayout>
+            android:layout_gravity="center"
+            android:text="Belum ada lapak aktif."
+            android:textColor="@color/text_gray"
+            android:textSize="14sp" />
+    </FrameLayout>
 
     <!-- Bottom Navigation Bar UMKM -->
     <com.google.android.material.card.MaterialCardView

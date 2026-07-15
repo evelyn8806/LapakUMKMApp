@@ -46,6 +46,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
                 intent.putExtra("deskripsi_lapak", event.getDeskripsi());
                 intent.putExtra("lokasi_lapak", event.getLokasi());
                 intent.putExtra("gambar_lapak", event.getGambar());
+                intent.putExtra("harga_lapak", event.getHarga());
                 context.startActivity(intent);
             }
         });

@@ -162,5 +162,6 @@ public class FilterActivity extends AppCompatActivity {
         intent.putExtra("lokasi", lokasi);
         intent.putExtra("sort", sort);
         startActivity(intent);
+        finish();
     }
 }
