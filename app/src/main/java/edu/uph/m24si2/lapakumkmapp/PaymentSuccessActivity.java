@@ -45,7 +45,7 @@ public class PaymentSuccessActivity extends AppCompatActivity {
         });
 
         btnLihatStatus.setOnClickListener(v -> {
-            Intent intent = new Intent(this, StatusPengajuanActivity.class);
+            Intent intent = new Intent(this, MyStallsActivity.class);
             startActivity(intent);
             finish();
         });

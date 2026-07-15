@@ -26,18 +26,18 @@ public class MyStallsActivity extends AppCompatActivity {
         rvMyStalls.setLayoutManager(new LinearLayoutManager(this));
 
         setupBottomNav();
-        loadActiveStalls();
+        loadRequests();
     }
 
-    private void loadActiveStalls() {
-        List<RentalRequest> activeRequests = RentalManager.getInstance().getRequestsByStatus(RentalRequest.Status.AKTIF);
-        if (activeRequests.isEmpty()) {
+    private void loadRequests() {
+        List<RentalRequest> allRequests = RentalManager.getInstance().getRequests();
+        if (allRequests.isEmpty()) {
             tvEmpty.setVisibility(View.VISIBLE);
             rvMyStalls.setVisibility(View.GONE);
         } else {
             tvEmpty.setVisibility(View.GONE);
             rvMyStalls.setVisibility(View.VISIBLE);
-            RentalRequestAdapter adapter = new RentalRequestAdapter(activeRequests, this);
+            RentalRequestAdapter adapter = new RentalRequestAdapter(allRequests, this);
             rvMyStalls.setAdapter(adapter);
         }
     }
@@ -66,6 +66,6 @@ public class MyStallsActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        loadActiveStalls();
+        loadRequests();
     }
 }

@@ -169,6 +169,21 @@ public class PengajuanSewaActivity extends AppCompatActivity {
 
             PengajuanManager.getInstance().tambahPengajuan(namaUmkm, namaEvent, tanggal, userEmail, userName);
 
+            // Create and save RentalRequest
+            String eventLocation = tvReviewLokasi.getText().toString();
+            String eventPrice = getIntent().getStringExtra("harga_event");
+            int eventImage = getIntent().getIntExtra("gambar_event", R.drawable.festival_kuliner);
+            
+            RentalRequest newRequest = new RentalRequest(
+                namaEvent,
+                eventLocation,
+                eventPrice != null ? eventPrice : "Rp1.500.000",
+                eventImage,
+                RentalRequest.Status.MENUNGGU_PEMBAYARAN
+            );
+            
+            RentalManager.getInstance().addRequest(newRequest);
+
             // Reset timer pembayaran untuk pengajuan baru
             getSharedPreferences("LapakUMKMPrefs", MODE_PRIVATE)
                     .edit()
@@ -178,8 +193,13 @@ public class PengajuanSewaActivity extends AppCompatActivity {
             Toast.makeText(this, "Pengajuan Berhasil Dikirim!", Toast.LENGTH_LONG).show();
             
             Intent intent = new Intent(this, PaymentActivity.class);
+<<<<<<< Updated upstream
             intent.putExtra("nama_event", tvReviewNamaEvent.getText().toString());
             
+=======
+            intent.putExtra("nama_event", namaEvent);
+            intent.putExtra("rental_request", newRequest);
+>>>>>>> Stashed changes
             startActivity(intent);
             finish();
         });

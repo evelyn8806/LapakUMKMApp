@@ -48,10 +48,21 @@ public class DashboardActivity extends AppCompatActivity {
         }
 
         btnBayarSekarang.setOnClickListener(v -> {
+            RentalRequest pending = null;
+            for (RentalRequest r : RentalManager.getInstance().getRequests()) {
+                if (r.getStatus() == RentalRequest.Status.MENUNGGU_PEMBAYARAN) {
+                    pending = r;
+                    break;
+                }
+            }
+
             Intent intent = new Intent(DashboardActivity.this, PaymentDetailActivity.class);
             // Default ke BCA Transfer untuk mempermudah alur sesuai permintaan
             intent.putExtra("PAYMENT_METHOD", "TRANSFER");
             intent.putExtra("BANK_NAME", "BCA");
+            if (pending != null) {
+                intent.putExtra("rental_request", pending);
+            }
             startActivity(intent);
         });
 
@@ -63,6 +74,7 @@ public class DashboardActivity extends AppCompatActivity {
             startActivity(new Intent(DashboardActivity.this, MyStallsActivity.class));
         });
 
+<<<<<<< Updated upstream
         // Search Bar Listener
         android.widget.EditText etSearchDashboard = findViewById(R.id.etSearchDashboard);
         etSearchDashboard.setOnEditorActionListener((v, actionId, event) -> {
@@ -77,6 +89,10 @@ public class DashboardActivity extends AppCompatActivity {
                 }
             }
             return false;
+=======
+        findViewById(R.id.menuHistory).setOnClickListener(v -> {
+            startActivity(new Intent(DashboardActivity.this, HistoryActivity.class));
+>>>>>>> Stashed changes
         });
 
         // Bottom Nav Listeners

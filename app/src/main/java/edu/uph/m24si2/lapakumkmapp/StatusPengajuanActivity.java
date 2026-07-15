@@ -24,12 +24,6 @@ public class StatusPengajuanActivity extends AppCompatActivity {
         Button btnLihatTiket = findViewById(R.id.btnLihatTiket);
         Button btnEventSelesai = findViewById(R.id.btnEventSelesai);
 
-        // Update UI with request data
-        if (request != null) {
-            ((TextView)findViewById(R.id.tvTitle)).setText("Status " + request.getStatus().getLabel());
-            // Other fields can be updated if needed, for demo we just use the event name
-        }
-
         btnBack.setOnClickListener(v -> finish());
 
         btnLihatTiket.setOnClickListener(v -> {
@@ -38,10 +32,6 @@ public class StatusPengajuanActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        if (request != null && request.getStatus() == RentalRequest.Status.AKTIF) {
-            btnEventSelesai.setVisibility(View.VISIBLE);
-        }
-
         btnEventSelesai.setOnClickListener(v -> {
             if (request != null) {
                 request.setStatus(RentalRequest.Status.SELESAI);
@@ -49,5 +39,31 @@ public class StatusPengajuanActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        // Update UI with request data
+        if (request != null) {
+            TextView tvTitle = findViewById(R.id.tvTitle);
+            TextView tvStatusHeader = findViewById(R.id.tvStatusHeader);
+            TextView tvStatusDesc = findViewById(R.id.tvStatusDesc);
+
+            tvTitle.setText("Status " + request.getStatus().getLabel());
+            
+            if (request.getStatus() == RentalRequest.Status.MENUNGGU_PERSETUJUAN) {
+                tvStatusHeader.setText("Menunggu Persetujuan");
+                tvStatusDesc.setText("Pembayaran Anda berhasil diverifikasi. Mohon tunggu admin menyetujui pengajuan Anda.");
+                btnLihatTiket.setVisibility(View.GONE);
+                btnEventSelesai.setVisibility(View.GONE);
+            } else if (request.getStatus() == RentalRequest.Status.AKTIF) {
+                tvStatusHeader.setText("Pengajuan Disetujui!");
+                tvStatusDesc.setText("Lapak Anda telah disetujui and siap digunakan sesuai jadwal event.");
+                btnLihatTiket.setVisibility(View.VISIBLE);
+                btnEventSelesai.setVisibility(View.VISIBLE);
+            } else if (request.getStatus() == RentalRequest.Status.SELESAI) {
+                tvStatusHeader.setText("Event Selesai");
+                tvStatusDesc.setText("Terima kasih telah berpartisipasi dalam event ini.");
+                btnLihatTiket.setVisibility(View.GONE);
+                btnEventSelesai.setVisibility(View.GONE);
+            }
+        }
     }
 }

@@ -60,6 +60,8 @@ public class PaymentActivity extends AppCompatActivity {
             }
 
             Intent intent = new Intent(this, PaymentDetailActivity.class);
+            RentalRequest request = (RentalRequest) getIntent().getSerializableExtra("rental_request");
+            intent.putExtra("rental_request", request);
             
             if (selectedId == R.id.rbTransfer) {
                 intent.putExtra("PAYMENT_METHOD", "TRANSFER");

@@ -58,8 +58,8 @@ public class RentalRequestAdapter extends RecyclerView.Adapter<RentalRequestAdap
         }
 
         holder.itemView.setOnClickListener(v -> {
-            if (request.getStatus() == RentalRequest.Status.AKTIF) {
-                Intent intent = new Intent(context, StatusPengajuanActivity.class); // Reusing as detail page
+            if (request.getStatus() == RentalRequest.Status.AKTIF || request.getStatus() == RentalRequest.Status.MENUNGGU_PERSETUJUAN || request.getStatus() == RentalRequest.Status.SELESAI) {
+                Intent intent = new Intent(context, StatusPengajuanActivity.class);
                 intent.putExtra("rental_request", request);
                 intent.putExtra("IS_DETAIL", true);
                 context.startActivity(intent);

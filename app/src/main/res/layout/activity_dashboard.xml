@@ -314,12 +314,16 @@
 
                 <!-- History -->
                 <LinearLayout
+                    android:id="@+id/menuHistory"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="8dp">
+                    android:padding="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground">
 
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="48dp"
