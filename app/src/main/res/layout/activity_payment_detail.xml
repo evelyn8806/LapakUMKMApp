@@ -85,11 +85,14 @@
                 android:layout_marginBottom="12dp"/>
 
             <TextView
+                android:id="@+id/tvCopyVA"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Salin Nomor"
                 android:textColor="#1565C0"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:clickable="true"
+                android:focusable="true"/>
 
             <View
                 android:layout_width="match_parent"

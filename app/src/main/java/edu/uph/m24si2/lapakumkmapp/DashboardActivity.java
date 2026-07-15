@@ -8,55 +8,63 @@ import com.google.android.material.card.MaterialCardView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DashboardActivity extends AppCompatActivity {
 
-    private MaterialCardView cardEvent1, cardEvent2, cardPendingPayment;
+    private MaterialCardView cardPendingPayment;
     private Button btnExploreNow, btnBayarSekarang;
-    private TextView tvLihatSemua, tvRekomendasiHeader, tvNoResults;
+    private TextView tvRekomendasiHeader, tvNoResults, tvPendingEventName;
+    private ImageView ivPendingEventImage;
     private NestedScrollView nestedScrollView;
     private EditText etSearch;
+    private RecyclerView rvEvents;
+    private EventAdapter eventAdapter;
+    private List<EventModel> allEventsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        cardEvent1 = findViewById(R.id.cardEvent1);
-        cardEvent2 = findViewById(R.id.cardEvent2);
         cardPendingPayment = findViewById(R.id.cardPendingPayment);
         btnExploreNow = findViewById(R.id.btnExploreNow);
         btnBayarSekarang = findViewById(R.id.btnBayarSekarang);
-        tvLihatSemua = findViewById(R.id.tvLihatSemua);
         tvRekomendasiHeader = findViewById(R.id.tvRekomendasiHeader);
         nestedScrollView = findViewById(R.id.nestedScrollView);
         etSearch = findViewById(R.id.etSearch);
         tvNoResults = findViewById(R.id.tvNoResults);
+        rvEvents = findViewById(R.id.rvEvents);
+        tvPendingEventName = findViewById(R.id.tvPendingEventName);
+        ivPendingEventImage = findViewById(R.id.ivPendingEventImage);
 
-        // Logic tampilkan card "Perlu Dibayar" jika ada expiry_time di prefs
-        long expiryTime = getSharedPreferences("LapakUMKMPrefs", MODE_PRIVATE).getLong("expiry_time", 0);
-        if (expiryTime > System.currentTimeMillis()) {
-            cardPendingPayment.setVisibility(View.VISIBLE);
-        } else {
-            cardPendingPayment.setVisibility(View.GONE);
-        }
+        refreshPendingPaymentCard();
 
         btnBayarSekarang.setOnClickListener(v -> {
-            Intent intent = new Intent(DashboardActivity.this, PaymentDetailActivity.class);
-            // Default ke BCA Transfer untuk mempermudah alur sesuai permintaan
-            intent.putExtra("PAYMENT_METHOD", "TRANSFER");
-            intent.putExtra("BANK_NAME", "BCA");
-            startActivity(intent);
+            List<RentalRequest> pending = RentalManager.getInstance().getRequestsByStatus(RentalRequest.Status.MENUNGGU_PEMBAYARAN);
+            if (!pending.isEmpty()) {
+                Intent intent = new Intent(DashboardActivity.this, PaymentDetailActivity.class);
+                intent.putExtra("PAYMENT_METHOD", "TRANSFER");
+                intent.putExtra("BANK_NAME", "BCA");
+                intent.putExtra("rental_request", pending.get(0));
+                startActivity(intent);
+            }
         });
+
+        allEventsList = EventManager.getAllEvents();
+        eventAdapter = new EventAdapter(new ArrayList<>(allEventsList), this);
+        rvEvents.setLayoutManager(new LinearLayoutManager(this));
+        rvEvents.setAdapter(eventAdapter);
+
         findViewById(R.id.menuMaps).setOnClickListener(v -> {
             startActivity(new Intent(DashboardActivity.this, ExplorationMapActivity.class));
         });
@@ -65,7 +73,18 @@ public class DashboardActivity extends AppCompatActivity {
             startActivity(new Intent(DashboardActivity.this, FilterActivity.class));
         });
 
-        // Bottom Nav Listeners
+        findViewById(R.id.menuPengajuan).setOnClickListener(v -> {
+            Intent intent = new Intent(DashboardActivity.this, RentalListActivity.class);
+            intent.putExtra("IS_HISTORY", false);
+            startActivity(intent);
+        });
+
+        findViewById(R.id.menuHistory).setOnClickListener(v -> {
+            Intent intent = new Intent(DashboardActivity.this, RentalListActivity.class);
+            intent.putExtra("IS_HISTORY", true);
+            startActivity(intent);
+        });
+
         findViewById(R.id.navEksplorasi).setOnClickListener(v -> {
             startActivity(new Intent(DashboardActivity.this, ExplorationMapActivity.class));
         });
@@ -78,100 +97,54 @@ public class DashboardActivity extends AppCompatActivity {
             startActivity(new Intent(DashboardActivity.this, NotificationsActivity.class));
         });
         
-        // 1. Fitur Search
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String query = s.toString().toLowerCase();
-                boolean anyFound = false;
-
-                if (query.isEmpty()) {
-                    cardEvent1.setVisibility(View.VISIBLE);
-                    cardEvent2.setVisibility(View.VISIBLE);
-                    anyFound = true;
-                } else {
-                    if ("Festival Kuliner Nusantara".toLowerCase().contains(query)) {
-                        cardEvent1.setVisibility(View.VISIBLE);
-                        anyFound = true;
-                    } else {
-                        cardEvent1.setVisibility(View.GONE);
-                    }
-
-                    if ("Pasar Malam Tahun Baru".toLowerCase().contains(query)) {
-                        cardEvent2.setVisibility(View.VISIBLE);
-                        anyFound = true;
-                    } else {
-                        cardEvent2.setVisibility(View.GONE);
-                    }
-                }
-
-                tvNoResults.setVisibility(anyFound ? View.GONE : View.VISIBLE);
+                filterBySearch(s.toString().toLowerCase());
             }
 
             @Override
             public void afterTextChanged(Editable s) {}
         });
 
-        // 2. Klik "Jelajahi Sekarang" scroll ke Rekomendasi
-        btnExploreNow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Scroll ke posisi header
-                int y = ((View) tvRekomendasiHeader.getParent()).getTop();
-                nestedScrollView.smoothScrollTo(0, y);
-            }
-        });
-
-        // 3. Klik "Lihat Semua"
-        tvLihatSemua.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(DashboardActivity.this, RecommendationListActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        cardEvent1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bukaDetail("Festival Kuliner Nusantara", "Event Kuliner", 
-                    "Nikmati berbagai hidangan khas dari seluruh nusantara.", 
-                    "Alun-Alun Kota Bandung", R.drawable.festival_kuliner);
-            }
-        });
-
-        cardEvent2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bukaDetail("Pasar Malam Tahun Baru", "Event Tahunan", 
-                    "Kemeriahan pasar malam menyambut tahun baru.", 
-                    "Lapangan Gasibu Bandung", R.drawable.pasar_malam);
-            }
+        btnExploreNow.setOnClickListener(v -> {
+            int y = ((View) tvRekomendasiHeader.getParent()).getTop();
+            nestedScrollView.smoothScrollTo(0, y);
         });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        // Refresh status pembayaran saat kembali ke dashboard
-        long expiryTime = getSharedPreferences("LapakUMKMPrefs", MODE_PRIVATE).getLong("expiry_time", 0);
-        if (expiryTime > System.currentTimeMillis()) {
+    private void refreshPendingPaymentCard() {
+        List<RentalRequest> pending = RentalManager.getInstance().getRequestsByStatus(RentalRequest.Status.MENUNGGU_PEMBAYARAN);
+        if (!pending.isEmpty()) {
+            RentalRequest r = pending.get(0);
             cardPendingPayment.setVisibility(View.VISIBLE);
+            if (tvPendingEventName != null) tvPendingEventName.setText(r.getEventName());
+            if (ivPendingEventImage != null) ivPendingEventImage.setImageResource(r.getEventImage());
         } else {
             cardPendingPayment.setVisibility(View.GONE);
         }
     }
 
-    private void bukaDetail(String nama, String kategori, String deskripsi, String lokasi, int imageResId) {
-        Intent intent = new Intent(DashboardActivity.this, LapakDetailActivity.class);
-        intent.putExtra("nama_lapak", nama);
-        intent.putExtra("kategori_lapak", kategori);
-        intent.putExtra("deskripsi_lapak", deskripsi);
-        intent.putExtra("lokasi_lapak", lokasi);
-        intent.putExtra("gambar_lapak", imageResId);
-        startActivity(intent);
+    private void filterBySearch(String query) {
+        List<EventModel> filteredList = new ArrayList<>();
+        for (EventModel event : allEventsList) {
+            if (event.getNama().toLowerCase().contains(query) || 
+                event.getKategori().toLowerCase().contains(query) ||
+                event.getLokasi().toLowerCase().contains(query)) {
+                filteredList.add(event);
+            }
+        }
+        eventAdapter.updateList(filteredList);
+        tvNoResults.setVisibility(filteredList.isEmpty() ? View.VISIBLE : View.GONE);
+        rvEvents.setVisibility(filteredList.isEmpty() ? View.GONE : View.VISIBLE);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshPendingPaymentCard();
     }
 }

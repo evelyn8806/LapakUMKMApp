@@ -35,12 +35,19 @@ public class PengajuanSewaActivity extends AppCompatActivity {
     private Uri ktpUri = null;
     private Uri nibUri = null;
 
+    private String eventName, eventLocation, eventPrice;
+    private int eventImage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pengajuan_sewa);
 
-        // Bind views
+        eventName = getIntent().getStringExtra("nama_event");
+        eventLocation = getIntent().getStringExtra("lokasi_event");
+        eventImage = getIntent().getIntExtra("gambar_event", R.drawable.festival_kuliner);
+        eventPrice = getIntent().getStringExtra("harga_event");
+
         layoutStep1 = findViewById(R.id.layoutStep1);
         layoutStep2 = findViewById(R.id.layoutStep2);
         layoutStep3 = findViewById(R.id.layoutStep3);
@@ -71,7 +78,6 @@ public class PengajuanSewaActivity extends AppCompatActivity {
         tvReviewTotalBiaya = findViewById(R.id.tvReviewTotalBiaya);
         cbAgreement = findViewById(R.id.cbAgreement);
 
-        // Setup Spinner
         String[] jenisUsaha = {"Pilih Jenis Usaha", "Makanan", "Minuman", "Pakaian", "Kerajinan", "Lainnya"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, jenisUsaha);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -79,7 +85,6 @@ public class PengajuanSewaActivity extends AppCompatActivity {
 
         findViewById(R.id.btnBackPengajuan).setOnClickListener(v -> finish());
 
-        // File Selection
         btnPilihKTP.setOnClickListener(v -> openFilePicker(PICK_KTP_REQUEST));
         btnPilihNIB.setOnClickListener(v -> openFilePicker(PICK_NIB_REQUEST));
 
@@ -95,7 +100,6 @@ public class PengajuanSewaActivity extends AppCompatActivity {
             ivDeleteNIB.setVisibility(View.GONE);
         });
 
-        // Navigation
         btnNextStep2.setOnClickListener(v -> {
             if (etNamaUsaha.getText().toString().trim().isEmpty()) {
                 Toast.makeText(this, "Nama Usaha wajib diisi", Toast.LENGTH_SHORT).show();
@@ -118,12 +122,9 @@ public class PengajuanSewaActivity extends AppCompatActivity {
                 return;
             }
 
-            // Fill review data from Intent
-            String eventName = getIntent().getStringExtra("nama_event");
-            String eventLocation = getIntent().getStringExtra("lokasi_event");
-            
             if (eventName != null) tvReviewNamaEvent.setText(eventName);
             if (eventLocation != null) tvReviewLokasi.setText(eventLocation);
+            if (eventPrice != null) tvReviewTotalBiaya.setText(eventPrice);
 
             showStep(3);
         });
@@ -133,12 +134,9 @@ public class PengajuanSewaActivity extends AppCompatActivity {
         });
 
         btnSubmit.setOnClickListener(v -> {
-            // Simpan data pengajuan ke Manager (Database Lokal)
-            String namaUmkm = etNamaUsaha.getText().toString();
-            String namaEvent = tvReviewNamaEvent.getText().toString();
-            String tanggal = "01 Jan 2025"; // Bisa ambil dari DatePicker
-
-            PengajuanManager.getInstance().tambahPengajuan(namaUmkm, namaEvent, tanggal);
+            // Create Rental Request
+            RentalRequest request = new RentalRequest(eventName, eventLocation, eventPrice, eventImage, RentalRequest.Status.MENUNGGU_PEMBAYARAN);
+            RentalManager.getInstance().addRequest(request);
 
             // Reset timer pembayaran untuk pengajuan baru
             getSharedPreferences("LapakUMKMPrefs", MODE_PRIVATE)
@@ -146,10 +144,11 @@ public class PengajuanSewaActivity extends AppCompatActivity {
                     .remove("expiry_time")
                     .commit();
 
-            Toast.makeText(this, "Pengajuan Berhasil Dikirim!", Toast.LENGTH_LONG).show();
+            // Go to payment
             Intent intent = new Intent(this, PaymentDetailActivity.class);
             intent.putExtra("PAYMENT_METHOD", "TRANSFER");
             intent.putExtra("BANK_NAME", "BCA");
+            intent.putExtra("rental_request", request); // Passing the request
             startActivity(intent);
             finish();
         });
@@ -187,7 +186,6 @@ public class PengajuanSewaActivity extends AppCompatActivity {
         layoutStep2.setVisibility(step == 2 ? View.VISIBLE : View.GONE);
         layoutStep3.setVisibility(step == 3 ? View.VISIBLE : View.GONE);
 
-        // Update indicator colors
         tvStep1Circle.setBackgroundResource(step >= 1 ? R.drawable.bg_circle_blue : R.drawable.bg_circle_gray);
         tvStep1Circle.setTextColor(step >= 1 ? getResources().getColor(R.color.white) : getResources().getColor(R.color.text_gray));
         

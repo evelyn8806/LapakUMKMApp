@@ -3,46 +3,42 @@ package edu.uph.m24si2.lapakumkmapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
+import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import java.util.List;
 
 public class MyStallsActivity extends AppCompatActivity {
+
+    private RecyclerView rvMyStalls;
+    private TextView tvEmpty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_stalls);
 
+        rvMyStalls = findViewById(R.id.rvMyStalls);
+        tvEmpty = findViewById(R.id.tvEmptyStalls);
+
+        rvMyStalls.setLayoutManager(new LinearLayoutManager(this));
+
         setupBottomNav();
-        setupActionButtons();
+        loadActiveStalls();
     }
 
-    private void setupActionButtons() {
-        // Tombol Lihat Detail pada item 1
-        findViewById(R.id.tabScroll).requestFocus(); // Biar fokus ga di tombol bawah
-
-        // Mencari tombol di dalam layout (karena layoutnya statis, kita bisa ambil button berdasarkan posisinya atau ID jika ada)
-        // Item 1: Festival Kuliner Nusantara (Menunggu Verifikasi)
-        // Button ini tidak punya ID unik di layout statis tadi, tapi kita bisa berikan atau cari.
-        // Untuk kemudahan, saya akan tambahkan Toast dulu sebagai logika dummy.
-    }
-
-    // Fungsi-fungsi tombol di XML (jika ditambahkan android:onClick) atau via Listener
-    public void onLihatDetailClick(View v) {
-        Intent intent = new Intent(this, LapakDetailActivity.class);
-        intent.putExtra("nama_lapak", "Festival Kuliner Nusantara");
-        startActivity(intent);
-    }
-
-    public void onBayarClick(View v) {
-        Intent intent = new Intent(this, PaymentActivity.class);
-        startActivity(intent);
-    }
-
-    public void onLihatETicketClick(View v) {
-        Intent intent = new Intent(this, ETicketActivity.class);
-        startActivity(intent);
+    private void loadActiveStalls() {
+        List<RentalRequest> activeRequests = RentalManager.getInstance().getRequestsByStatus(RentalRequest.Status.AKTIF);
+        if (activeRequests.isEmpty()) {
+            tvEmpty.setVisibility(View.VISIBLE);
+            rvMyStalls.setVisibility(View.GONE);
+        } else {
+            tvEmpty.setVisibility(View.GONE);
+            rvMyStalls.setVisibility(View.VISIBLE);
+            RentalRequestAdapter adapter = new RentalRequestAdapter(activeRequests, this);
+            rvMyStalls.setAdapter(adapter);
+        }
     }
 
     private void setupBottomNav() {
@@ -59,5 +55,11 @@ public class MyStallsActivity extends AppCompatActivity {
             startActivity(new Intent(this, NotificationsActivity.class));
             finish();
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadActiveStalls();
     }
 }

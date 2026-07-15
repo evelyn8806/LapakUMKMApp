@@ -32,7 +32,8 @@
             android:exported="false" />
 
         <activity
-            android:name=".FilterActivity"/>
+            android:name=".FilterActivity"
+            android:exported="false" />
 
         <activity
             android:name=".MainActivity"
@@ -88,7 +89,7 @@
             android:exported="false" />
 
         <activity
-            android:name=".MapsActivity"
+            android:name=".RentalListActivity"
             android:exported="false" />
 
     </application>

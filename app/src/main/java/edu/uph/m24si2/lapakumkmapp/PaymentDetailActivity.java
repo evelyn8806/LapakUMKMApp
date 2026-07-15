@@ -17,6 +17,7 @@ public class PaymentDetailActivity extends AppCompatActivity {
     private TextView tvCountdown;
     private CountDownTimer countDownTimer;
     private SharedPreferences prefs;
+    private RentalRequest currentRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +29,13 @@ public class PaymentDetailActivity extends AppCompatActivity {
         TextView tvMethodLabel = findViewById(R.id.tvMethodLabel);
         TextView tvVANumber = findViewById(R.id.tvVANumber);
         TextView tvInstructions = findViewById(R.id.tvInstructions);
+        TextView tvCopyVA = findViewById(R.id.tvCopyVA);
         ImageView btnBack = findViewById(R.id.btnBackDetail);
         Button btnKonfirmasi = findViewById(R.id.btnKonfirmasiSelesai);
         TextView tvUbahMetode = findViewById(R.id.tvUbahMetode);
 
-        // Langsung hitung sisa waktu real-time
+        currentRequest = (RentalRequest) getIntent().getSerializableExtra("rental_request");
+
         setupTimer();
 
         String method = getIntent().getStringExtra("PAYMENT_METHOD");
@@ -54,12 +57,11 @@ public class PaymentDetailActivity extends AppCompatActivity {
             tvInstructions.setText("1. Buka aplikasi " + method + " Anda\n2. Pilih menu Bayar/Scan QRIS\n3. Masukkan nominal atau konfirmasi tagihan\n4. Masukkan PIN " + method + " Anda");
         }
 
-        btnBack.setOnClickListener(v -> {
-            Intent intent = new Intent(this, DashboardActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            finish();
+        tvCopyVA.setOnClickListener(v -> {
+            Toast.makeText(this, "nomor sudah disalin", Toast.LENGTH_SHORT).show();
         });
+
+        btnBack.setOnClickListener(v -> handleBack());
 
         tvUbahMetode.setOnClickListener(v -> {
             Intent intent = new Intent(this, PaymentActivity.class);
@@ -73,19 +75,39 @@ public class PaymentDetailActivity extends AppCompatActivity {
             
             new Handler().postDelayed(() -> {
                 Toast.makeText(this, "Pembayaran Berhasil Diverifikasi!", Toast.LENGTH_SHORT).show();
+                
+                // Update status to MENUNGGU_PERSETUJUAN (Case b)
+                if (currentRequest != null) {
+                    currentRequest.setStatus(RentalRequest.Status.MENUNGGU_PERSETUJUAN);
+                }
+
                 Intent intent = new Intent(this, PaymentSuccessActivity.class);
                 intent.putExtra("PAYMENT_METHOD", finalMethod.equals("TRANSFER") ? finalBank : finalMethod);
+                intent.putExtra("rental_request", currentRequest);
                 startActivity(intent);
                 finish();
             }, 3000);
         });
     }
 
+    private void handleBack() {
+        Toast.makeText(this, "pembayaran ditunda", Toast.LENGTH_SHORT).show();
+        // Request remains MENUNGGU_PEMBAYARAN
+        Intent intent = new Intent(this, DashboardActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        handleBack();
+    }
+
     private void setupTimer() {
         long currentTime = System.currentTimeMillis();
         long expiryTime = prefs.getLong("expiry_time", 0);
         
-        // Jika expiryTime sudah lewat atau belum ada, set ulang ke 24 jam dari sekarang
         if (expiryTime <= currentTime) {
             expiryTime = currentTime + (24L * 60 * 60 * 1000);
             prefs.edit().putLong("expiry_time", expiryTime).commit();
@@ -128,7 +150,6 @@ public class PaymentDetailActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        // Resume timer saat activity kembali fokus
         setupTimer();
     }
 }
