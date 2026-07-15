@@ -74,7 +74,6 @@ public class DashboardActivity extends AppCompatActivity {
             startActivity(new Intent(DashboardActivity.this, MyStallsActivity.class));
         });
 
-<<<<<<< Updated upstream
         // Search Bar Listener
         android.widget.EditText etSearchDashboard = findViewById(R.id.etSearchDashboard);
         etSearchDashboard.setOnEditorActionListener((v, actionId, event) -> {
@@ -89,10 +88,11 @@ public class DashboardActivity extends AppCompatActivity {
                 }
             }
             return false;
-=======
+        });
+
         findViewById(R.id.menuHistory).setOnClickListener(v -> {
             startActivity(new Intent(DashboardActivity.this, HistoryActivity.class));
->>>>>>> Stashed changes
+        });
         });
 
         // Bottom Nav Listeners

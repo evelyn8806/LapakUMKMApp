@@ -193,13 +193,8 @@ public class PengajuanSewaActivity extends AppCompatActivity {
             Toast.makeText(this, "Pengajuan Berhasil Dikirim!", Toast.LENGTH_LONG).show();
             
             Intent intent = new Intent(this, PaymentActivity.class);
-<<<<<<< Updated upstream
-            intent.putExtra("nama_event", tvReviewNamaEvent.getText().toString());
-            
-=======
             intent.putExtra("nama_event", namaEvent);
             intent.putExtra("rental_request", newRequest);
->>>>>>> Stashed changes
             startActivity(intent);
             finish();
         });

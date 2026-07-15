@@ -6,13 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".MapsActivity">
 
-    <fragment
-        android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
+    <!-- Header Bar -->
+    <RelativeLayout
+        android:id="@+id/rlHeader"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="56dp"
+        android:background="@color/white"
+        android:elevation="4dp"
+        android:paddingHorizontal="16dp">
 
-<<<<<<< Updated upstream
         <ImageView
             android:id="@+id/btnBack"
             android:layout_width="24dp"
@@ -47,18 +49,18 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:src="@android:drawable/ic_menu_search"
-            app:tint="@color/black"/>
+            app:tint="@color/black" />
     </RelativeLayout>
 
-    <!-- Search & Filter Bar -->
+    <!-- Search and Filter Bar -->
     <LinearLayout
         android:id="@+id/llSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/rlHeader"
+        android:background="#FFFFFF"
         android:orientation="vertical"
         android:padding="16dp"
-        android:background="#FFFFFF"
         android:visibility="gone">
 
         <com.google.android.material.card.MaterialCardView
@@ -66,8 +68,8 @@
             android:layout_height="48dp"
             app:cardCornerRadius="12dp"
             app:cardElevation="0dp"
-            app:strokeWidth="1dp"
-            app:strokeColor="#F0F0F0">
+            app:strokeColor="#F0F0F0"
+            app:strokeWidth="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -75,21 +77,23 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingHorizontal="12dp">
+
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@android:drawable/ic_menu_search"
                     app:tint="@color/text_gray" />
+
                 <EditText
                     android:id="@+id/etSearchExploration"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:layout_marginStart="8dp"
+                    android:layout_weight="1"
                     android:background="@null"
                     android:hint="Cari event atau bazar..."
-                    android:textSize="14sp"
-                    android:inputType="text"/>
+                    android:inputType="text"
+                    android:textSize="14sp" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -98,54 +102,59 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:scrollbars="none">
+
             <LinearLayout
                 android:id="@+id/layoutFilters"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnFilterSemua"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="36dp"
-                    android:text="SEMUA"
-                    android:textSize="12sp"
-                    app:cornerRadius="8dp"
-                    app:backgroundTint="@color/admin_primary"
-                    android:textColor="@color/white"
                     android:layout_marginEnd="8dp"
-                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"/>
+                    android:text="SEMUA"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    app:backgroundTint="@color/admin_primary"
+                    app:cornerRadius="8dp" />
+
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnFilterKuliner"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="36dp"
-                    android:text="KULINER"
-                    android:textSize="12sp"
-                    app:cornerRadius="8dp"
-                    app:backgroundTint="#F5F5F5"
-                    android:textColor="@color/text_gray"
                     android:layout_marginEnd="8dp"
-                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"/>
+                    android:text="KULINER"
+                    android:textColor="@color/text_gray"
+                    android:textSize="12sp"
+                    app:backgroundTint="#F5F5F5"
+                    app:cornerRadius="8dp" />
+
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnFilterBazar"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="36dp"
-                    android:text="BAZAR"
-                    android:textSize="12sp"
-                    app:cornerRadius="8dp"
-                    app:backgroundTint="#F5F5F5"
-                    android:textColor="@color/text_gray"
                     android:layout_marginEnd="8dp"
-                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"/>
+                    android:text="BAZAR"
+                    android:textColor="@color/text_gray"
+                    android:textSize="12sp"
+                    app:backgroundTint="#F5F5F5"
+                    app:cornerRadius="8dp" />
+
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnFilterMusik"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="36dp"
                     android:text="MUSIK"
-                    android:textSize="12sp"
-                    app:cornerRadius="8dp"
-                    app:backgroundTint="#F5F5F5"
                     android:textColor="@color/text_gray"
-                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"/>
+                    android:textSize="12sp"
+                    app:backgroundTint="#F5F5F5"
+                    app:cornerRadius="8dp" />
             </LinearLayout>
         </HorizontalScrollView>
     </LinearLayout>
@@ -154,10 +163,10 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/llSearch"
-        android:layout_above="@+id/bottomNav">
+        android:layout_above="@+id/bottomNav"
+        android:layout_below="@id/llSearch">
 
-        <!-- Maps View (Required by MapsActivity) -->
+        <!-- Maps View -->
         <fragment
             android:id="@+id/map"
             android:name="com.google.android.gms.maps.SupportMapFragment"
@@ -168,10 +177,10 @@
             android:id="@+id/rvExploration"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="16dp"
-            android:clipToPadding="false"
             android:background="#F8F9FA"
-            android:visibility="gone"/>
+            android:clipToPadding="false"
+            android:padding="16dp"
+            android:visibility="gone" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cvNoEventOverlay"
@@ -182,33 +191,37 @@
             android:visibility="gone"
             app:cardCornerRadius="16dp"
             app:cardElevation="8dp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:orientation="vertical"
-                android:padding="24dp"
-                android:gravity="center">
+                android:padding="24dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Belum Ada Event"
+                    android:textColor="@color/black"
                     android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"/>
+                    android:textStyle="bold" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Kota ini belum memiliki event aktif. Request sekarang?"
-                    android:gravity="center"
                     android:layout_marginTop="8dp"
-                    android:textColor="@color/text_gray"/>
+                    android:gravity="center"
+                    android:text="Kota ini belum memiliki event aktif. Request sekarang?"
+                    android:textColor="@color/text_gray" />
+
                 <Button
                     android:id="@+id/btnRequestEvent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="Request Event"
-                    app:backgroundTint="@color/admin_primary"/>
+                    app:backgroundTint="@color/admin_primary" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -229,138 +242,121 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="Tidak ada event yang ditemukan"
         android:gravity="center"
+        android:text="Tidak ada event yang ditemukan"
         android:textColor="@color/text_gray"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <!-- Bottom Navigation Bar UMKM -->
-=======
-    <!-- Top Bar with Back Button and City Spinner -->
->>>>>>> Stashed changes
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/bottomNav"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        app:cardCornerRadius="12dp"
-        app:cardElevation="8dp">
+        android:layout_height="72dp"
+        android:layout_alignParentBottom="true"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingHorizontal="12dp">
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-<<<<<<< Updated upstream
+            <LinearLayout
+                android:id="@+id/navBeranda"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@android:drawable/ic_menu_myplaces"
+                    app:tint="@color/text_gray" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Beranda"
+                    android:textColor="@color/text_gray"
+                    android:textSize="10sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@android:drawable/ic_menu_search"
+                    app:tint="@color/admin_primary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Eksplorasi"
+                    android:textColor="@color/admin_primary"
+                    android:textSize="10sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/navNotif"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@android:drawable/ic_popup_reminder"
+                    app:tint="@color/text_gray" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Notifikasi"
+                    android:textColor="@color/text_gray"
+                    android:textSize="10sp" />
+            </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/navAkun"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center"
+                android:background="?attr/selectableItemBackground"
                 android:clickable="true"
                 android:focusable="true"
-                android:background="?attr/selectableItemBackground">
+                android:gravity="center"
+                android:orientation="vertical">
+
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@android:drawable/ic_menu_send"
-                    app:tint="@color/text_gray"/>
+                    app:tint="@color/text_gray" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Akun"
-                    android:textSize="10sp"
-                    android:textColor="@color/text_gray"/>
+                    android:textColor="@color/text_gray"
+                    android:textSize="10sp" />
             </LinearLayout>
-=======
-            <ImageView
-                android:id="@+id/btnBack"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:padding="8dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@android:drawable/ic_media_previous"
-                app:tint="@color/black" />
-
-            <Spinner
-                android:id="@+id/spinnerCity"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="8dp" />
-
->>>>>>> Stashed changes
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
-
-    <!-- No Event Overlay -->
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cvNoEventOverlay"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_margin="32dp"
-        android:visibility="gone"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="12dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="24dp">
-
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@android:drawable/ic_dialog_map"
-                app:tint="@color/admin_primary" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Belum Ada Event"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="center"
-                android:text="Maaf, belum ada event UMKM yang terdaftar di kota ini."
-                android:textColor="@color/text_gray"
-                android:textSize="14sp" />
-
-            <Button
-                android:id="@+id/btnRequestEvent"
-                style="@style/Widget.MaterialComponents.Button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:backgroundTint="@color/admin_primary"
-                android:text="Ajukan Event di Kota Ini"
-                android:textAllCaps="false"
-                app:cornerRadius="8dp" />
-
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabMyLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="24dp"
-        android:src="@android:drawable/ic_menu_mylocation"
-        app:backgroundTint="@color/white"
-        app:tint="@color/admin_primary" />
 
 </RelativeLayout>
