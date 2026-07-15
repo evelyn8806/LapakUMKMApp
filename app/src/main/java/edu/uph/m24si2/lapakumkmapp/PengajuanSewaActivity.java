@@ -13,13 +13,15 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import androidx.annotation.Nullable;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 public class PengajuanSewaActivity extends AppCompatActivity {
 
-    private static final int PICK_KTP_REQUEST = 1;
-    private static final int PICK_NIB_REQUEST = 2;
+    private ActivityResultLauncher<Intent> ktpPickerLauncher;
+    private ActivityResultLauncher<Intent> nibPickerLauncher;
 
     private LinearLayout layoutStep1, layoutStep2, layoutStep3;
     private TextView tvStep1Circle, tvStep2Circle, tvStep3Circle;
@@ -79,9 +81,32 @@ public class PengajuanSewaActivity extends AppCompatActivity {
 
         findViewById(R.id.btnBackPengajuan).setOnClickListener(v -> finish());
 
+        // Register Activity Result Launchers
+        ktpPickerLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                        ktpUri = result.getData().getData();
+                        tvFileNameKTP.setText("KTP: File terpilih");
+                        ivDeleteKTP.setVisibility(View.VISIBLE);
+                    }
+                }
+        );
+
+        nibPickerLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                        nibUri = result.getData().getData();
+                        tvFileNameNIB.setText("NIB: File terpilih");
+                        ivDeleteNIB.setVisibility(View.VISIBLE);
+                    }
+                }
+        );
+
         // File Selection
-        btnPilihKTP.setOnClickListener(v -> openFilePicker(PICK_KTP_REQUEST));
-        btnPilihNIB.setOnClickListener(v -> openFilePicker(PICK_NIB_REQUEST));
+        btnPilihKTP.setOnClickListener(v -> openFilePicker(ktpPickerLauncher));
+        btnPilihNIB.setOnClickListener(v -> openFilePicker(nibPickerLauncher));
 
         ivDeleteKTP.setOnClickListener(v -> {
             ktpUri = null;
@@ -121,16 +146,16 @@ public class PengajuanSewaActivity extends AppCompatActivity {
             // Fill review data from Intent
             String eventName = getIntent().getStringExtra("nama_event");
             String eventLocation = getIntent().getStringExtra("lokasi_event");
+            String eventPrice = getIntent().getStringExtra("harga_event");
             
             if (eventName != null) tvReviewNamaEvent.setText(eventName);
             if (eventLocation != null) tvReviewLokasi.setText(eventLocation);
+            if (eventPrice != null) tvReviewTotalBiaya.setText(eventPrice);
 
             showStep(3);
         });
 
-        cbAgreement.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            btnSubmit.setEnabled(isChecked);
-        });
+        cbAgreement.setOnCheckedChangeListener((buttonView, isChecked) -> btnSubmit.setEnabled(isChecked));
 
         btnSubmit.setOnClickListener(v -> {
             // Simpan data pengajuan ke Manager (Database Lokal)
@@ -148,47 +173,24 @@ public class PengajuanSewaActivity extends AppCompatActivity {
             getSharedPreferences("LapakUMKMPrefs", MODE_PRIVATE)
                     .edit()
                     .remove("expiry_time")
-                    .commit();
+                    .apply();
 
             Toast.makeText(this, "Pengajuan Berhasil Dikirim!", Toast.LENGTH_LONG).show();
-<<<<<<< Updated upstream
-            Intent intent = new Intent(this, PaymentDetailActivity.class);
-            intent.putExtra("PAYMENT_METHOD", "TRANSFER");
-            intent.putExtra("BANK_NAME", "BCA");
-=======
+            
             Intent intent = new Intent(this, PaymentActivity.class);
             intent.putExtra("nama_event", tvReviewNamaEvent.getText().toString());
->>>>>>> Stashed changes
+            
             startActivity(intent);
             finish();
         });
     }
 
-    private void openFilePicker(int requestCode) {
+    private void openFilePicker(ActivityResultLauncher<Intent> launcher) {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("*/*");
         String[] mimeTypes = {"image/*", "application/pdf"};
         intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
-        startActivityForResult(intent, requestCode);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && data != null && data.getData() != null) {
-            Uri selectedFileUri = data.getData();
-            String fileName = "File terpilih";
-            
-            if (requestCode == PICK_KTP_REQUEST) {
-                ktpUri = selectedFileUri;
-                tvFileNameKTP.setText("KTP: " + fileName);
-                ivDeleteKTP.setVisibility(View.VISIBLE);
-            } else if (requestCode == PICK_NIB_REQUEST) {
-                nibUri = selectedFileUri;
-                tvFileNameNIB.setText("NIB: " + fileName);
-                ivDeleteNIB.setVisibility(View.VISIBLE);
-            }
-        }
+        launcher.launch(intent);
     }
 
     private void showStep(int step) {
@@ -198,12 +200,12 @@ public class PengajuanSewaActivity extends AppCompatActivity {
 
         // Update indicator colors
         tvStep1Circle.setBackgroundResource(step >= 1 ? R.drawable.bg_circle_blue : R.drawable.bg_circle_gray);
-        tvStep1Circle.setTextColor(step >= 1 ? getResources().getColor(R.color.white) : getResources().getColor(R.color.text_gray));
+        tvStep1Circle.setTextColor(ContextCompat.getColor(this, step >= 1 ? R.color.white : R.color.text_gray));
         
         tvStep2Circle.setBackgroundResource(step >= 2 ? R.drawable.bg_circle_blue : R.drawable.bg_circle_gray);
-        tvStep2Circle.setTextColor(step >= 2 ? getResources().getColor(R.color.white) : getResources().getColor(R.color.text_gray));
+        tvStep2Circle.setTextColor(ContextCompat.getColor(this, step >= 2 ? R.color.white : R.color.text_gray));
         
         tvStep3Circle.setBackgroundResource(step >= 3 ? R.drawable.bg_circle_blue : R.drawable.bg_circle_gray);
-        tvStep3Circle.setTextColor(step >= 3 ? getResources().getColor(R.color.white) : getResources().getColor(R.color.text_gray));
+        tvStep3Circle.setTextColor(ContextCompat.getColor(this, step >= 3 ? R.color.white : R.color.text_gray));
     }
 }

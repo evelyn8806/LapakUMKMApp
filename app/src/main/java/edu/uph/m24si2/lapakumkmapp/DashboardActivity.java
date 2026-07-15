@@ -63,15 +63,25 @@ public class DashboardActivity extends AppCompatActivity {
             startActivity(new Intent(DashboardActivity.this, MyStallsActivity.class));
         });
 
+        // Search Bar Listener
+        android.widget.EditText etSearchDashboard = findViewById(R.id.etSearchDashboard);
+        etSearchDashboard.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH || 
+                actionId == android.view.inputmethod.EditorInfo.IME_ACTION_DONE) {
+                String query = etSearchDashboard.getText().toString();
+                if (!query.isEmpty()) {
+                    Intent intent = new Intent(DashboardActivity.this, RecommendationListActivity.class);
+                    intent.putExtra("search_query", query);
+                    startActivity(intent);
+                    return true;
+                }
+            }
+            return false;
+        });
+
         // Bottom Nav Listeners
         findViewById(R.id.navEksplorasi).setOnClickListener(v -> {
             startActivity(new Intent(DashboardActivity.this, ExplorationMapActivity.class));
-        });
-
-
-
-        findViewById(R.id.navNotif).setOnClickListener(v -> {
-            startActivity(new Intent(DashboardActivity.this, NotificationsActivity.class));
         });
 
         findViewById(R.id.navAkun).setOnClickListener(v -> {

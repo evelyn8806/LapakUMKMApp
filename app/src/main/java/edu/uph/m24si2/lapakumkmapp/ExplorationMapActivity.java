@@ -33,9 +33,17 @@ public class ExplorationMapActivity extends AppCompatActivity {
 
         allEvents = EventManager.getAllEvents();
         
+        findViewById(R.id.llSearch).setVisibility(View.VISIBLE);
         rvExploration = findViewById(R.id.rvExploration);
+        rvExploration.setVisibility(View.VISIBLE);
         etSearch = findViewById(R.id.etSearchExploration);
         tvNoResults = findViewById(R.id.tvNoExplorationResults);
+        
+        // Hide map elements if they exist
+        View mapFragment = findViewById(R.id.map);
+        if (mapFragment != null) mapFragment.setVisibility(View.GONE);
+        View fab = findViewById(R.id.fabMyLocation);
+        if (fab != null) fab.setVisibility(View.GONE);
         
         setupRecyclerView();
         setupSearch();
@@ -118,13 +126,6 @@ public class ExplorationMapActivity extends AppCompatActivity {
     private void setupBottomNav() {
         findViewById(R.id.navBeranda).setOnClickListener(v -> {
             startActivity(new Intent(this, DashboardActivity.class));
-            finish();
-        });
-        
-
-
-        findViewById(R.id.navNotif).setOnClickListener(v -> {
-            startActivity(new Intent(this, NotificationsActivity.class));
             finish();
         });
 

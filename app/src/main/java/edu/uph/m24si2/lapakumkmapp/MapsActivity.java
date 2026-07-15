@@ -53,9 +53,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         btnBack = findViewById(R.id.btnBack);
         spinnerCity = findViewById(R.id.spinnerCity);
+        spinnerCity.setVisibility(View.VISIBLE);
+        
         cvNoEventOverlay = findViewById(R.id.cvNoEventOverlay);
         btnRequestEvent = findViewById(R.id.btnRequestEvent);
         fabMyLocation = findViewById(R.id.fabMyLocation);
+        
+        // Hide list-related views
+        findViewById(R.id.llSearch).setVisibility(View.GONE);
+        findViewById(R.id.rvExploration).setVisibility(View.GONE);
 
         setupCitySpinner();
 
@@ -65,12 +71,23 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             mapFragment.getMapAsync(this);
         }
 
-        // Pastikan data terisi
-        if (allEvents == null || allEvents.isEmpty()) {
-            allEvents = EventManager.getAllEvents();
-        }
-
         btnBack.setOnClickListener(v -> finish());
+
+        findViewById(R.id.ivSearchIcon).setOnClickListener(v -> {
+            if (findViewById(R.id.llSearch).getVisibility() == View.GONE) {
+                findViewById(R.id.llSearch).setVisibility(View.VISIBLE);
+                findViewById(R.id.rvExploration).setVisibility(View.VISIBLE);
+                findViewById(R.id.map).setVisibility(View.GONE);
+                spinnerCity.setVisibility(View.GONE);
+                fabMyLocation.setVisibility(View.GONE);
+            } else {
+                findViewById(R.id.llSearch).setVisibility(View.GONE);
+                findViewById(R.id.rvExploration).setVisibility(View.GONE);
+                findViewById(R.id.map).setVisibility(View.VISIBLE);
+                spinnerCity.setVisibility(View.VISIBLE);
+                fabMyLocation.setVisibility(View.VISIBLE);
+            }
+        });
 
         btnRequestEvent.setOnClickListener(v -> {
             String selectedCity = spinnerCity.getSelectedItem().toString();

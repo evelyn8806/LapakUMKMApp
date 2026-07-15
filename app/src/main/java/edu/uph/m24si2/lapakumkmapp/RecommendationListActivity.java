@@ -39,27 +39,40 @@ public class RecommendationListActivity extends AppCompatActivity {
         float maxPrice = getIntent().getFloatExtra("maxPrice", Float.MAX_VALUE);
         String lokasi = getIntent().getStringExtra("lokasi");
         String sort = getIntent().getStringExtra("sort");
+        String searchQuery = getIntent().getStringExtra("search_query");
 
-        applyFilter(jenis, minPrice, maxPrice, lokasi, sort);
+        applyFilter(jenis, minPrice, maxPrice, lokasi, sort, searchQuery);
     }
 
-    private void applyFilter(String jenis, float minPrice, float maxPrice, String lokasi, String sort) {
+    private void applyFilter(String jenis, float minPrice, float maxPrice, String lokasi, String sort, String searchQuery) {
         List<EventModel> filteredList = new ArrayList<>();
 
         for (EventModel event : allEvents) {
             boolean matches = true;
 
-            // 1. Filter Harga
-            if (event.getNumericHarga() < minPrice || event.getNumericHarga() > maxPrice) {
+            // 1. Filter Search Query (Global Search)
+            if (searchQuery != null && !searchQuery.isEmpty()) {
+                String query = searchQuery.toLowerCase();
+                boolean nameMatch = event.getNama().toLowerCase().contains(query);
+                boolean categoryMatch = event.getKategori().toLowerCase().contains(query);
+                boolean locationMatch = event.getLokasi().toLowerCase().contains(query);
+                
+                if (!nameMatch && !categoryMatch && !locationMatch) {
+                    matches = false;
+                }
+            }
+
+            // 2. Filter Harga
+            if (matches && (event.getNumericHarga() < minPrice || event.getNumericHarga() > maxPrice)) {
                 matches = false;
             }
 
-            // 2. Filter Lokasi
+            // 3. Filter Lokasi
             if (matches && lokasi != null && !lokasi.equalsIgnoreCase("Pilih kota") && !event.getKota().equalsIgnoreCase(lokasi)) {
                 matches = false;
             }
 
-            // 3. Filter Jenis Lapak
+            // 4. Filter Jenis Lapak
             if (matches && jenis != null && !jenis.equalsIgnoreCase("Semua")) {
                 if (!event.getKategori().toLowerCase().contains(jenis.toLowerCase())) {
                     matches = false;

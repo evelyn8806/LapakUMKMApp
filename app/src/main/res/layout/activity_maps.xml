@@ -14,14 +14,32 @@
         android:paddingHorizontal="16dp"
         android:elevation="2dp">
 
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            android:src="@android:drawable/ic_menu_revert"
+            app:tint="@color/black" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_marginStart="40dp"
             android:text="Eksplorasi Event"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/spinnerCity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="40dp"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/ivSearchIcon"
@@ -41,7 +59,8 @@
         android:layout_below="@id/rlHeader"
         android:orientation="vertical"
         android:padding="16dp"
-        android:background="#FFFFFF">
+        android:background="#FFFFFF"
+        android:visibility="gone">
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
@@ -133,14 +152,78 @@
     </LinearLayout>
 
     <!-- Content Area -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvExploration"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/llSearch"
-        android:layout_above="@+id/bottomNav"
-        android:padding="16dp"
-        android:clipToPadding="false"/>
+        android:layout_above="@+id/bottomNav">
+
+        <!-- Maps View (Required by MapsActivity) -->
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvExploration"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            android:clipToPadding="false"
+            android:background="#F8F9FA"
+            android:visibility="gone"/>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvNoEventOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="32dp"
+            android:visibility="gone"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Belum Ada Event"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Kota ini belum memiliki event aktif. Request sekarang?"
+                    android:gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/text_gray"/>
+                <Button
+                    android:id="@+id/btnRequestEvent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Request Event"
+                    app:backgroundTint="@color/admin_primary"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabMyLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="16dp"
+            android:src="@android:drawable/ic_menu_mylocation"
+            app:backgroundTint="@color/white"
+            app:tint="@color/admin_primary" />
+
+    </FrameLayout>
 
     <TextView
         android:id="@+id/tvNoExplorationResults"
@@ -205,28 +288,6 @@
                     android:textColor="@color/admin_primary"/>
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/navNotif"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:clickable="true"
-                android:focusable="true"
-                android:background="?attr/selectableItemBackground">
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@android:drawable/ic_popup_reminder"
-                    app:tint="@color/text_gray"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Notifikasi"
-                    android:textSize="10sp"
-                    android:textColor="@color/text_gray"/>
-            </LinearLayout>
             <LinearLayout
                 android:id="@+id/navAkun"
                 android:layout_width="0dp"

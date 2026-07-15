@@ -56,6 +56,45 @@
                     app:tint="@color/text_dark" />
             </RelativeLayout>
 
+            <!-- Search Bar -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardSearch"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="#F5F5F5"
+                app:cardCornerRadius="25dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#E0E0E0"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="16dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@android:drawable/ic_menu_search"
+                        app:tint="@color/text_gray" />
+
+                    <EditText
+                        android:id="@+id/etSearchDashboard"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="12dp"
+                        android:background="@null"
+                        android:hint="Cari lokasi, event, atau kata kunci..."
+                        android:textSize="14sp"
+                        android:textColorHint="@color/text_gray"
+                        android:imeOptions="actionSearch"
+                        android:inputType="text" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
             <!-- Banner Carousel Placeholder -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
@@ -601,28 +640,6 @@
                     android:textColor="@color/text_gray"/>
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/navNotif"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:clickable="true"
-                android:focusable="true"
-                android:background="?attr/selectableItemBackground">
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@android:drawable/ic_popup_reminder"
-                    app:tint="@color/text_gray"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Notifikasi"
-                    android:textSize="10sp"
-                    android:textColor="@color/text_gray"/>
-            </LinearLayout>
             <LinearLayout
                 android:id="@+id/navAkun"
                 android:layout_width="0dp"
