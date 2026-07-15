@@ -74,30 +74,14 @@ public class AccountActivity extends AppCompatActivity {
     }
 
     private void setupNavigation(String role) {
-        if (role.equals("Admin")) {
-            findViewById(R.id.bottomNav).setVisibility(View.GONE);
+        if (role.equals("ADMIN")) {
+            findViewById(R.id.umkmBottomNav).setVisibility(View.GONE);
             findViewById(R.id.adminBottomNav).setVisibility(View.VISIBLE);
             AdminNavigationHelper.setupNavigation(this, R.id.navAdminAkun);
         } else {
-            findViewById(R.id.bottomNav).setVisibility(View.VISIBLE);
+            findViewById(R.id.umkmBottomNav).setVisibility(View.VISIBLE);
             findViewById(R.id.adminBottomNav).setVisibility(View.GONE);
-            
-            findViewById(R.id.navBeranda).setOnClickListener(v -> {
-                startActivity(new Intent(this, DashboardActivity.class));
-                finish();
-            });
-
-            findViewById(R.id.navEksplorasi).setOnClickListener(v -> {
-                startActivity(new Intent(this, ExplorationMapActivity.class));
-                finish();
-            });
-
-
-
-            findViewById(R.id.navNotif).setOnClickListener(v -> {
-                startActivity(new Intent(this, NotificationsActivity.class));
-                finish();
-            });
+            UmkmNavigationHelper.setupNavigation(this, R.id.navAkun);
         }
     }
 }

@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="24dp"
-                android:text="Hasil pencarian tidak ditemukan."
+                android:text="Hasil tidak ditemukan."
                 android:textColor="#D32F2F"
                 android:textStyle="bold"
                 android:visibility="gone" />

@@ -18,7 +18,8 @@ public class LogoutConfirmActivity extends AppCompatActivity {
 
         findViewById(R.id.btnConfirmLogout).setOnClickListener(v -> {
             SharedPreferences sharedPref = getSharedPreferences("UserPrefs", MODE_PRIVATE);
-            sharedPref.edit().clear().apply();
+            // Hanya hapus status login otomatis (Remember Me), jangan hapus data registrasi
+            sharedPref.edit().putBoolean("isLoggedIn", false).apply();
             
             Toast.makeText(this, "Berhasil Keluar", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(LogoutConfirmActivity.this, LoginActivity.class);

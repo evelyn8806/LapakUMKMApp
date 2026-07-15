@@ -79,6 +79,11 @@ public class PaymentDetailActivity extends AppCompatActivity {
                 // Update status to MENUNGGU_PERSETUJUAN (Case b)
                 if (currentRequest != null) {
                     currentRequest.setStatus(RentalRequest.Status.MENUNGGU_PERSETUJUAN);
+                    RentalManager.getInstance().updateRequest(currentRequest);
+                    
+                    // Add Notifications
+                    NotificationManager.getInstance().addNotification("Pembayaran Berhasil", 
+                        "Pembayaran untuk " + currentRequest.getEventName() + " telah diverifikasi.");
                 }
 
                 Intent intent = new Intent(this, PaymentSuccessActivity.class);

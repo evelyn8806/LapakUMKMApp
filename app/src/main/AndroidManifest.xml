@@ -140,6 +140,10 @@
             android:name=".AdminPenggunaActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".AdminPengajuanDetailActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>
