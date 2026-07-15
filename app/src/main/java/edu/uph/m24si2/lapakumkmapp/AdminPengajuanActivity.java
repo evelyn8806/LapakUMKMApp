@@ -20,6 +20,9 @@ public class AdminPengajuanActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_pengajuan);
 
+        UserManager.getInstance().loadUsers(this);
+        PengajuanManager.getInstance().loadPengajuan(this);
+
         AdminNavigationHelper.setupNavigation(this, R.id.navAdminPengajuan);
         
         String filterExtra = getIntent().getStringExtra("FILTER_STATUS");
@@ -88,14 +91,22 @@ public class AdminPengajuanActivity extends AppCompatActivity {
             TextView tvTime = itemView.findViewById(R.id.tvTimeInfo);
             TextView tvUser = itemView.findViewById(R.id.tvUserInfo);
             
+            TextView tvLokasi = itemView.findViewById(R.id.tvAdminReviewLokasi);
+            TextView tvDeskripsi = itemView.findViewById(R.id.tvAdminReviewDeskripsi);
+            TextView tvHarga = itemView.findViewById(R.id.tvAdminReviewHarga);
+            
             MaterialButton btnReject = itemView.findViewById(R.id.btnRejectFull);
             MaterialButton btnProcess = itemView.findViewById(R.id.btnProcessFull);
 
             tvUsaha.setText(p.getNamaUmkm());
-            tvCategory.setText("Kuliner");
+            tvCategory.setText(p.getNamaEvent());
             tvStatus.setText(p.getStatus());
             tvTime.setText("Diajukan: " + p.getTanggal());
             tvUser.setText("Oleh: " + p.getUserName());
+            
+            tvLokasi.setText("Lokasi: " + p.getLokasi());
+            tvDeskripsi.setText("Deskripsi: " + p.getDeskripsi());
+            tvHarga.setText("Biaya Sewa: " + p.getHarga());
 
             // Set status appearance
             if (p.getStatus().equals("Menunggu")) {
@@ -103,7 +114,7 @@ public class AdminPengajuanActivity extends AppCompatActivity {
                 tvStatus.setTextColor(ContextCompat.getColor(this, R.color.admin_primary));
                 tvStatus.setBackgroundResource(R.drawable.bg_tag_new);
                 btnReject.setVisibility(View.VISIBLE);
-                btnProcess.setText("Proses");
+                btnProcess.setText("Setujui");
             } else if (p.getStatus().equals("Disetujui")) {
                 tvStatus.setTextColor(ContextCompat.getColor(this, R.color.status_approved));
                 tvStatus.setBackgroundResource(R.drawable.bg_tag_approved);

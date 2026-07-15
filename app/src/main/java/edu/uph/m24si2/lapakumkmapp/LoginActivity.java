@@ -20,6 +20,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // Load persistent users
+        UserManager.getInstance().loadUsers(this);
+
         role = getIntent().getStringExtra("ROLE");
         TextView tvSubtitle = findViewById(R.id.tvLoginSubtitle);
         if (role != null) {

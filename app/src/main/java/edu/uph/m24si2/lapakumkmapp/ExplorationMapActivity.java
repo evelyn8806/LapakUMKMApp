@@ -31,6 +31,8 @@ public class ExplorationMapActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exploration);
 
+        UserManager.getInstance().loadUsers(this);
+
         allEvents = EventManager.getAllEvents();
         
         findViewById(R.id.llSearch).setVisibility(View.VISIBLE);

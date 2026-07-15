@@ -16,6 +16,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Load persistent users
+        UserManager.getInstance().loadUsers(this);
+
         // Check login status
         SharedPreferences sharedPref = getSharedPreferences("UserPrefs", MODE_PRIVATE);
         boolean isRemembered = sharedPref.getBoolean("isLoggedIn", false);

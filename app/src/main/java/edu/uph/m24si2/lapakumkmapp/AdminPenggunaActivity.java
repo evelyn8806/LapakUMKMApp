@@ -20,6 +20,8 @@ public class AdminPenggunaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_pengguna);
 
+        UserManager.getInstance().loadUsers(this);
+
         AdminNavigationHelper.setupNavigation(this, R.id.navAdminPengguna);
         setupTabs();
         loadUsers();

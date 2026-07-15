@@ -17,6 +17,8 @@ public class AdminDashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_dashboard);
 
+        UserManager.getInstance().loadUsers(this);
+
         AdminNavigationHelper.setupNavigation(this, R.id.navAdminDashboard);
         loadApplications();
         updateStats();

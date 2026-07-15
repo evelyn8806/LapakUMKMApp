@@ -52,11 +52,6 @@ public class MyStallsActivity extends AppCompatActivity {
             startActivity(new Intent(this, ExplorationMapActivity.class));
         });
 
-        findViewById(R.id.navNotif).setOnClickListener(v -> {
-            startActivity(new Intent(this, NotificationsActivity.class));
-            finish();
-        });
-
         findViewById(R.id.navAkun).setOnClickListener(v -> {
             startActivity(new Intent(this, AccountActivity.class));
             finish();

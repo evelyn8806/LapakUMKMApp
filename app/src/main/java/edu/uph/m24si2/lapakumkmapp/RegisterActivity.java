@@ -63,8 +63,8 @@ public class RegisterActivity extends AppCompatActivity {
                     editor.putString("role", role); // Store role
                     editor.apply();
 
-                    // Tambahkan ke UserManager
-                    UserManager.getInstance().addUser(new UserModel(nama, email, phone, password, role));
+                    // Tambahkan ke UserManager (Sekarang butuh Context untuk simpan data)
+                    UserManager.getInstance().addUser(RegisterActivity.this, new UserModel(nama, email, phone, password, role));
 
                     // Clear any pending payment timer for the new user
                     getSharedPreferences("LapakUMKMPrefs", MODE_PRIVATE).edit().clear().apply();

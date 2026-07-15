@@ -88,6 +88,52 @@
             </LinearLayout>
         </RelativeLayout>
 
+        <!-- Submission Details -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:padding="12dp"
+            android:background="#FAFAFA"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Detail Pengajuan:"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/tvAdminReviewLokasi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lokasi: Alun-Alun Bandung"
+                android:textSize="11sp"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/text_gray"/>
+
+            <TextView
+                android:id="@+id/tvAdminReviewDeskripsi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Deskripsi: Bakso urat dengan kuah mantap."
+                android:textSize="11sp"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/text_gray"/>
+
+            <TextView
+                android:id="@+id/tvAdminReviewHarga"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Biaya Sewa: Rp250.000"
+                android:textSize="11sp"
+                android:layout_marginTop="2dp"
+                android:textStyle="bold"
+                android:textColor="@color/admin_primary"/>
+        </LinearLayout>
+
         <LinearLayout
             android:id="@+id/layoutActions"
             android:layout_width="wrap_content"

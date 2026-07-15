@@ -161,6 +161,9 @@ public class PengajuanSewaActivity extends AppCompatActivity {
             // Simpan data pengajuan ke Manager (Database Lokal)
             String namaUmkm = etNamaUsaha.getText().toString();
             String namaEvent = tvReviewNamaEvent.getText().toString();
+            String deskripsiUmkm = etDeskripsiUsaha.getText().toString();
+            String hargaSewa = tvReviewTotalBiaya.getText().toString();
+            String lokasiEvent = tvReviewLokasi.getText().toString();
             String tanggal = "01 Jan 2025"; // Bisa ambil dari DatePicker
             String jenisUsahaTerpilih = spinnerJenisUsaha.getSelectedItem().toString();
             String deskripsiUsaha = etDeskripsiUsaha.getText().toString();
@@ -172,6 +175,7 @@ public class PengajuanSewaActivity extends AppCompatActivity {
             String userEmail = sharedPref.getString("email", "email@example.com");
             String userName = sharedPref.getString("nama", "User");
 
+<<<<<<< Updated upstream
             // Create and save RentalRequest
             String eventLocation = tvReviewLokasi.getText().toString();
             String eventPrice = getIntent().getStringExtra("harga_event");
@@ -197,6 +201,9 @@ public class PengajuanSewaActivity extends AppCompatActivity {
             // Add Notification for Admin
             NotificationManager.getInstance().addNotification("Pengajuan Baru", 
                 "Ada pengajuan baru dari " + userName + " untuk event " + namaEvent);
+=======
+            PengajuanManager.getInstance().tambahPengajuan(this, namaUmkm, namaEvent, tanggal, userEmail, userName, deskripsiUmkm, hargaSewa, lokasiEvent);
+>>>>>>> Stashed changes
 
             // Reset timer pembayaran untuk pengajuan baru
             getSharedPreferences("LapakUMKMPrefs", MODE_PRIVATE)

@@ -111,28 +111,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/navNotif"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:clickable="true"
-                android:focusable="true"
-                android:background="?attr/selectableItemBackground">
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@android:drawable/ic_popup_reminder"
-                    app:tint="@color/text_gray"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Notifikasi"
-                    android:textSize="10sp"
-                    android:textColor="@color/text_gray"/>
-            </LinearLayout>
-            <LinearLayout
                 android:id="@+id/navAkun"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"

@@ -151,6 +151,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     intent.putExtra("deskripsi_lapak", event.getDeskripsi());
                     intent.putExtra("lokasi_lapak", event.getLokasi());
                     intent.putExtra("gambar_lapak", event.getGambar());
+                    intent.putExtra("harga_lapak", event.getHarga());
                     startActivity(intent);
                     break;
                 }
@@ -176,6 +177,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     intent.putExtra("deskripsi_lapak", event.getDeskripsi());
                     intent.putExtra("lokasi_lapak", event.getLokasi());
                     intent.putExtra("gambar_lapak", event.getGambar());
+                    intent.putExtra("harga_lapak", event.getHarga());
                     startActivity(intent);
                     break;
                 }

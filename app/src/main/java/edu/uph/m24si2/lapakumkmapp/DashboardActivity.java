@@ -128,7 +128,7 @@ public class DashboardActivity extends AppCompatActivity {
             public void onClick(View v) {
                 bukaDetail("Festival Kuliner Nusantara", "Event Kuliner", 
                     "Nikmati berbagai hidangan khas dari seluruh nusantara.", 
-                    "Alun-Alun Kota Bandung", R.drawable.festival_kuliner);
+                    "Alun-Alun Kota Bandung", R.drawable.festival_kuliner, "Rp. 250.000 / 3 hari");
             }
         });
 
@@ -137,7 +137,7 @@ public class DashboardActivity extends AppCompatActivity {
             public void onClick(View v) {
                 bukaDetail("Pasar Malam Tahun Baru", "Event Tahunan", 
                     "Kemeriahan pasar malam menyambut tahun baru.", 
-                    "Lapangan Gasibu Bandung", R.drawable.pasar_malam);
+                    "Lapangan Gasibu Bandung", R.drawable.pasar_malam, "Rp. 200.000 / 5 hari");
             }
         });
     }
@@ -154,13 +154,14 @@ public class DashboardActivity extends AppCompatActivity {
         }
     }
 
-    private void bukaDetail(String nama, String kategori, String deskripsi, String lokasi, int imageResId) {
+    private void bukaDetail(String nama, String kategori, String deskripsi, String lokasi, int imageResId, String harga) {
         Intent intent = new Intent(DashboardActivity.this, LapakDetailActivity.class);
         intent.putExtra("nama_lapak", nama);
         intent.putExtra("kategori_lapak", kategori);
         intent.putExtra("deskripsi_lapak", deskripsi);
         intent.putExtra("lokasi_lapak", lokasi);
         intent.putExtra("gambar_lapak", imageResId);
+        intent.putExtra("harga_lapak", harga);
         startActivity(intent);
     }
 }
