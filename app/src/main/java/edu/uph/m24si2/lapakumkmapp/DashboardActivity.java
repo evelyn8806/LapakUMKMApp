@@ -91,10 +91,6 @@ public class DashboardActivity extends AppCompatActivity {
 
 
 
-        findViewById(R.id.navNotif).setOnClickListener(v -> {
-            startActivity(new Intent(DashboardActivity.this, NotificationsActivity.class));
-        });
-
         findViewById(R.id.navAkun).setOnClickListener(v -> {
             startActivity(new Intent(DashboardActivity.this, AccountActivity.class));
         });
