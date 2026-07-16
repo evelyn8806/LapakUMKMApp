@@ -49,3 +49,6 @@ https://youtu.be/S1IoXBdtC50
 
 link trello :
 https://trello.com/b/rfdPiiEd/lapakumkm
+
+link PPT Presentasi :
+https://canva.link/gxxt5ll5km2a1q2
